@@ -1,0 +1,708 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jason Kim</title>
+    <description>Writings on software and other topics
+</description>
+    <link>http://jasonkim.ca/</link>
+    <atom:link href="http://jasonkim.ca/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Tue, 02 Feb 2016 23:33:39 -0800</pubDate>
+    <lastBuildDate>Tue, 02 Feb 2016 23:33:39 -0800</lastBuildDate>
+    <generator>Jekyll v3.0.2</generator>
+    
+      <item>
+        <title>The Deployment Minefield</title>
+        <description>&lt;p&gt;I find deployments hard. But why? I conjectured a few reasons why.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;You don’t practice setting up deployments too often.&lt;/li&gt;
+  &lt;li&gt;When you do the setup, you usually mindlessly copypasta the command
+from internet.&lt;/li&gt;
+  &lt;li&gt;And you finally make it work without any deep understanding, well
+you never try to relearn what you’ve done.&lt;/li&gt;
+  &lt;li&gt;Deployment is actually a hard subject that touches on many different
+complex systems.&lt;/li&gt;
+  &lt;li&gt;When something goes wrong, it’s hard to fix or undo. And you might
+compound the problem by trying to fix it by copypasta-ing even more crap.&lt;/li&gt;
+  &lt;li&gt;You might not even be aware of the problem at all. You could’ve done
+something an hour that fucked up the deployment process, but you might
+be trying to undo something you did 10 minutes ago. Diagnosis of the
+problem is really hard for deployment.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;What is the remedy for these problem?&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;You have to practice deployment like everything else. In order to
+practice something you need a meticulous guideline on how to practice.
+There for document everything!&lt;/li&gt;
+  &lt;li&gt;Understand each steps you are performing. Never just copypasta
+something. Even better, understand the system you are using.&lt;/li&gt;
+  &lt;li&gt;Even after you make something work, go back and review what you’ve
+just done.&lt;/li&gt;
+  &lt;li&gt;Learn the system you are using. Again, don’t just copypasta.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;I find that 5 and 6 are rather hard problems. You need really good
+understanding of the system in order to debug some problem.
+Otherwise, you just end up googling same shit over and over again.
+Maybe I’ll come up with some solution for them later down the road.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 22 Dec 2015 16:47:42 -0800</pubDate>
+        <link>http://jasonkim.ca/blog/2015/12/22/the-deployment-minefield/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2015/12/22/the-deployment-minefield/</guid>
+        
+        
+        <category>Dev Ops</category>
+        
+      </item>
+    
+      <item>
+        <title>Setting up Phoenix 1.0 on Mac OS X Yosemite (With Troubleshooting Steps)</title>
+        <description>&lt;p&gt;&lt;a href=&quot;http://www.phoenixframework.org/&quot;&gt;Phoenix&lt;/a&gt; is a promising
+&lt;a href=&quot;http://elixir-lang.org/&quot;&gt;Elixir&lt;/a&gt; web framework that is fast and productive.
+I heard about Phoenix through a coworker a couple of weeks
+ago and started playing with it.
+Then stopped for a while, until I heard that the framework finally
+hit &lt;a href=&quot;https://news.ycombinator.com/item?id=10135825&quot;&gt;1.0 on Hacker News&lt;/a&gt;.
+There were many praises for the framework and success stories
+that I thought I had to try it again.&lt;/p&gt;
+
+&lt;p&gt;This is a summary of what I did to set up Phoenix 1.0 on
+Mac OS X Yosemite (Version 10.10.5). I also included how
+I solved some odd errors that appeared during installation process.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;$ brew install elixir&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;$ mix local.hex&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;$ mix archive.install https://github.com/phoenixframework/phoenix/releases/download/v1.0.0/phoenix_new-1.0.0.ez&lt;/code&gt;&lt;/p&gt;
+
+    &lt;p&gt;In this step, you might see this error.&lt;/p&gt;
+
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+ ** (Mix) Could not access url https://github.com/phoenixframework/phoenix/releases/download/v1.0.0/phoenix_new-1.0.0.ez, error: {:failed_connect, [{:to_address, {&#39;github.com&#39;, 443}}, {:inet, [:inet], :nxdomain}]}
+&lt;/code&gt;&lt;/p&gt;
+
+    &lt;p&gt;To solve this issue, you need to ensure that &lt;code class=&quot;highlighter-rouge&quot;&gt;~/.mix/archives directory&lt;/code&gt; has write permission.&lt;/p&gt;
+
+    &lt;p&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;$ sudo chmod a+rw ~/.mix/archives/&lt;/code&gt; then try running #3 again.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Go into the directory where you want your Phoenix app to live.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;$ mix phoenix.new hello_phoenix&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Say yes to &lt;code class=&quot;highlighter-rouge&quot;&gt;Fetch and install dependencies? [Yn] y&lt;/code&gt;&lt;/p&gt;
+
+    &lt;p&gt;You might see an error during this process. And most likely, it’s happening because your Phoenix project directory doesn’t have write permission.&lt;/p&gt;
+
+    &lt;p&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;$ sudo chmod -R a+rw hello_phoenix&lt;/code&gt;.
+ Then try running #5 again.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;$ npm install&lt;/code&gt; with node &amp;gt; 0.12.0&lt;/li&gt;
+  &lt;li&gt;Ensure that you have postgresql running.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;$ mix ecto.create&lt;/code&gt;&lt;/p&gt;
+
+    &lt;p&gt;You might get this error.
+ &lt;code class=&quot;highlighter-rouge&quot;&gt;
+ ** (Mix) The database for HelloPhoenix.Repo couldn&#39;t be created, reason given: &quot;psql: FATAL:  role \&quot;postgres\&quot; is not permitted to log in\n&quot;.
+&lt;/code&gt;&lt;/p&gt;
+
+    &lt;p&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;$ psql postgres&lt;/code&gt;&lt;/p&gt;
+
+    &lt;p&gt;In the psql, run &lt;code class=&quot;highlighter-rouge&quot;&gt;CREATE ROLE postgres;&lt;/code&gt;&lt;/p&gt;
+
+    &lt;p&gt;Try running &lt;code class=&quot;highlighter-rouge&quot;&gt;$ mix ecto.create&lt;/code&gt; again.&lt;/p&gt;
+
+    &lt;p&gt;You might get this error.
+ &lt;code class=&quot;highlighter-rouge&quot;&gt;
+ ** (Mix) The database for HelloPhoenix.Repo couldn&#39;t be created, reason given: &quot;psql: FATAL:  role \&quot;postgres\&quot; is not permitted to log in\n&quot;.
+&lt;/code&gt;&lt;/p&gt;
+
+    &lt;p&gt;In the psql, run &lt;code class=&quot;highlighter-rouge&quot;&gt;ALTER ROLE postgres LOGIN;&lt;/code&gt;&lt;/p&gt;
+
+    &lt;p&gt;Try running &lt;code class=&quot;highlighter-rouge&quot;&gt;$ mix ecto.create&lt;/code&gt; again.&lt;/p&gt;
+
+    &lt;p&gt;You might get this error.
+ &lt;code class=&quot;highlighter-rouge&quot;&gt;
+ ** (Mix) The database for HelloPhoenix.Repo couldn&#39;t be created, reason given: &quot;ERROR:  permission denied to create database\n&quot;.
+&lt;/code&gt;&lt;/p&gt;
+
+    &lt;p&gt;In the psql, run &lt;code class=&quot;highlighter-rouge&quot;&gt;ALTER ROLE postgres CREATEDB;&lt;/code&gt;&lt;/p&gt;
+
+    &lt;p&gt;Now try &lt;code class=&quot;highlighter-rouge&quot;&gt;$ mix ecto.create&lt;/code&gt; again&lt;/p&gt;
+
+    &lt;p&gt;You should see &lt;code class=&quot;highlighter-rouge&quot;&gt;The database for HelloPhoenix.Repo has been created.&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;$ mix phoenix.server&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Go to http://localhost:4000/&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/o7mD8Fv.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Tue, 01 Sep 2015 22:15:10 -0700</pubDate>
+        <link>http://jasonkim.ca/blog/2015/09/01/setting-up-phoenix-1-dot-0-on-mac-os-x-yosemite/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2015/09/01/setting-up-phoenix-1-dot-0-on-mac-os-x-yosemite/</guid>
+        
+        
+        <category>elixir</category>
+        
+        <category>phoenix</category>
+        
+      </item>
+    
+      <item>
+        <title>Don&#39;t say something is easy</title>
+        <description>&lt;p&gt;“Oh, that’s easy.”&lt;/p&gt;
+
+&lt;p&gt;We say this often when we help beginners with coding. I think we say this
+for several reasons, but one big reason is to encourage the beginner that
+he or she can solve the problem by reducing the perceived difficulty of the
+problem. However, in reality, this probably has an adverse effect.
+First of all, it’s condescending. It puts the beginner’s confidence down.
+He or she must be thinking, “If this is so easy, why can’t I do it?”
+You might even be wrong that it’s an easy problem. There may be details of
+the problem you haven’t noticed yet that genuinely difficult problem
+look very easy.&lt;/p&gt;
+
+&lt;p&gt;I believe that you can omit saying “That’s easy,” completely and help
+out someone effectively. Just treat problems beginners have as a problem
+you and your colleagues have. Don’t belittle the beginner with phrases like
+“That’s easy” and just focus on what the problem is and helping them solve
+the problem.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 24 Jul 2015 19:59:37 -0700</pubDate>
+        <link>http://jasonkim.ca/blog/2015/07/24/dont-say-something-is-easy/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2015/07/24/dont-say-something-is-easy/</guid>
+        
+        
+        <category>programming</category>
+        
+        <category>misc</category>
+        
+      </item>
+    
+      <item>
+        <title>Unfair</title>
+        <description>&lt;p&gt;I found out that someone who is a friend and a coworker passed away years ago,
+and I didn’t know about it until today. I felt bad that I hadn’t tried to
+reach out to him more when I had the chance. He was a sincere guy who was
+always positive. It makes me angry that someone so good passed away when he
+was just 23. All the possibilities and dreams he might have had, they are all
+gone. He didn’t even get a shot at life.&lt;/p&gt;
+
+&lt;p&gt;People talk about unfairness a lot. They complain about how things are so
+unfair in life. I do too. In a way, this game called life is rigged. Some people
+really have many advantages in life while other don’t. You can rightly
+complain about how life is unfair because it really is so. But what does that
+get you? Nothing. It’ll in fact mess you up even more. It’ll weaken you and
+keep you stagnant. If you notice you are behind, think about how you are
+going to catch up.&lt;/p&gt;
+
+&lt;p&gt;In fact, a vast majority of people even if they are way way behind others,
+if they are living a life, working hard, studying, striving to better
+himself and others, they are trying. Everyday, you get another chance at life.
+A chance some others don’t have.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 03 Jul 2015 20:48:51 -0700</pubDate>
+        <link>http://jasonkim.ca/blog/2015/07/03/unfair/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2015/07/03/unfair/</guid>
+        
+        
+        <category>musings</category>
+        
+      </item>
+    
+      <item>
+        <title>Setting up Bower on Rails 4 for Heroku</title>
+        <description>&lt;p&gt;We know Bower is great for managing frontend packages such as jQuery and Bootstrap.
+I noticed that it’s not obvious how I can use Bower with Rails and Heroku.
+Here is how I set up Bower to work with Rails 4 app running on Heroku.&lt;/p&gt;
+
+&lt;p&gt;My local system setup looks like this.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;OS X Yosemite V 10.10.3&lt;/li&gt;
+  &lt;li&gt;ruby 2.2.1p85 (2015-02-26 revision 49769) [x86_64-darwin14]&lt;/li&gt;
+  &lt;li&gt;Rails 4.2.3&lt;/li&gt;
+  &lt;li&gt;Bower 1.4.1&lt;/li&gt;
+  &lt;li&gt;Node v0.10.38&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;prerequisites&quot;&gt;1. Prerequisites&lt;/h2&gt;
+
+&lt;p&gt;I’m gonna assume that you have some basics down already.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Install Ruby and Ruby on Rails.&lt;/li&gt;
+  &lt;li&gt;Install Node and have npm working.&lt;/li&gt;
+  &lt;li&gt;Install Bower&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;configure-npm-package-and-bower-package&quot;&gt;2. Configure npm package and bower package&lt;/h2&gt;
+
+&lt;p&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;npm init&lt;/code&gt; to create &lt;code class=&quot;highlighter-rouge&quot;&gt;package.json&lt;/code&gt; file with correct npm
+configuration for your app.&lt;/p&gt;
+
+&lt;p&gt;Now run &lt;code class=&quot;highlighter-rouge&quot;&gt;npm install bower --save&lt;/code&gt;. This will include bower as a
+dependency for your npm package.json.&lt;/p&gt;
+
+&lt;p&gt;Whenever you install a npm package, add &lt;code class=&quot;highlighter-rouge&quot;&gt;--save&lt;/code&gt; to automatically
+add the package as the dependency.&lt;/p&gt;
+
+&lt;p&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;bower init&lt;/code&gt; to create &lt;code class=&quot;highlighter-rouge&quot;&gt;bower.json&lt;/code&gt; file with correct bower
+configuration for your app.&lt;/p&gt;
+
+&lt;p&gt;Now install your packages running &lt;code class=&quot;highlighter-rouge&quot;&gt;npm install [pakcage-name] --save&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Again, whenever you install a bower package, add &lt;code class=&quot;highlighter-rouge&quot;&gt;--save&lt;/code&gt; to automatically
+add the bower package as the dependency.&lt;/p&gt;
+
+&lt;h2 id=&quot;make-bower-work-with-rails&quot;&gt;3. Make Bower work with Rails&lt;/h2&gt;
+
+&lt;p&gt;Let’s specify where bower packages are installed on the Rails app.&lt;/p&gt;
+
+&lt;p&gt;Create a file called &lt;code class=&quot;highlighter-rouge&quot;&gt;.bowerrc&lt;/code&gt;, and add&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;directory&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;vendor/assets/bower_components&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;vendor/assets/bower_components&lt;/code&gt; is where bower packages will be installed.&lt;/p&gt;
+
+&lt;p&gt;At this point, let’s edit &lt;code class=&quot;highlighter-rouge&quot;&gt;.gitignore&lt;/code&gt;, so we don’t commit npm packages or bower packages.
+At the end of &lt;code class=&quot;highlighter-rouge&quot;&gt;.gitignore&lt;/code&gt; file, add&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+node_modules
+vendor/assets/bower_components
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;In &lt;code class=&quot;highlighter-rouge&quot;&gt;config/application.rb&lt;/code&gt;, add:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+config.assets.paths &amp;lt;&amp;lt; Rails.root.join(&#39;vendor&#39;, &#39;assets&#39;, &#39;bower_components&#39;)
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;This will ensure that Rails picks up asset files from where bower packages are
+installed.&lt;/p&gt;
+
+&lt;p&gt;If you wanna start using Bootstrap for example, in the &lt;code class=&quot;highlighter-rouge&quot;&gt;app/assets/stylesheets/application.css&lt;/code&gt;,
+you can add:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+*= require bootstrap/dist/css/bootstrap
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;And in &lt;code class=&quot;highlighter-rouge&quot;&gt;app/assets/javascript/application.js&lt;/code&gt;,&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+//= require bootstrap/dist/js/bootstrap
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Make sure restart the Rails app to see the bower packages working with Rails.&lt;/p&gt;
+
+&lt;h2 id=&quot;use-bower-on-heroku&quot;&gt;4. Use Bower on Heroku&lt;/h2&gt;
+
+&lt;p&gt;At this point, Bower should be working well with Rails on your local environment.
+However, when you try to use it on Heroku, it’ll error out while it
+is trying to precompile assets.&lt;/p&gt;
+
+&lt;p&gt;This part, I am following some steps taken in &lt;a href=&quot;https://coderwall.com/p/6bmygq/heroku-rails-bower&quot;&gt;Anthony Smith’s post&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Configure Heroku to use ddollar’s multi-buildpack:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;heroku config:add BUILDPACK_URL=https://github.com/ddollar/heroku-buildpack-multi.git&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Create a file called: &lt;code class=&quot;highlighter-rouge&quot;&gt;.buildpacks&lt;/code&gt; and add:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+https://github.com/heroku/heroku-buildpack-nodejs
+https://github.com/heroku/heroku-buildpack-ruby
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Make sure that the ruby buildpack is the last one in the list.
+This will allow you to access the Rails console when running heroku run console.&lt;/p&gt;
+
+&lt;p&gt;In the &lt;code class=&quot;highlighter-rouge&quot;&gt;package.json&lt;/code&gt;, add a postinstall script. It should look like this.&lt;/p&gt;
+
+&lt;p&gt;```
+{
+  …&lt;/p&gt;
+
+&lt;p&gt;“scripts”: {
+    “postinstall”: “./node_modules/bower/bin/bower install”
+  }&lt;/p&gt;
+
+&lt;p&gt;…
+}
+```&lt;/p&gt;
+
+&lt;p&gt;Now push to Heroku!&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;git push heroku master&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;npm install&lt;/code&gt; will take a while to finish.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 29 Jun 2015 10:51:56 -0700</pubDate>
+        <link>http://jasonkim.ca/blog/2015/06/29/setting-up-bower-on-rails-4-for-heroku/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2015/06/29/setting-up-bower-on-rails-4-for-heroku/</guid>
+        
+        
+        <category>rails</category>
+        
+      </item>
+    
+      <item>
+        <title>Metaprogramming in Ruby should be avoided if possible</title>
+        <description>&lt;p&gt;This isn’t the first time &lt;a href=&quot;https://www.google.com/webhp?sourceid=chrome-instant&amp;amp;ion=1&amp;amp;espv=2&amp;amp;ie=UTF-8#q=metaprogramming%20harmful&quot;&gt;someone has considered metaprogramming in ruby to be harmful&lt;/a&gt;,
+and it won’t be the last. Metaprogramming is useful when you are programming
+reactively against external changes that you have to account for with your
+code. An example I like to use is the time when I had to create attributes
+for an object based on external json object. So even if the json object
+changes its attributes, the ruby program is able to account for the changed
+attributes.&lt;/p&gt;
+
+&lt;p&gt;However, in the real world, proper use of metaprogramming is infrequent.
+I would even venture to say that, if you are considering doing something
+with metaprogramming in Ruby, stop and try to solve it without metaprogramming.&lt;/p&gt;
+
+&lt;p&gt;Metaprogramming is not obvious and even to the author himself, it’ll become
+less obvious over time. Metaprogramming often ends up ugly. This is
+certainly true for someone else reading the code. It is harder to debug.
+You end up having a hard time finding the code using &lt;code class=&quot;highlighter-rouge&quot;&gt;grep&lt;/code&gt; or the text editor because
+the code is obscured via metaprogramming.&lt;/p&gt;
+
+&lt;p&gt;If you must metaprogram, document it well. Let your colleagues know what you
+are doing. Be very open about how your metaprogramming works. And it never
+hurts to get a second opinion on how you can avoid doing this altogether.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 06 Jun 2015 10:36:48 -0700</pubDate>
+        <link>http://jasonkim.ca/blog/2015/06/06/dont-over-metaprogram-in-ruby/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2015/06/06/dont-over-metaprogram-in-ruby/</guid>
+        
+        
+        <category>ruby</category>
+        
+      </item>
+    
+      <item>
+        <title>attributa: a simpler way to assign values to attributes in node.js</title>
+        <description>&lt;p&gt;&lt;a href=&quot;https://github.com/serv/attributa&quot;&gt;Attributa&lt;/a&gt; is a node.js package
+that helps you to assign multiple attributes
+in just one line.&lt;/p&gt;
+
+&lt;h2 id=&quot;problem&quot;&gt;Problem&lt;/h2&gt;
+
+&lt;p&gt;Did you ever have to do this?&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;js
+function User(data) {
+  this.username = data.username;
+  this.password = data.password;
+  this.address = data.address;
+  this.email = data.email;
+  // ...
+  // After a dozen more attributes...
+  this.privacySetting = data.privacySetting;
+}
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;solution&quot;&gt;Solution&lt;/h2&gt;
+
+&lt;p&gt;You can now do this instead!&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;js
+function User(data) {
+  attributa(this, data);
+}
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The installation instructions and docs can be found in
+&lt;a href=&quot;https://github.com/serv/attributa&quot;&gt;the repository&lt;/a&gt;.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 25 Jan 2015 21:04:45 -0800</pubDate>
+        <link>http://jasonkim.ca/blog/2015/01/25/attributa-a-simpler-way-to-assign-values-to-attributes-in-node-dot-js/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2015/01/25/attributa-a-simpler-way-to-assign-values-to-attributes-in-node-dot-js/</guid>
+        
+        
+        <category>javascript</category>
+        
+        <category>node.js</category>
+        
+      </item>
+    
+      <item>
+        <title>3 technical books I want to read for 2015</title>
+        <description>&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://www.amazon.com/Code-Language-Computer-Hardware-Software/dp/0735611319/ref=sr_1_1?ie=UTF8&amp;amp;qid=1420415680&amp;amp;sr=8-1&amp;amp;keywords=Code%3A+The+Hidden+Language+of+Computer+Hardware+and+Software&quot;&gt;Code: The Hidden Language of Computer Hardware and Software&lt;/a&gt;
+by Charles Petzold&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://www.amazon.com/C-Programming-Language-2nd/dp/0131103628/ref=sr_1_1?ie=UTF8&amp;amp;qid=1420415769&amp;amp;sr=8-1&amp;amp;keywords=C+Programming+Language+%282nd+Edition%29&quot;&gt;The C Programming Language, 2nd Edition&lt;/a&gt;
+by Brian W. Kernighan and Dennis M. Ritchie&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://www.amazon.com/Algorithms-4th-Robert-Sedgewick/dp/032157351X/ref=sr_1_1?ie=UTF8&amp;amp;qid=1420419952&amp;amp;sr=8-1&amp;amp;keywords=algorithms&quot;&gt;Algorithms&lt;/a&gt; by Robert Sedgewick and Kevin Wayne&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        <pubDate>Sun, 04 Jan 2015 15:50:42 -0800</pubDate>
+        <link>http://jasonkim.ca/blog/2015/01/04/12-books-i-want-to-read-for-2015/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2015/01/04/12-books-i-want-to-read-for-2015/</guid>
+        
+        
+        <category>books</category>
+        
+      </item>
+    
+      <item>
+        <title>Learning from Suprul</title>
+        <description>&lt;p&gt;Since last July 2014, I started learning about
+&lt;a href=&quot;http://backbonejs.org/&quot;&gt;Backbone.js&lt;/a&gt; for
+&lt;a href=&quot;https://soundtracking.com/&quot;&gt;Soundtracking.com&lt;/a&gt;’s web client.
+To learn more about Backbone.js and REST API/Client architecture,
+I decided that I would spend the rest of 2014 working on creating a
+&lt;a href=&quot;https://delicious.com&quot;&gt;Delicious&lt;/a&gt; clone.&lt;/p&gt;
+
+&lt;p&gt;Unfortunately, it is only about 50% finished, and I don’t intend to complete it.
+I achieved the initial goal of understanding these things and I feel that
+I learned what I needed from this project. Big things I learned from this
+project were:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Creating REST API&lt;/li&gt;
+  &lt;li&gt;Creating single page app using Backbone.js&lt;/li&gt;
+  &lt;li&gt;Rolling out my own OAUTH2&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;You can check the project repos here.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/serv/supurl&quot;&gt;Backbone.js client&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/serv/supurl-api&quot;&gt;Ruby on Rails API / Backend&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Fri, 26 Dec 2014 22:42:33 -0800</pubDate>
+        <link>http://jasonkim.ca/blog/2014/12/26/supruls-archetecture/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2014/12/26/supruls-archetecture/</guid>
+        
+        
+        <category>ruby on rails</category>
+        
+        <category>backbone</category>
+        
+      </item>
+    
+      <item>
+        <title>Setting up Dokku on DigitalOcean using Ubuntu 14.10 x64</title>
+        <description>&lt;p&gt;Note: this is still incomplete.&lt;/p&gt;
+
+&lt;h2 id=&quot;prerequisites&quot;&gt;Prerequisites&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Minimal understanding of what Dokku, DigitalOcean and Ubuntu ara&lt;/li&gt;
+  &lt;li&gt;Already has DigitalOcean account&lt;/li&gt;
+  &lt;li&gt;Knows basics of SSH&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;creating-digitalocean-droplet&quot;&gt;Creating DigitalOcean Droplet&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Sign into DigitalOcean and click on the button, “CREATE” on the left sidebar.&lt;/li&gt;
+  &lt;li&gt;Insert a good Droplet Hostname and select the size of the droplet that suits
+your application.&lt;/li&gt;
+  &lt;li&gt;Select the region. I’m choosing the default one, which is NY3.&lt;/li&gt;
+  &lt;li&gt;In “Select Image” section, click on “Linux Distributions” tab.&lt;/li&gt;
+  &lt;li&gt;Click on Ubuntu and select &lt;strong&gt;14.10 x64&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;We will create and add a new SSH key manually. DO NOT select any SSH key
+displayed under “Add SSH Keys” section.&lt;/li&gt;
+  &lt;li&gt;Click on “Create Droplet”&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;logging-into-the-new-server-for-the-first-time&quot;&gt;Logging into the new server for the first time&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;You should have received an email that contains your host IP address,
+username and the password. Keep the password as secret! Username is &lt;code class=&quot;highlighter-rouge&quot;&gt;root&lt;/code&gt; by
+default.&lt;/li&gt;
+  &lt;li&gt;Log into the host server using the username. &lt;code class=&quot;highlighter-rouge&quot;&gt;$ ssh root@123.123.123.123&lt;/code&gt;
+Replace &lt;code class=&quot;highlighter-rouge&quot;&gt;123.123.123.123&lt;/code&gt; with your host ip address.&lt;/li&gt;
+  &lt;li&gt;Type &lt;code class=&quot;highlighter-rouge&quot;&gt;yes&lt;/code&gt; to the question &lt;code class=&quot;highlighter-rouge&quot;&gt;Are you sure you want to continue connecting (yes/no)?&lt;/code&gt; and press Enter.&lt;/li&gt;
+  &lt;li&gt;Copy and paste the root password that was emailed to you.&lt;/li&gt;
+  &lt;li&gt;The server will prompt you to update your password. Follow the instructions
+given to you and update the password.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;creating-public-key-on-your-local-machine&quot;&gt;Creating public key on your local machine&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;On your local computer’s terminal, run &lt;code class=&quot;highlighter-rouge&quot;&gt;$ cd ~/.ssh&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;$ ssh-keygen -t rsa -C &quot;your_email@example.com&quot;&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;To the question, &lt;code class=&quot;highlighter-rouge&quot;&gt;Enter file in which to save the key (/Users/you/.ssh/id_rsa): &lt;/code&gt;, type in the host name of the DigitalOcean droplet you just create. Just
+good practise to have the same name.&lt;/li&gt;
+  &lt;li&gt;Enter the password for the pubkey you just created. This doesn’t have to
+be the same as the root password you changed earlier.&lt;/li&gt;
+  &lt;li&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;$ cat key-you-created.pub&lt;/code&gt; to check that pubkey was created successfully.&lt;/li&gt;
+  &lt;li&gt;Copy the result of &lt;code class=&quot;highlighter-rouge&quot;&gt;$ cat key-you-created.pub&lt;/code&gt; in the local machine.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;adding-the-new-ssh-key-in-digitalocean&quot;&gt;Adding the new SSH Key in DigitalOcean&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Log into DigitalOcean&lt;/li&gt;
+  &lt;li&gt;Click on “SSH Keys” on the left hand side.&lt;/li&gt;
+  &lt;li&gt;Click on “Add SSH Keys” on the top right hand side.&lt;/li&gt;
+  &lt;li&gt;Paste the pubkey content in the form and submit it.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;configuring-your-local-machine-to-use-this-specific-new-pubkey&quot;&gt;Configuring your local machine to use this specific new pubkey&lt;/h2&gt;
+&lt;p&gt;when connecting to the server&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;In the local machine, run &lt;code class=&quot;highlighter-rouge&quot;&gt;$ vi ~/.ssh/config&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Add the following lines.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+Host [some-host-name-nickname]
+  Hostname     [123.123.123.123].
+  User         root
+  IdentityFile ~/.ssh/[key-you-created]
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Replace all the data in &lt;code class=&quot;highlighter-rouge&quot;&gt;[]&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;authenticating-yourself-against-the-server&quot;&gt;Authenticating yourself against the server&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;In the server console run &lt;code class=&quot;highlighter-rouge&quot;&gt;$ cd ~/.ssh&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Again, in the server, run &lt;code class=&quot;highlighter-rouge&quot;&gt;$ echo &quot;ssh-rsa [paste the content of key-you-created.pub]&quot; &amp;gt;&amp;gt; authorized_keys&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;$ cat authorized_keys&lt;/code&gt; and check that your local machine’s pubkey is
+in the list of authorized_keys in the server.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;phew-take-a-breather&quot;&gt;Phew, take a breather&lt;/h2&gt;
+
+&lt;p&gt;If everything went right, you should be able to do, &lt;code class=&quot;highlighter-rouge&quot;&gt;$ ssh root@some-host-name-nickname&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;installing-dokku&quot;&gt;Installing Dokku&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;I am largely following &lt;a href=&quot;http://progrium.viewdocs.io/dokku/installation&quot;&gt;the official installation doc for Dokku&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;On the server, run &lt;code class=&quot;highlighter-rouge&quot;&gt;$ wget -qO- https://raw.github.com/progrium/dokku/v0.3.7/bootstrap.sh | sudo DOKKU_TAG=v0.3.7 bash&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;$ cat ~/.ssh/supurl-production.pub | ssh root@104.131.160.133 &quot;sudo sshcommand acl-add dokku $USER&quot;&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;$ git remote add dokku dokku@supurl-production:supurl-production&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;troubleshooting-various-errors&quot;&gt;Troubleshooting various errors&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+git push dokku master
+Counting objects: 1012, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (772/772), done.
+Writing objects: 100% (1012/1012), 109.41 KiB | 0 bytes/s, done.
+Total 1012 (delta 526), reused 298 (delta 137)
+-----&amp;gt; Cleaning up ...
+-----&amp;gt; Building supurl-production ...
+Ruby app detected
+-----&amp;gt; Compiling Ruby/Rails
+-----&amp;gt; Using Ruby version: ruby-2.0.0
+-----&amp;gt; Installing dependencies using 1.5.2
+New app detected loading default bundler cache
+!
+!     Command: &#39;set -o pipefail; curl --fail --retry 3 --retry-delay 1 --connect-timeout 3 --max-time 30 https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/ruby-2.0.0-p481-default-cache.tgz -s -o - | tar zxf -&#39; failed unexpectedly:
+!
+!     gzip: stdin: unexpected end of file
+!     tar: Child returned status 1
+!     tar: Error is not recoverable: exiting now
+!
+To dokku@supurl-production:supurl-production
+! [remote rejected] master -&amp;gt; master (pre-receive hook declined)
+error: failed to push some refs to &#39;dokku@supurl-production:supurl-production&#39;
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Build pack error.
+https://github.com/heroku/heroku-buildpack-ruby/issues/304&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+I, [2014-12-09T01:09:50.397656 #12]  INFO -- : listening on addr=0.0.0.0:5000 fd=10
+E, [2014-12-09T01:09:50.403558 #12] ERROR -- : could not connect to server: No such file or directory
+Is the server running locally and accepting
+connections on Unix domain socket &quot;/var/run/postgresql/.s.PGSQL.5432&quot;?
+(PG::ConnectionBad)
+/app/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.6/lib/active_record/connection_adapters/postgresql_adapter.rb:888:in `initialize&#39;
+/app/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.6/lib/active_record/connection_adapters/postgresql_adapter.rb:888:in `new&#39;
+/app/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.6/lib/active_record/connection_adapters/postgresql_adapter.rb:888:in `connect&#39;
+/app/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.6/lib/active_record/connection_adapters/postgresql_adapter.rb:568:in `initialize&#39;
+/app/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.6/lib/active_record/connection_adapters/postgresql_adapter.rb:41:in `new&#39;
+/app/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.6/lib/active_record/connection_adapters/postgresql_adapter.rb:41:in `postgresql_connection&#39;
+/app/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.6/lib/active_record/connection_adapters/abstract/connection_pool.rb:435:in `new_connection&#39;
+/app/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.6/lib/active_record/connection_adapters/abstract/connection_pool.rb:445:in `checkout_new_connection&#39;
+/app/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.6/lib/active_record/connection_adapters/abstract/connection_pool.rb:416:in `acquire_connection&#39;
+/app/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.6/lib/active_record/connection_adapters/abstract/connection_pool.rb:351:in `block in checkout&#39;
+/app/vendor/ruby-2.1.5/lib/ruby/2.1.0/monitor.rb:211:in `mon_synchronize&#39;
+/app/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.6/lib/active_record/connection_adapters/abstract/connection_pool.rb:350:in `checkout&#39;
+/app/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.6/lib/active_record/connection_adapters/abstract/connection_pool.rb:265:in `block in connection&#39;
+/app/vendor/ruby-2.1.5/lib/ruby/2.1.0/monitor.rb:211:in `mon_synchronize&#39;
+/app/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.6/lib/active_record/connection_adapters/abstract/connection_pool.rb:264:in `connection&#39;
+/app/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.6/lib/active_record/connection_adapters/abstract/connection_pool.rb:541:in `retrieve_connection&#39;
+/app/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.6/lib/active_record/connection_handling.rb:113:in `retrieve_connection&#39;
+/app/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.6/lib/active_record/connection_handling.rb:87:in `connection&#39;
+./config/unicorn.rb:15:in `block in reload&#39;
+/app/vendor/bundle/ruby/2.1.0/gems/unicorn-4.8.3/lib/unicorn/http_server.rb:519:in `call&#39;
+/app/vendor/bundle/ruby/2.1.0/gems/unicorn-4.8.3/lib/unicorn/http_server.rb:519:in `spawn_missing_workers&#39;
+/app/vendor/bundle/ruby/2.1.0/gems/unicorn-4.8.3/lib/unicorn/http_server.rb:140:in `start&#39;
+/app/vendor/bundle/ruby/2.1.0/gems/unicorn-4.8.3/bin/unicorn:126:in `&amp;lt;top (required)&amp;gt;&#39;
+/app/vendor/bundle/ruby/2.1.0/bin/unicorn:23:in `load&#39;
+/app/vendor/bundle/ruby/2.1.0/bin/unicorn:23:in `&amp;lt;main&amp;gt;&#39;
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;$ dokku postgresql:create supurl-production&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;http://dev.housetrip.com/2014/07/06/deploy-rails-and-postgresql-app-to-dokku/&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;dokku run APP_NAME rake db:seed &lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;```
+# installing the plugin
+cd /var/lib/dokku/plugins
+git clone https://github.com/Kloadut/dokku-pg-plugin postgresql
+dokku plugins-install&lt;/p&gt;
+
+&lt;h1 id=&quot;create-and-setup-the-db&quot;&gt;Create and setup the db&lt;/h1&gt;
+&lt;p&gt;dokku postgresql:create &lt;db-name&gt;&lt;/db-name&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;once-youve-deployed-your-app-once-you-can-link-the-db-to-the-app-like&quot;&gt;Once you’ve deployed your app once, you can link the db to the app like:&lt;/h1&gt;
+&lt;p&gt;dokku postgresql:link &lt;app-name&gt; &lt;db-name&gt;
+```&lt;/db-name&gt;&lt;/app-name&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+remote: runtime: panic before malloc heap initialized
+remote: fatal error: runtime: cannot allocate heap metadata
+To dokku@supurl-production:supurl-production
+! [remote rejected] master -&amp;gt; master (pre-receive hook declined)
+error: failed to push some refs to &#39;dokku@supurl-production:supurl-production&#39;
+&lt;/code&gt;
+https://github.com/docker/docker/issues/1555
+http://stackoverflow.com/a/17174672/536890&lt;/p&gt;
+</description>
+        <pubDate>Mon, 08 Dec 2014 15:24:03 -0800</pubDate>
+        <link>http://jasonkim.ca/blog/2014/12/08/setting-up-dokku-on-digitalocean-using-ubuntu-14-dot-10-x64/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2014/12/08/setting-up-dokku-on-digitalocean-using-ubuntu-14-dot-10-x64/</guid>
+        
+        
+        <category>sysadmin</category>
+        
+        <category>deployment</category>
+        
+      </item>
+    
+  </channel>
+</rss>
