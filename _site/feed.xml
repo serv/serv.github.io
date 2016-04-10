@@ -6,9 +6,60 @@
 </description>
     <link>http://jasonkim.ca/</link>
     <atom:link href="http://jasonkim.ca/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 30 Mar 2016 00:09:01 -0700</pubDate>
-    <lastBuildDate>Wed, 30 Mar 2016 00:09:01 -0700</lastBuildDate>
+    <pubDate>Sat, 09 Apr 2016 18:45:48 -0700</pubDate>
+    <lastBuildDate>Sat, 09 Apr 2016 18:45:48 -0700</lastBuildDate>
     <generator>Jekyll v3.0.2</generator>
+    
+      <item>
+        <title>Time Saving Tips for Software Development for Developers</title>
+        <description>&lt;p&gt;I waste a lot of time not coding. Typical work involves many activities,
+that are process related chores, meetings and etc, so only a fraction of time
+can be spent on coding and working on a feature. I find it important that
+you should try to squeeze most out of this time as possible.&lt;/p&gt;
+
+&lt;p&gt;I try to understand the product feature and its use cases before I begin
+coding on a feature.
+In an ideal world, your product owner will write a perfect story that
+doesn’t require any edits whatsoever. This never happens. Product owners are
+humans and they will usually write an insufficient story
+when the stories are sufficiently large and complicated.
+Developers must be able to wear the product owner’s hat to come up with the
+rest of the acceptance requirements for a story.
+Try to come up with what makes sense and what doesn’t make sense about the
+story. While you are trying to come up with what makes sense,
+bring it up with your product owner to see if some additional acceptance
+criteria needs to be added. When things don’t make sense in the story, also
+bring it up with product owner sooner rather than later.&lt;/p&gt;
+
+&lt;p&gt;Here’s another thing I do before I begin coding.
+I spend a good length of time thinking about the software design of the feature.
+Explore how each acceptances in the story can be mapped to your software design.
+Your code builds on top of other code you wrote.
+Code you write has inertia. Early on during the coding phase, you can make
+small and large changes without much trouble. You are nimble when your code
+for the feature isn’t large yet. But when you have to change the software design
+later on down the road, changing your existing code that has grown larger
+is way more difficult. There are many more moving parts and each changes
+you have to make in your code will need to make multiplicative changes across
+your code base. Also engage your teammates in brainstorming session and
+pick their brains on how they think the code should look.&lt;/p&gt;
+
+&lt;p&gt;After you are completed with coding, have a rigorous code review with your
+coworker. I was wrong about this before. I have been doing more lenient
+code review that left quite a room for disagreement. Be respectful in your
+tone and watch out for strong language. Messages do not get understood
+best over the web, especially when that message is about criticizing your code.
+This code review should be contrasted with nitpicking. It’s not about trying
+to inject your preference for the code. It should be about writing good code.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 09 Apr 2016 17:47:42 -0700</pubDate>
+        <link>http://jasonkim.ca/blog/2016/04/09/software-development-time-saving/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2016/04/09/software-development-time-saving/</guid>
+        
+        
+        <category>Dev Ops</category>
+        
+      </item>
     
       <item>
         <title>The Deployment Minefield</title>
@@ -494,213 +545,6 @@ project were:&lt;/p&gt;
         <category>ruby on rails</category>
         
         <category>backbone</category>
-        
-      </item>
-    
-      <item>
-        <title>Setting up Dokku on DigitalOcean using Ubuntu 14.10 x64</title>
-        <description>&lt;p&gt;Note: this is still incomplete.&lt;/p&gt;
-
-&lt;h2 id=&quot;prerequisites&quot;&gt;Prerequisites&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Minimal understanding of what Dokku, DigitalOcean and Ubuntu ara&lt;/li&gt;
-  &lt;li&gt;Already has DigitalOcean account&lt;/li&gt;
-  &lt;li&gt;Knows basics of SSH&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;creating-digitalocean-droplet&quot;&gt;Creating DigitalOcean Droplet&lt;/h2&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Sign into DigitalOcean and click on the button, “CREATE” on the left sidebar.&lt;/li&gt;
-  &lt;li&gt;Insert a good Droplet Hostname and select the size of the droplet that suits
-your application.&lt;/li&gt;
-  &lt;li&gt;Select the region. I’m choosing the default one, which is NY3.&lt;/li&gt;
-  &lt;li&gt;In “Select Image” section, click on “Linux Distributions” tab.&lt;/li&gt;
-  &lt;li&gt;Click on Ubuntu and select &lt;strong&gt;14.10 x64&lt;/strong&gt;.&lt;/li&gt;
-  &lt;li&gt;We will create and add a new SSH key manually. DO NOT select any SSH key
-displayed under “Add SSH Keys” section.&lt;/li&gt;
-  &lt;li&gt;Click on “Create Droplet”&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;logging-into-the-new-server-for-the-first-time&quot;&gt;Logging into the new server for the first time&lt;/h2&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;You should have received an email that contains your host IP address,
-username and the password. Keep the password as secret! Username is &lt;code class=&quot;highlighter-rouge&quot;&gt;root&lt;/code&gt; by
-default.&lt;/li&gt;
-  &lt;li&gt;Log into the host server using the username. &lt;code class=&quot;highlighter-rouge&quot;&gt;$ ssh root@123.123.123.123&lt;/code&gt;
-Replace &lt;code class=&quot;highlighter-rouge&quot;&gt;123.123.123.123&lt;/code&gt; with your host ip address.&lt;/li&gt;
-  &lt;li&gt;Type &lt;code class=&quot;highlighter-rouge&quot;&gt;yes&lt;/code&gt; to the question &lt;code class=&quot;highlighter-rouge&quot;&gt;Are you sure you want to continue connecting (yes/no)?&lt;/code&gt; and press Enter.&lt;/li&gt;
-  &lt;li&gt;Copy and paste the root password that was emailed to you.&lt;/li&gt;
-  &lt;li&gt;The server will prompt you to update your password. Follow the instructions
-given to you and update the password.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;creating-public-key-on-your-local-machine&quot;&gt;Creating public key on your local machine&lt;/h2&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;On your local computer’s terminal, run &lt;code class=&quot;highlighter-rouge&quot;&gt;$ cd ~/.ssh&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;$ ssh-keygen -t rsa -C &quot;your_email@example.com&quot;&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;To the question, &lt;code class=&quot;highlighter-rouge&quot;&gt;Enter file in which to save the key (/Users/you/.ssh/id_rsa): &lt;/code&gt;, type in the host name of the DigitalOcean droplet you just create. Just
-good practise to have the same name.&lt;/li&gt;
-  &lt;li&gt;Enter the password for the pubkey you just created. This doesn’t have to
-be the same as the root password you changed earlier.&lt;/li&gt;
-  &lt;li&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;$ cat key-you-created.pub&lt;/code&gt; to check that pubkey was created successfully.&lt;/li&gt;
-  &lt;li&gt;Copy the result of &lt;code class=&quot;highlighter-rouge&quot;&gt;$ cat key-you-created.pub&lt;/code&gt; in the local machine.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;adding-the-new-ssh-key-in-digitalocean&quot;&gt;Adding the new SSH Key in DigitalOcean&lt;/h2&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Log into DigitalOcean&lt;/li&gt;
-  &lt;li&gt;Click on “SSH Keys” on the left hand side.&lt;/li&gt;
-  &lt;li&gt;Click on “Add SSH Keys” on the top right hand side.&lt;/li&gt;
-  &lt;li&gt;Paste the pubkey content in the form and submit it.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;configuring-your-local-machine-to-use-this-specific-new-pubkey&quot;&gt;Configuring your local machine to use this specific new pubkey&lt;/h2&gt;
-&lt;p&gt;when connecting to the server&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;In the local machine, run &lt;code class=&quot;highlighter-rouge&quot;&gt;$ vi ~/.ssh/config&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;Add the following lines.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
-Host [some-host-name-nickname]
-  Hostname     [123.123.123.123].
-  User         root
-  IdentityFile ~/.ssh/[key-you-created]
-&lt;/code&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Replace all the data in &lt;code class=&quot;highlighter-rouge&quot;&gt;[]&lt;/code&gt;.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;authenticating-yourself-against-the-server&quot;&gt;Authenticating yourself against the server&lt;/h2&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;In the server console run &lt;code class=&quot;highlighter-rouge&quot;&gt;$ cd ~/.ssh&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;Again, in the server, run &lt;code class=&quot;highlighter-rouge&quot;&gt;$ echo &quot;ssh-rsa [paste the content of key-you-created.pub]&quot; &amp;gt;&amp;gt; authorized_keys&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;$ cat authorized_keys&lt;/code&gt; and check that your local machine’s pubkey is
-in the list of authorized_keys in the server.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;phew-take-a-breather&quot;&gt;Phew, take a breather&lt;/h2&gt;
-
-&lt;p&gt;If everything went right, you should be able to do, &lt;code class=&quot;highlighter-rouge&quot;&gt;$ ssh root@some-host-name-nickname&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;installing-dokku&quot;&gt;Installing Dokku&lt;/h2&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;I am largely following &lt;a href=&quot;http://progrium.viewdocs.io/dokku/installation&quot;&gt;the official installation doc for Dokku&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;On the server, run &lt;code class=&quot;highlighter-rouge&quot;&gt;$ wget -qO- https://raw.github.com/progrium/dokku/v0.3.7/bootstrap.sh | sudo DOKKU_TAG=v0.3.7 bash&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;$ cat ~/.ssh/supurl-production.pub | ssh root@104.131.160.133 &quot;sudo sshcommand acl-add dokku $USER&quot;&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;$ git remote add dokku dokku@supurl-production:supurl-production&lt;/code&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;troubleshooting-various-errors&quot;&gt;Troubleshooting various errors&lt;/h2&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
-git push dokku master
-Counting objects: 1012, done.
-Delta compression using up to 8 threads.
-Compressing objects: 100% (772/772), done.
-Writing objects: 100% (1012/1012), 109.41 KiB | 0 bytes/s, done.
-Total 1012 (delta 526), reused 298 (delta 137)
------&amp;gt; Cleaning up ...
------&amp;gt; Building supurl-production ...
-Ruby app detected
------&amp;gt; Compiling Ruby/Rails
------&amp;gt; Using Ruby version: ruby-2.0.0
------&amp;gt; Installing dependencies using 1.5.2
-New app detected loading default bundler cache
-!
-!     Command: &#39;set -o pipefail; curl --fail --retry 3 --retry-delay 1 --connect-timeout 3 --max-time 30 https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/ruby-2.0.0-p481-default-cache.tgz -s -o - | tar zxf -&#39; failed unexpectedly:
-!
-!     gzip: stdin: unexpected end of file
-!     tar: Child returned status 1
-!     tar: Error is not recoverable: exiting now
-!
-To dokku@supurl-production:supurl-production
-! [remote rejected] master -&amp;gt; master (pre-receive hook declined)
-error: failed to push some refs to &#39;dokku@supurl-production:supurl-production&#39;
-&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Build pack error.
-https://github.com/heroku/heroku-buildpack-ruby/issues/304&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
-I, [2014-12-09T01:09:50.397656 #12]  INFO -- : listening on addr=0.0.0.0:5000 fd=10
-E, [2014-12-09T01:09:50.403558 #12] ERROR -- : could not connect to server: No such file or directory
-Is the server running locally and accepting
-connections on Unix domain socket &quot;/var/run/postgresql/.s.PGSQL.5432&quot;?
-(PG::ConnectionBad)
-/app/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.6/lib/active_record/connection_adapters/postgresql_adapter.rb:888:in `initialize&#39;
-/app/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.6/lib/active_record/connection_adapters/postgresql_adapter.rb:888:in `new&#39;
-/app/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.6/lib/active_record/connection_adapters/postgresql_adapter.rb:888:in `connect&#39;
-/app/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.6/lib/active_record/connection_adapters/postgresql_adapter.rb:568:in `initialize&#39;
-/app/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.6/lib/active_record/connection_adapters/postgresql_adapter.rb:41:in `new&#39;
-/app/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.6/lib/active_record/connection_adapters/postgresql_adapter.rb:41:in `postgresql_connection&#39;
-/app/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.6/lib/active_record/connection_adapters/abstract/connection_pool.rb:435:in `new_connection&#39;
-/app/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.6/lib/active_record/connection_adapters/abstract/connection_pool.rb:445:in `checkout_new_connection&#39;
-/app/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.6/lib/active_record/connection_adapters/abstract/connection_pool.rb:416:in `acquire_connection&#39;
-/app/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.6/lib/active_record/connection_adapters/abstract/connection_pool.rb:351:in `block in checkout&#39;
-/app/vendor/ruby-2.1.5/lib/ruby/2.1.0/monitor.rb:211:in `mon_synchronize&#39;
-/app/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.6/lib/active_record/connection_adapters/abstract/connection_pool.rb:350:in `checkout&#39;
-/app/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.6/lib/active_record/connection_adapters/abstract/connection_pool.rb:265:in `block in connection&#39;
-/app/vendor/ruby-2.1.5/lib/ruby/2.1.0/monitor.rb:211:in `mon_synchronize&#39;
-/app/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.6/lib/active_record/connection_adapters/abstract/connection_pool.rb:264:in `connection&#39;
-/app/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.6/lib/active_record/connection_adapters/abstract/connection_pool.rb:541:in `retrieve_connection&#39;
-/app/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.6/lib/active_record/connection_handling.rb:113:in `retrieve_connection&#39;
-/app/vendor/bundle/ruby/2.1.0/gems/activerecord-4.1.6/lib/active_record/connection_handling.rb:87:in `connection&#39;
-./config/unicorn.rb:15:in `block in reload&#39;
-/app/vendor/bundle/ruby/2.1.0/gems/unicorn-4.8.3/lib/unicorn/http_server.rb:519:in `call&#39;
-/app/vendor/bundle/ruby/2.1.0/gems/unicorn-4.8.3/lib/unicorn/http_server.rb:519:in `spawn_missing_workers&#39;
-/app/vendor/bundle/ruby/2.1.0/gems/unicorn-4.8.3/lib/unicorn/http_server.rb:140:in `start&#39;
-/app/vendor/bundle/ruby/2.1.0/gems/unicorn-4.8.3/bin/unicorn:126:in `&amp;lt;top (required)&amp;gt;&#39;
-/app/vendor/bundle/ruby/2.1.0/bin/unicorn:23:in `load&#39;
-/app/vendor/bundle/ruby/2.1.0/bin/unicorn:23:in `&amp;lt;main&amp;gt;&#39;
-&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;$ dokku postgresql:create supurl-production&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;http://dev.housetrip.com/2014/07/06/deploy-rails-and-postgresql-app-to-dokku/&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;dokku run APP_NAME rake db:seed &lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;```
-# installing the plugin
-cd /var/lib/dokku/plugins
-git clone https://github.com/Kloadut/dokku-pg-plugin postgresql
-dokku plugins-install&lt;/p&gt;
-
-&lt;h1 id=&quot;create-and-setup-the-db&quot;&gt;Create and setup the db&lt;/h1&gt;
-&lt;p&gt;dokku postgresql:create &lt;db-name&gt;&lt;/db-name&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;once-youve-deployed-your-app-once-you-can-link-the-db-to-the-app-like&quot;&gt;Once you’ve deployed your app once, you can link the db to the app like:&lt;/h1&gt;
-&lt;p&gt;dokku postgresql:link &lt;app-name&gt; &lt;db-name&gt;
-```&lt;/db-name&gt;&lt;/app-name&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
-remote: runtime: panic before malloc heap initialized
-remote: fatal error: runtime: cannot allocate heap metadata
-To dokku@supurl-production:supurl-production
-! [remote rejected] master -&amp;gt; master (pre-receive hook declined)
-error: failed to push some refs to &#39;dokku@supurl-production:supurl-production&#39;
-&lt;/code&gt;
-https://github.com/docker/docker/issues/1555
-http://stackoverflow.com/a/17174672/536890&lt;/p&gt;
-</description>
-        <pubDate>Mon, 08 Dec 2014 15:24:03 -0800</pubDate>
-        <link>http://jasonkim.ca/blog/2014/12/08/setting-up-dokku-on-digitalocean-using-ubuntu-14-dot-10-x64/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2014/12/08/setting-up-dokku-on-digitalocean-using-ubuntu-14-dot-10-x64/</guid>
-        
-        
-        <category>sysadmin</category>
-        
-        <category>deployment</category>
         
       </item>
     
