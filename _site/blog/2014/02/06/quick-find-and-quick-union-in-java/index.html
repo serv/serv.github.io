@@ -102,9 +102,7 @@ implementations of union find.</p>
 if two nodes are connected or not. We can use a typical array to
 represent a set of nodes and their connections to each other.</p>
 
-<p><code class="highlighter-rouge">java
-{1,2,3,4,5};
-</code></p>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="o">{</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">,</span><span class="mi">3</span><span class="o">,</span><span class="mi">4</span><span class="o">,</span><span class="mi">5</span><span class="o">};</span></code></pre></figure>
 
 <p>Indexes of the array are the nodes and the values of the array
 are the connections. When the value of one index equals that of
@@ -124,68 +122,65 @@ with O(N) runtime.</p>
   <li>union: connects two nodes</li>
 </ul>
 
-<p>```java QuickFind.java
-public class QuickFind {
-  private int[] id;
-  private int count;</p>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">// QuickFind.java</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">QuickFind</span> <span class="o">{</span>
+  <span class="kd">private</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">id</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="kt">int</span> <span class="n">count</span><span class="o">;</span>
 
-<p>// constructor
-  // Given N, create an array with N elements
-  public QuickFind(int N) {
-    count = N;
-    id = new int[N];
-    for (int i = 0; i &lt; N; i++) {
-      id[i] = i;
-    }
-  }</p>
+  <span class="c1">// constructor</span>
+  <span class="c1">// Given N, create an array with N elements</span>
+  <span class="kd">public</span> <span class="n">QuickFind</span><span class="o">(</span><span class="kt">int</span> <span class="n">N</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="n">N</span><span class="o">;</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">N</span><span class="o">];</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+      <span class="n">id</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">i</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
 
-<p>// if values of two index are the same,
-  // return true, else false
-  public boolean connected(int p, int q) {
-    return id[p] == id[q];
-  }</p>
+  <span class="c1">// if values of two index are the same,</span>
+  <span class="c1">// return true, else false</span>
+  <span class="kd">public</span> <span class="kt">boolean</span> <span class="n">connected</span><span class="o">(</span><span class="kt">int</span> <span class="n">p</span><span class="o">,</span> <span class="kt">int</span> <span class="n">q</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">id</span><span class="o">[</span><span class="n">p</span><span class="o">]</span> <span class="o">==</span> <span class="n">id</span><span class="o">[</span><span class="n">q</span><span class="o">];</span>
+  <span class="o">}</span>
 
-<p>// connect two nodes
-  public void union(int p, int q) {
-    for (int i = 0; i &lt; count; i++) {
-      if (id[i] == id[p]) {
-        id[i] = id[q];
-      }
-    }
-    System.out.println(p + “ “ + q);
-  }</p>
+  <span class="c1">// connect two nodes</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="n">union</span><span class="o">(</span><span class="kt">int</span> <span class="n">p</span><span class="o">,</span> <span class="kt">int</span> <span class="n">q</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">count</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">id</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">==</span> <span class="n">id</span><span class="o">[</span><span class="n">p</span><span class="o">])</span> <span class="o">{</span>
+        <span class="n">id</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">id</span><span class="o">[</span><span class="n">q</span><span class="o">];</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">p</span> <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> <span class="n">q</span><span class="o">);</span>
+  <span class="o">}</span>
 
-<p>public void print() {
-    StringBuilder temp = new StringBuilder();
-    temp.append(“”);</p>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="n">print</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">StringBuilder</span> <span class="n">temp</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">();</span>
+    <span class="n">temp</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">""</span><span class="o">);</span>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>for(int i = 0; i &lt; count; i++) {
-  temp.append(id[i]);
-  temp.append(" ");
-}
-String strI = temp.toString();
-System.out.println(strI);   }
-</code></pre>
-</div>
+    <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">count</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+      <span class="n">temp</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">id</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+      <span class="n">temp</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">" "</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="n">String</span> <span class="n">strI</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">strI</span><span class="o">);</span>
+  <span class="o">}</span>
 
-<p>public static void main(String[] args) {
-    QuickFind qf = new QuickFind(10);
-    qf.union(5,6);
-    qf.print();
-    qf.union(0,9);
-    qf.print();
-    qf.union(9,3);
-    qf.print();
-    qf.union(2,1);
-    qf.print();
-    qf.union(7,0);
-    qf.print();
-    qf.union(4,8);
-    qf.print();
-  }
-}</p>
-
-<p>```</p>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="n">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">QuickFind</span> <span class="n">qf</span> <span class="o">=</span> <span class="k">new</span> <span class="n">QuickFind</span><span class="o">(</span><span class="mi">10</span><span class="o">);</span>
+    <span class="n">qf</span><span class="o">.</span><span class="na">union</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span><span class="mi">6</span><span class="o">);</span>
+    <span class="n">qf</span><span class="o">.</span><span class="na">print</span><span class="o">();</span>
+    <span class="n">qf</span><span class="o">.</span><span class="na">union</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="mi">9</span><span class="o">);</span>
+    <span class="n">qf</span><span class="o">.</span><span class="na">print</span><span class="o">();</span>
+    <span class="n">qf</span><span class="o">.</span><span class="na">union</span><span class="o">(</span><span class="mi">9</span><span class="o">,</span><span class="mi">3</span><span class="o">);</span>
+    <span class="n">qf</span><span class="o">.</span><span class="na">print</span><span class="o">();</span>
+    <span class="n">qf</span><span class="o">.</span><span class="na">union</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span><span class="mi">1</span><span class="o">);</span>
+    <span class="n">qf</span><span class="o">.</span><span class="na">print</span><span class="o">();</span>
+    <span class="n">qf</span><span class="o">.</span><span class="na">union</span><span class="o">(</span><span class="mi">7</span><span class="o">,</span><span class="mi">0</span><span class="o">);</span>
+    <span class="n">qf</span><span class="o">.</span><span class="na">print</span><span class="o">();</span>
+    <span class="n">qf</span><span class="o">.</span><span class="na">union</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span><span class="mi">8</span><span class="o">);</span>
+    <span class="n">qf</span><span class="o">.</span><span class="na">print</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
 
 <h3 id="to-run-this-java-program">To run this java program</h3>
 
@@ -200,71 +195,70 @@ System.out.println(strI);   }
 going through entire array during union, you attach one node’s
 root to another’s root.</p>
 
-<p>``` java QuickUnion.java
-public class QuickUnion {
-  private int[] id;
-  private int[] sz;
-  private int count;</p>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">// QuickUnion.java</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">QuickUnion</span> <span class="o">{</span>
+  <span class="kd">private</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">id</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">sz</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="kt">int</span> <span class="n">count</span><span class="o">;</span>
 
-<p>public QuickUnion(int N) {
-    count = N;
-    id = new int[N];
-    sz = new int[N];
-    for (int i = 0; i &lt; N; i++) {
-      id[i] = i;
-      sz[i] = 0;
-    }
-  }</p>
+  <span class="kd">public</span> <span class="n">QuickUnion</span><span class="o">(</span><span class="kt">int</span> <span class="n">N</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="n">N</span><span class="o">;</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">N</span><span class="o">];</span>
+    <span class="n">sz</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">N</span><span class="o">];</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+      <span class="n">id</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">i</span><span class="o">;</span>
+      <span class="n">sz</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
 
-<p>private int root(int i) {
-    while (i != id[i]) {
-      i = id[i];
-    }
-    return i;
-  }</p>
+  <span class="kd">private</span> <span class="kt">int</span> <span class="n">root</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">!=</span> <span class="n">id</span><span class="o">[</span><span class="n">i</span><span class="o">])</span> <span class="o">{</span>
+      <span class="n">i</span> <span class="o">=</span> <span class="n">id</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">i</span><span class="o">;</span>
+  <span class="o">}</span>
 
-<p>public boolean connected(int p, int q) {
-    return root(p) == root(q);
-  }</p>
+  <span class="kd">public</span> <span class="kt">boolean</span> <span class="n">connected</span><span class="o">(</span><span class="kt">int</span> <span class="n">p</span><span class="o">,</span> <span class="kt">int</span> <span class="n">q</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">root</span><span class="o">(</span><span class="n">p</span><span class="o">)</span> <span class="o">==</span> <span class="n">root</span><span class="o">(</span><span class="n">q</span><span class="o">);</span>
+  <span class="o">}</span>
 
-<p>public void union(int p, int q) {
-    int i = root(p);
-    int j = root(q);
-    if (i == j) return;
-    if (sz[i] &lt; sz[j]) { id[i] = j; sz[j] += sz[i]; }
-    else { id[j] = i; sz[i] += sz[j]; }
-  }</p>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="n">union</span><span class="o">(</span><span class="kt">int</span> <span class="n">p</span><span class="o">,</span> <span class="kt">int</span> <span class="n">q</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">root</span><span class="o">(</span><span class="n">p</span><span class="o">);</span>
+    <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">root</span><span class="o">(</span><span class="n">q</span><span class="o">);</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">j</span><span class="o">)</span> <span class="k">return</span><span class="o">;</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">sz</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&lt;</span> <span class="n">sz</span><span class="o">[</span><span class="n">j</span><span class="o">])</span> <span class="o">{</span> <span class="n">id</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">j</span><span class="o">;</span> <span class="n">sz</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">+=</span> <span class="n">sz</span><span class="o">[</span><span class="n">i</span><span class="o">];</span> <span class="o">}</span>
+    <span class="k">else</span> <span class="o">{</span> <span class="n">id</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">i</span><span class="o">;</span> <span class="n">sz</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">+=</span> <span class="n">sz</span><span class="o">[</span><span class="n">j</span><span class="o">];</span> <span class="o">}</span>
+  <span class="o">}</span>
 
-<p>public void print() {
-    StringBuilder temp = new StringBuilder();
-    temp.append(“”);</p>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="n">print</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">StringBuilder</span> <span class="n">temp</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">();</span>
+    <span class="n">temp</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">""</span><span class="o">);</span>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>for(int i = 0; i &lt; count; i++) {
-  temp.append(id[i]);
-  temp.append(" ");
-}
-String strI = temp.toString();
-System.out.println(strI);   }
-</code></pre>
-</div>
+    <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">count</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+      <span class="n">temp</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">id</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+      <span class="n">temp</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">" "</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="n">String</span> <span class="n">strI</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">strI</span><span class="o">);</span>
+  <span class="o">}</span>
 
-<p>public static void main(String[] args) {
-    int N = StdIn.readInt();
-    QuickUnion qu = new QuickUnion(N);
-    while (!StdIn.isEmpty()) {
-      int p = StdIn.readInt();
-      int q = StdIn.readInt();
-      if (!qu.connected(p, q)) {
-        qu.union(p, q);
-        StdOut.println(p + “ “ + q);
-      }
-    }
-    qu.print();
-  }
-}
-```
-—
-### Edited on Feb 11, 2014</p>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="n">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="n">StdIn</span><span class="o">.</span><span class="na">readInt</span><span class="o">();</span>
+    <span class="n">QuickUnion</span> <span class="n">qu</span> <span class="o">=</span> <span class="k">new</span> <span class="n">QuickUnion</span><span class="o">(</span><span class="n">N</span><span class="o">);</span>
+    <span class="k">while</span> <span class="o">(!</span><span class="n">StdIn</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">())</span> <span class="o">{</span>
+      <span class="kt">int</span> <span class="n">p</span> <span class="o">=</span> <span class="n">StdIn</span><span class="o">.</span><span class="na">readInt</span><span class="o">();</span>
+      <span class="kt">int</span> <span class="n">q</span> <span class="o">=</span> <span class="n">StdIn</span><span class="o">.</span><span class="na">readInt</span><span class="o">();</span>
+      <span class="k">if</span> <span class="o">(!</span><span class="n">qu</span><span class="o">.</span><span class="na">connected</span><span class="o">(</span><span class="n">p</span><span class="o">,</span> <span class="n">q</span><span class="o">))</span> <span class="o">{</span>
+        <span class="n">qu</span><span class="o">.</span><span class="na">union</span><span class="o">(</span><span class="n">p</span><span class="o">,</span> <span class="n">q</span><span class="o">);</span>
+        <span class="n">StdOut</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">p</span> <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> <span class="n">q</span><span class="o">);</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="n">qu</span><span class="o">.</span><span class="na">print</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+<hr />
+<p>### Edited on Feb 11, 2014</p>
 
 <ul>
   <li>Code for <code class="highlighter-rouge">QuickUnion.java</code> and <code class="highlighter-rouge">QuickFind.java</code> were updated to fix some

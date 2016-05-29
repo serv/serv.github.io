@@ -33,9 +33,9 @@ Quick find is an algorithm that places emphasis on finding out
 if two nodes are connected or not. We can use a typical array to
 represent a set of nodes and their connections to each other.
 
-```java
+{% highlight java %}
 {1,2,3,4,5};
-```
+{% endhighlight %}
 
 Indexes of the array are the nodes and the values of the array
 are the connections. When the value of one index equals that of
@@ -53,7 +53,8 @@ The quick find has 3 methods. They are:
 - connected: checks if two nodes are connected or not
 - union: connects two nodes
 
-```java QuickFind.java
+{% highlight java %}
+// QuickFind.java
 public class QuickFind {
   private int[] id;
   private int count;
@@ -112,8 +113,7 @@ public class QuickFind {
     qf.print();
   }
 }
-
-```
+{% endhighlight %}
 
 ###To run this java program
 
@@ -126,7 +126,8 @@ Quick union improves greatly in union operation. Instead of
 going through entire array during union, you attach one node's
 root to another's root.
 
-``` java QuickUnion.java
+{% highlight java %}
+// QuickUnion.java
 public class QuickUnion {
   private int[] id;
   private int[] sz;
@@ -187,7 +188,8 @@ public class QuickUnion {
     qu.print();
   }
 }
-```
+{% endhighlight %}
+
 ---
 ### Edited on Feb 11, 2014
 
