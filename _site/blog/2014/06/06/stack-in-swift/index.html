@@ -89,34 +89,28 @@ Swift.</p>
 
 <h3 id="define-classes">1. Define classes</h3>
 
-<p>```js
-import Foundation</p>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="kd">import</span> <span class="kt">Foundation</span>
 
-<p>class Stack {</p>
+<span class="kd">class</span> <span class="kt">Stack</span> <span class="p">{</span>
 
-<p>}
-```</p>
+<span class="p">}</span></code></pre></figure>
 
-<p>```js
-import Foundation</p>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="kd">import</span> <span class="kt">Foundation</span>
 
-<p>class node {</p>
+<span class="kd">class</span> <span class="n">node</span> <span class="p">{</span>
 
-<p>}
-```</p>
+<span class="p">}</span></code></pre></figure>
 
 <p>I created two classes in different files in XCode.</p>
 
 <h3 id="define-attributes-of-the-node-class">2. Define attributes of the Node class</h3>
 
-<p>```js
-import Foundation</p>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="kd">import</span> <span class="kt">Foundation</span>
 
-<p>class node {
-  var value: NSObject?
-  var next: Node?
-}
-```</p>
+<span class="kd">class</span> <span class="n">node</span> <span class="p">{</span>
+  <span class="k">var</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">NSObject</span><span class="p">?</span>
+  <span class="k">var</span> <span class="nv">next</span><span class="p">:</span> <span class="kt">Node</span><span class="p">?</span>
+<span class="p">}</span></code></pre></figure>
 
 <p>I defined two attributes called:</p>
 
@@ -137,23 +131,21 @@ is typed as <code class="highlighter-rouge">Node</code> because it points to ano
 
 <h3 id="init-functions-in-node">3. <code class="highlighter-rouge">init</code> functions in Node</h3>
 
-<p>```js
-import Foundation</p>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="kd">import</span> <span class="kt">Foundation</span>
 
-<p>class Node {
-  var value: NSObject?
-  var next: Node?</p>
+<span class="kd">class</span> <span class="kt">Node</span> <span class="p">{</span>
+  <span class="k">var</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">NSObject</span><span class="p">?</span>
+  <span class="k">var</span> <span class="nv">next</span><span class="p">:</span> <span class="kt">Node</span><span class="p">?</span>
 
-<p>init() {</p>
+  <span class="nf">init</span><span class="p">()</span> <span class="p">{</span>
 
-<p>}</p>
+  <span class="p">}</span>
 
-<p>init(value: NSObject) {
-    self.value = value
-    self.next = Node()
-  }
-}
-```</p>
+  <span class="nf">init</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="kt">NSObject</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="kt">Node</span><span class="p">()</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
 
 <p>We want two <code class="highlighter-rouge">init</code> functions because we want to
 instantiate a node with some <code class="highlighter-rouge">value</code> or without anything.
@@ -161,17 +153,15 @@ We are done with Node class</p>
 
 <h3 id="init-function-for-stack-and-its-attributes">4. <code class="highlighter-rouge">init</code> function for Stack and its attributes</h3>
 
-<p>```js
-import Foundation</p>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="kd">import</span> <span class="kt">Foundation</span>
 
-<p>class Stack {
-var count: Int = 0
-  var head: Node = Node()</p>
+<span class="kd">class</span> <span class="kt">Stack</span> <span class="p">{</span>
+<span class="k">var</span> <span class="nv">count</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">var</span> <span class="nv">head</span><span class="p">:</span> <span class="kt">Node</span> <span class="o">=</span> <span class="kt">Node</span><span class="p">()</span>
 
-<p>init() {
-  }
-}
-```</p>
+  <span class="nf">init</span><span class="p">()</span> <span class="p">{</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
 
 <p>Stack has <code class="highlighter-rouge">head</code> and <code class="highlighter-rouge">count</code> attributes.
 <code class="highlighter-rouge">head</code> points to the top of the stack.
@@ -179,21 +169,19 @@ var count: Int = 0
 
 <h3 id="isempty-function">5. <code class="highlighter-rouge">isEmpty</code> function</h3>
 
-<p>```js
-import Foundation</p>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="kd">import</span> <span class="kt">Foundation</span>
 
-<p>class Stack {
-var count: Int = 0
-  var head: Node = Node()</p>
+<span class="kd">class</span> <span class="kt">Stack</span> <span class="p">{</span>
+<span class="k">var</span> <span class="nv">count</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">var</span> <span class="nv">head</span><span class="p">:</span> <span class="kt">Node</span> <span class="o">=</span> <span class="kt">Node</span><span class="p">()</span>
 
-<p>init() {
-  }</p>
+  <span class="nf">init</span><span class="p">()</span> <span class="p">{</span>
+  <span class="p">}</span>
 
-<p>func isEmpty() -&gt; Boolean {
-    return self.count == 0
-  }
-}
-```</p>
+  <span class="kd">func</span> <span class="nf">isEmpty</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Boolean</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">self</span><span class="o">.</span><span class="n">count</span> <span class="o">==</span> <span class="mi">0</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
 
 <p><code class="highlighter-rouge">isEmpty</code> function returns <code class="highlighter-rouge">true</code> if the stack is empty
 and returns <code class="highlighter-rouge">false</code> if the stack is not empty.</p>
@@ -202,37 +190,33 @@ and returns <code class="highlighter-rouge">false</code> if the stack is not emp
 
 <p><code class="highlighter-rouge">push</code> function inserts some value to the top of the stack.</p>
 
-<p>```js
-func push(value: NSObject) {
-  if isEmpty() {
-    self.head = Node()
-  }</p>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">push</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="kt">NSObject</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="nf">isEmpty</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="kt">Node</span><span class="p">()</span>
+  <span class="p">}</span>
 
-<p>var node = Node(value: value)
-  node.next = self.head
-  self.head = node
-  self.count++
-}
-```</p>
+  <span class="k">var</span> <span class="nv">node</span> <span class="o">=</span> <span class="kt">Node</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="n">value</span><span class="p">)</span>
+  <span class="n">node</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">head</span>
+  <span class="k">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="n">node</span>
+  <span class="k">self</span><span class="o">.</span><span class="n">count</span><span class="o">++</span>
+<span class="p">}</span></code></pre></figure>
 
 <h3 id="pop-function">7. <code class="highlighter-rouge">pop</code> function</h3>
 
 <p><code class="highlighter-rouge">pop</code> function removes some value from the top
 of the stack.</p>
 
-<p>```js
-func pop() -&gt; NSObject? {
-  if isEmpty() {
-    return nil
-  }</p>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">pop</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">NSObject</span><span class="p">?</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="nf">isEmpty</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kc">nil</span>
+  <span class="p">}</span>
 
-<p>var node = self.head
-  self.head = node.next!
-  self.count–</p>
+  <span class="k">var</span> <span class="nv">node</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">head</span>
+  <span class="k">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">next</span><span class="o">!</span>
+  <span class="k">self</span><span class="o">.</span><span class="n">count</span><span class="o">--</span>
 
-<p>return node.value
-}
-```</p>
+  <span class="k">return</span> <span class="n">node</span><span class="o">.</span><span class="n">value</span>
+<span class="p">}</span></code></pre></figure>
 
 <p>This function has optional return type because if the
 stack is empty, it should return nothing, <code class="highlighter-rouge">nil</code>.</p>

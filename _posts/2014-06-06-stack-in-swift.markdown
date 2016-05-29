@@ -22,34 +22,34 @@ Swift.
 
 ### 1. Define classes
 
-```js
+{% highlight swift %}
 import Foundation
 
 class Stack {
 
 }
-```
+{% endhighlight %}
 
-```js
+{% highlight swift %}
 import Foundation
 
 class node {
 
 }
-```
+{% endhighlight %}
 
 I created two classes in different files in XCode.
 
 ### 2. Define attributes of the Node class
 
-```js
+{% highlight swift %}
 import Foundation
 
 class node {
   var value: NSObject?
   var next: Node?
 }
-```
+{% endhighlight %}
 
 I defined two attributes called:
 
@@ -68,7 +68,7 @@ is typed as `Node` because it points to another node.
 
 ### 3. `init` functions in Node
 
-```js
+{% highlight swift %}
 import Foundation
 
 class Node {
@@ -84,7 +84,7 @@ class Node {
     self.next = Node()
   }
 }
-```
+{% endhighlight %}
 
 We want two `init` functions because we want to
 instantiate a node with some `value` or without anything.
@@ -92,7 +92,7 @@ We are done with Node class
 
 ### 4. `init` function for Stack and its attributes
 
-```js
+{% highlight swift %}
 import Foundation
 
 class Stack {
@@ -102,7 +102,7 @@ var count: Int = 0
   init() {
   }
 }
-```
+{% endhighlight %}
 
 Stack has `head` and `count` attributes.
 `head` points to the top of the stack.
@@ -110,7 +110,7 @@ Stack has `head` and `count` attributes.
 
 ### 5. `isEmpty` function
 
-```js
+{% highlight swift %}
 import Foundation
 
 class Stack {
@@ -124,7 +124,7 @@ var count: Int = 0
     return self.count == 0
   }
 }
-```
+{% endhighlight %}
 
 `isEmpty` function returns `true` if the stack is empty
 and returns `false` if the stack is not empty.
@@ -133,7 +133,7 @@ and returns `false` if the stack is not empty.
 
 `push` function inserts some value to the top of the stack.
 
-```js
+{% highlight swift %}
 func push(value: NSObject) {
   if isEmpty() {
     self.head = Node()
@@ -144,14 +144,14 @@ func push(value: NSObject) {
   self.head = node
   self.count++
 }
-```
+{% endhighlight %}
 
 ### 7. `pop` function
 
 `pop` function removes some value from the top
 of the stack.
 
-```js
+{% highlight swift %}
 func pop() -> NSObject? {
   if isEmpty() {
     return nil
@@ -163,7 +163,7 @@ func pop() -> NSObject? {
 
   return node.value
 }
-```
+{% endhighlight %}
 
 This function has optional return type because if the
 stack is empty, it should return nothing, `nil`.
