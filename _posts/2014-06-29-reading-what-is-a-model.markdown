@@ -19,7 +19,7 @@ categories: ['javascript', 'backbone.js']
   - Computed properties
   - Access control
 
-```js
+{% highlight js %}
 Person = Backbone.Model.extend({
   initialize: function() {
     alert("Welcome");
@@ -27,12 +27,12 @@ Person = Backbone.Model.extend({
 });
 
 var person = new Person;
-```
+{% endhighlight %}
 - `initialize()` is called when you create a new instance of a model.
 
 ## Setting attributes
 
-```js
+{% highlight js %}
 Person = Backbone.Model.extend({
   initialize: function() {
     alert("Welcome to this world");
@@ -42,10 +42,10 @@ Person = Backbone.Model.extend({
 var person = new Person({ name: "Thomas", age: 67});
 var person = new Person();
 person.set({ name: "Thomas", age: 67});
-```
+{% endhighlight %}
 
 ## Getting attributes
-```js
+{% highlight js %}
 Person = Backbone.Model.extend({
   initialize: function() {
     alert("Welcome to this world");
@@ -56,10 +56,10 @@ var person = new Person({ name: "Thomas", age: 67, child: 'Ryan'});
 var age = person.get("age"); // 67
 var name = person.get("name"); // "Thomas"
 var child = person.get("child"); // 'Ryan'
-```
+{% endhighlight %}
 
 ## Model defaults
-```js
+{% highlight js %}
 Person = Backbone.Model.extend({
   defaults: {
     name: 'Fetus',
@@ -76,10 +76,10 @@ var person = new Person({ name: "Thomas", age: 67, child: 'Ryan'});
 var age = person.get("age"); // 67
 var name = person.get("name"); // "Thomas"
 var child = person.get("child"); // 'Ryan'
-```
+{% endhighlight %}
 
 ## Manipulate model attributes
-```js
+{% highlight js %}
 Person = Backbone.Model.extend({
   defaults: {
     name: 'Fetus',
@@ -97,10 +97,10 @@ Person = Backbone.Model.extend({
 var person = new Person({ name: "Thomas", age: 67, child: 'Ryan'});
 person.adopt('John Resig');
 var child = person.get("child"); // 'John Resig'
-```
+{% endhighlight %}
 
 ## Listen to changes of an attribute
-```js
+{% highlight js %}
 Person = Backbone.Model.extend({
   defaults: {
     name: 'Fetus',
@@ -117,11 +117,11 @@ Person = Backbone.Model.extend({
 
 var person = new Person({ name: "Thomas", age: 67});
 person.set({name: 'Stewie Griffin'}); // This triggers a change and will alert()
-```
+{% endhighlight %}
 
 ## Interacting with the server
 ### Set url
-```js
+{% highlight js %}
 var UserModel = Backbone.Model.extend({
   urlRoot: '/user',
   defaults: {
@@ -129,10 +129,10 @@ var UserModel = Backbone.Model.extend({
     email: ''
   }
 });
-```
+{% endhighlight %}
 
 ### Creating a new model
-```js
+{% highlight js %}
 var UserModel = Backbone.Model.extend({
   urlRoot: '/user',
   defaults: {
@@ -154,10 +154,10 @@ user.save(userDetails, {
     alert(user.toJSON());
   }
 });
-```
+{% endhighlight %}
 
 ### Getting a model
-```js
+{% highlight js %}
 // Here we have set the `id` of the model
 var user = new Usermodel({id: 1});
 
@@ -168,10 +168,10 @@ user.fetch({
     alert(user.toJSON());
   }
 });
-```
+{% endhighlight %}
 
 ### Updating a model
-```js
+{% highlight js %}
 // Here we have set the `id` of the model
 var user = new Usermodel({
   id: 1,
@@ -187,10 +187,10 @@ user.save({name: 'Davis'}, {
     alert(user.toJSON());
   }
 });
-```
+{% endhighlight %}
 
 ### Deleting a model
-```js
+{% highlight js %}
 // Here we have set the `id` of the model
 var user = new Usermodel({
   id: 1,
@@ -205,4 +205,4 @@ user.destroy({
     alert('Destroyed');
   }
 });
-```
+{% endhighlight %}

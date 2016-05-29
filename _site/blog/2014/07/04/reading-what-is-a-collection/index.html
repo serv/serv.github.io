@@ -79,44 +79,42 @@
 <h2 id="what-is-a-collection">What is a collection</h2>
 
 <ul>
-  <li>an ordered set of models
-```js
-var Song = Backbone.Model.extend({
-initialize: function(){
-  console.log(“Music is the answer”);
-}
-});</li>
+  <li>an ordered set of models</li>
 </ul>
 
-<p>var Album = Backbone.Collection.extend({
-  model: Song
-});
-```</p>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">Song</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="na">initialize</span><span class="p">:</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Music is the answer"</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">Album</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Collection</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="na">model</span><span class="p">:</span> <span class="nx">Song</span>
+<span class="p">});</span></code></pre></figure>
 
 <h2 id="building-a-collection">Building a collection</h2>
 
-<p>```js
-var Song = Backbone.Model.extend({
-  defaults: {
-    name: “Not specified”,
-    artist: “Not specified”
-  },
-  initialize: function(){
-    console.log(“Music is the answer”);
-  }
-});</p>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">Song</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="na">defaults</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="s2">"Not specified"</span><span class="p">,</span>
+    <span class="na">artist</span><span class="p">:</span> <span class="s2">"Not specified"</span>
+  <span class="p">},</span>
+  <span class="na">initialize</span><span class="p">:</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Music is the answer"</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
 
-<p>var Album = Backbone.Collection.extend({
-  model: Song
-});</p>
+<span class="kd">var</span> <span class="nx">Album</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Collection</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="na">model</span><span class="p">:</span> <span class="nx">Song</span>
+<span class="p">});</span>
 
-<p>var song1 = new Song({ name: “How Bizarre”, artist: “OMC” });
-var song2 = new Song({ name: “Sexual Healing”, artist: “Marvin Gaye” });
-var song3 = new Song({ name: “Talk It Over In Bed”, artist: “OMC” });</p>
+<span class="kd">var</span> <span class="nx">song1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Song</span><span class="p">({</span> <span class="na">name</span><span class="p">:</span> <span class="s2">"How Bizarre"</span><span class="p">,</span> <span class="na">artist</span><span class="p">:</span> <span class="s2">"OMC"</span> <span class="p">});</span>
+<span class="kd">var</span> <span class="nx">song2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Song</span><span class="p">({</span> <span class="na">name</span><span class="p">:</span> <span class="s2">"Sexual Healing"</span><span class="p">,</span> <span class="na">artist</span><span class="p">:</span> <span class="s2">"Marvin Gaye"</span> <span class="p">});</span>
+<span class="kd">var</span> <span class="nx">song3</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Song</span><span class="p">({</span> <span class="na">name</span><span class="p">:</span> <span class="s2">"Talk It Over In Bed"</span><span class="p">,</span> <span class="na">artist</span><span class="p">:</span> <span class="s2">"OMC"</span> <span class="p">});</span>
 
-<p>var myAlbum = new Album([ song1, song2, song3]);
-console.log( myAlbum.models ); // [song1, song2, song3]
-```</p>
+<span class="kd">var</span> <span class="nx">myAlbum</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Album</span><span class="p">([</span> <span class="nx">song1</span><span class="p">,</span> <span class="nx">song2</span><span class="p">,</span> <span class="nx">song3</span><span class="p">]);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="nx">myAlbum</span><span class="p">.</span><span class="nx">models</span> <span class="p">);</span> <span class="c1">// [song1, song2, song3]</span></code></pre></figure>
+
 
   </div>
 

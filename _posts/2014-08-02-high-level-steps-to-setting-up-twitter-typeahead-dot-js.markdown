@@ -26,11 +26,12 @@ Typeahead requires jQuery.
 Check the [Typeahead examples](https://twitter.github.io/typeahead.js/examples/)
 and find the example that is suitable for
 your app's use case.
+
 ### 2
 Copy the example js code and create a function
 in the view which is responsible for generating the form.
 
-```js
+{% highlight js %}
 // ...
 
 this.twitterTypeahead: function() {
@@ -60,14 +61,14 @@ this.twitterTypeahead: function() {
 },
 
 // ...
-```
+{% endhighlight %}
 
 ### 3
 
 This function should run within the view's `render()`
 function.
 
-```js
+{% highlight js %}
 // ...
 this.redner: function() {
   // ...
@@ -75,7 +76,7 @@ this.redner: function() {
   // ...
 },
 // ...
-```
+{% endhighlight %}
 
 ### 4
 

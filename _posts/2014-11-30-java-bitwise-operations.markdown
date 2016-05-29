@@ -38,7 +38,7 @@ From [Java: A Beginner's Guide](http://www.amazon.com/Java-Beginners-Guide-Herbe
 
 ## Example 1: Getting upper case for a letter
 
-```java
+{% highlight java %}
 public class UpCase {
   public static void main(String args[]) {
     char ch;
@@ -53,21 +53,21 @@ public class UpCase {
     }
   }
 }
-```
+{% endhighlight %}
 
 The value 65,503 used in the AND statement is the decimal representation of 1111 1111 1101 1111. Thus, the AND operation leaves all bits in ch unchanged except for the 6th one, which is set to 0.
 
 ## Iterating through bits
 
-```java
+{% highlight java %}
 for(int t = 128; t > 0; t = t/2) {
   // ...
 }
-```
+{% endhighlight %}
 
 ## Example 2: Getting lower case for a letter
 
-```java
+{% highlight java %}
 public class LowCase {
   public static void main(String args[]) {
     char ch;
@@ -82,7 +82,7 @@ public class LowCase {
     }
   }
 }
-```
+{% endhighlight %}
 
 ## Shift operators
 

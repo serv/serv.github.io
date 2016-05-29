@@ -81,27 +81,23 @@ in just one line.</p>
 
 <p>Did you ever have to do this?</p>
 
-<p><code class="highlighter-rouge">js
-function User(data) {
-  this.username = data.username;
-  this.password = data.password;
-  this.address = data.address;
-  this.email = data.email;
-  // ...
-  // After a dozen more attributes...
-  this.privacySetting = data.privacySetting;
-}
-</code></p>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">User</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">username</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">username</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">password</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">password</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">address</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">address</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">email</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">email</span><span class="p">;</span>
+  <span class="c1">// ...</span>
+  <span class="c1">// After a dozen more attributes...</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">privacySetting</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">privacySetting</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
 
 <h2 id="solution">Solution</h2>
 
 <p>You can now do this instead!</p>
 
-<p><code class="highlighter-rouge">js
-function User(data) {
-  attributa(this, data);
-}
-</code></p>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">User</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">attributa</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
 
 <p>The installation instructions and docs can be found in
 <a href="https://github.com/serv/attributa">the repository</a>.</p>

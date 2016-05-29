@@ -17,7 +17,7 @@ Reading of [What is a router?](http://backbonetutorials.com/what-is-a-router/).
 - Interpret anything after #
 - Example: http://example.com/#/pages/help
 
-```js
+{% highlight html %}
 <script>
 var AppRouter = Backbone.Router.extend({
   routes: {
@@ -35,13 +35,13 @@ app_router.on('route:defaultRoute', function(actions) {
 Backbone.history.start();
 
 </script>
-```
+{% endhighlight %}
 
 ## Dynamic routing
 
 - Example: http://example.com/#/posts/12
 
-```js
+{% highlight html %}
 <script>
 var AppRouter = Backbone.Router.extend({
   routes: {
@@ -62,7 +62,7 @@ app_router.on('route:defaultRoute', function (actions) {
 Backbone.history.start();
 
 </script>
-```
+{% endhighlight %}
 
 ## ":params" and "*splats"
 
@@ -74,7 +74,7 @@ Backbone.history.start();
     - Any and all components
 - These are passed as arguments
 
-```js
+{% highlight js %}
 var AppRouter = Backbone.Router.extend({
   routes: {
     "posts/:id": "getPost",
@@ -97,4 +97,4 @@ app_router.on('route:downloadFile', function( path ){
 app_router.on('route:loadView', function( route, action ){
   alert(route + "_" + action); // dashboard_graph
 });
-```
+{% endhighlight %}

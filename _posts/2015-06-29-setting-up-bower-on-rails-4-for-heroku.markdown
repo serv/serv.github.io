@@ -51,27 +51,27 @@ Let's specify where bower packages are installed on the Rails app.
 
 Create a file called `.bowerrc`, and add
 
-```
+{% highlight json %}
 {
   "directory": "vendor/assets/bower_components"
 }
-```
+{% endhighlight %}
 
 `vendor/assets/bower_components` is where bower packages will be installed.
 
 At this point, let's edit `.gitignore`, so we don't commit npm packages or bower packages.
 At the end of `.gitignore` file, add
 
-```
+{% highlight text %}
 node_modules
 vendor/assets/bower_components
-```
+{% endhighlight %}
 
 In `config/application.rb`, add:
 
-```
+{% highlight ruby %}
 config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components')
-```
+{% endhighlight %}
 
 This will ensure that Rails picks up asset files from where bower packages are
 installed.
@@ -79,15 +79,15 @@ installed.
 If you wanna start using Bootstrap for example, in the `app/assets/stylesheets/application.css`,
 you can add:
 
-```
+{% highlight js %}
 *= require bootstrap/dist/css/bootstrap
-```
+{% endhighlight %}
 
 And in `app/assets/javascript/application.js`,
 
-```
+{% highlight js %}
 //= require bootstrap/dist/js/bootstrap
-```
+{% endhighlight %}
 
 Make sure restart the Rails app to see the bower packages working with Rails.
 
@@ -105,17 +105,17 @@ Configure Heroku to use ddollar's multi-buildpack:
 
 Create a file called: `.buildpacks` and add:
 
-```
+{% highlight text %}
 https://github.com/heroku/heroku-buildpack-nodejs
 https://github.com/heroku/heroku-buildpack-ruby
-```
+{% endhighlight %}
 
 Make sure that the ruby buildpack is the last one in the list.
 This will allow you to access the Rails console when running heroku run console.
 
 In the `package.json`, add a postinstall script. It should look like this.
 
-```
+{% highlight json %}
 {
   ...
 
@@ -125,7 +125,7 @@ In the `package.json`, add a postinstall script. It should look like this.
 
   ...
 }
-```
+{% endhighlight %}
 
 Now push to Heroku!
 

@@ -15,7 +15,7 @@ This is tldr for the second half of [Javascript Is Sexy's article titled "JavaSc
 - Variable declaration
   - Inside a function
     - Hoisted (lifted and declared) to the top of the function
-```javascript
+{% highlight js %}
 // How it's written
 function showName() {
   console.log ("First Name: " + name);
@@ -24,9 +24,9 @@ function showName() {
 }
 
 showName();
-```
+{% endhighlight %}
 
-```javascript
+{% highlight js %}
 // How it's actually processed
 function showName () {
 	var name;
@@ -36,7 +36,7 @@ function showName () {
 
   console.log ("Last Name: " + name); // Last Name: Ford
 }
-```
+{% endhighlight %}
   - Outside a function
     - Global context
 
@@ -44,8 +44,8 @@ function showName () {
   - Has precedence over variable declaration
   - But not variable assignment
 - Function expressions are not hoisted
-```javascript
+{% highlight js %}
 var myName = function () {
   console.log ("Rich");
 }
-```
+{% endhighlight %}

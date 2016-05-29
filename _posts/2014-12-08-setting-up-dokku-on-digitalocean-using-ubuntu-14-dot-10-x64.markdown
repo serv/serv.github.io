@@ -62,12 +62,12 @@ when connecting to the server
 1. In the local machine, run `$ vi ~/.ssh/config`
 2. Add the following lines.
 
-```
+{% highlight text %}
 Host [some-host-name-nickname]
   Hostname     [123.123.123.123].
   User         root
   IdentityFile ~/.ssh/[key-you-created]
-```
+{% endhighlight %}
 
 3. Replace all the data in `[]`.
 
@@ -91,7 +91,7 @@ If everything went right, you should be able to do, `$ ssh root@some-host-name-n
 
 ## Troubleshooting various errors
 
-```
+{% highlight text %}
 git push dokku master
 Counting objects: 1012, done.
 Delta compression using up to 8 threads.
@@ -115,13 +115,13 @@ New app detected loading default bundler cache
 To dokku@supurl-production:supurl-production
 ! [remote rejected] master -> master (pre-receive hook declined)
 error: failed to push some refs to 'dokku@supurl-production:supurl-production'
-```
+{% endhighlight %}
 
 Build pack error.
 https://github.com/heroku/heroku-buildpack-ruby/issues/304
 
 
-```
+{% highlight text %}
 I, [2014-12-09T01:09:50.397656 #12]  INFO -- : listening on addr=0.0.0.0:5000 fd=10
 E, [2014-12-09T01:09:50.403558 #12] ERROR -- : could not connect to server: No such file or directory
 Is the server running locally and accepting
@@ -152,7 +152,7 @@ connections on Unix domain socket "/var/run/postgresql/.s.PGSQL.5432"?
 /app/vendor/bundle/ruby/2.1.0/gems/unicorn-4.8.3/bin/unicorn:126:in `<top (required)>'
 /app/vendor/bundle/ruby/2.1.0/bin/unicorn:23:in `load'
 /app/vendor/bundle/ruby/2.1.0/bin/unicorn:23:in `<main>'
-```
+{% endhighlight %}
 
 `$ dokku postgresql:create supurl-production`
 
@@ -161,7 +161,7 @@ http://dev.housetrip.com/2014/07/06/deploy-rails-and-postgresql-app-to-dokku/
 `dokku run APP_NAME rake db:seed `
 
 
-```
+{% highlight text %}
 # installing the plugin
 cd /var/lib/dokku/plugins
 git clone https://github.com/Kloadut/dokku-pg-plugin postgresql
@@ -172,15 +172,16 @@ dokku postgresql:create <db-name>
 
 # Once you've deployed your app once, you can link the db to the app like:
 dokku postgresql:link <app-name> <db-name>
-```
+{% endhighlight %}
 
 
-```
+{% highlight text %}
 remote: runtime: panic before malloc heap initialized
 remote: fatal error: runtime: cannot allocate heap metadata
 To dokku@supurl-production:supurl-production
 ! [remote rejected] master -> master (pre-receive hook declined)
 error: failed to push some refs to 'dokku@supurl-production:supurl-production'
-```
+{% endhighlight %}
+
 https://github.com/docker/docker/issues/1555
 http://stackoverflow.com/a/17174672/536890

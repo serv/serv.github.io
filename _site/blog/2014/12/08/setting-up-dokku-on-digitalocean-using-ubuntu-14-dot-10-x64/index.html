@@ -141,12 +141,10 @@ be the same as the root password you changed earlier.</li>
   <li>Add the following lines.</li>
 </ol>
 
-<p><code class="highlighter-rouge">
-Host [some-host-name-nickname]
+<figure class="highlight"><pre><code class="language-text" data-lang="text">Host [some-host-name-nickname]
   Hostname     [123.123.123.123].
   User         root
-  IdentityFile ~/.ssh/[key-you-created]
-</code></p>
+  IdentityFile ~/.ssh/[key-you-created]</code></pre></figure>
 
 <ol>
   <li>Replace all the data in <code class="highlighter-rouge">[]</code>.</li>
@@ -176,8 +174,7 @@ in the list of authorized_keys in the server.</li>
 
 <h2 id="troubleshooting-various-errors">Troubleshooting various errors</h2>
 
-<p><code class="highlighter-rouge">
-git push dokku master
+<figure class="highlight"><pre><code class="language-text" data-lang="text">git push dokku master
 Counting objects: 1012, done.
 Delta compression using up to 8 threads.
 Compressing objects: 100% (772/772), done.
@@ -199,14 +196,12 @@ New app detected loading default bundler cache
 !
 To dokku@supurl-production:supurl-production
 ! [remote rejected] master -&gt; master (pre-receive hook declined)
-error: failed to push some refs to 'dokku@supurl-production:supurl-production'
-</code></p>
+error: failed to push some refs to 'dokku@supurl-production:supurl-production'</code></pre></figure>
 
 <p>Build pack error.
 https://github.com/heroku/heroku-buildpack-ruby/issues/304</p>
 
-<p><code class="highlighter-rouge">
-I, [2014-12-09T01:09:50.397656 #12]  INFO -- : listening on addr=0.0.0.0:5000 fd=10
+<figure class="highlight"><pre><code class="language-text" data-lang="text">I, [2014-12-09T01:09:50.397656 #12]  INFO -- : listening on addr=0.0.0.0:5000 fd=10
 E, [2014-12-09T01:09:50.403558 #12] ERROR -- : could not connect to server: No such file or directory
 Is the server running locally and accepting
 connections on Unix domain socket "/var/run/postgresql/.s.PGSQL.5432"?
@@ -235,8 +230,7 @@ connections on Unix domain socket "/var/run/postgresql/.s.PGSQL.5432"?
 /app/vendor/bundle/ruby/2.1.0/gems/unicorn-4.8.3/lib/unicorn/http_server.rb:140:in `start'
 /app/vendor/bundle/ruby/2.1.0/gems/unicorn-4.8.3/bin/unicorn:126:in `&lt;top (required)&gt;'
 /app/vendor/bundle/ruby/2.1.0/bin/unicorn:23:in `load'
-/app/vendor/bundle/ruby/2.1.0/bin/unicorn:23:in `&lt;main&gt;'
-</code></p>
+/app/vendor/bundle/ruby/2.1.0/bin/unicorn:23:in `&lt;main&gt;'</code></pre></figure>
 
 <p><code class="highlighter-rouge">$ dokku postgresql:create supurl-production</code></p>
 
@@ -244,27 +238,24 @@ connections on Unix domain socket "/var/run/postgresql/.s.PGSQL.5432"?
 
 <p><code class="highlighter-rouge">dokku run APP_NAME rake db:seed </code></p>
 
-<p>```
-# installing the plugin
+<figure class="highlight"><pre><code class="language-text" data-lang="text"># installing the plugin
 cd /var/lib/dokku/plugins
 git clone https://github.com/Kloadut/dokku-pg-plugin postgresql
-dokku plugins-install</p>
+dokku plugins-install
 
-<h1 id="create-and-setup-the-db">Create and setup the db</h1>
-<p>dokku postgresql:create <db-name></db-name></p>
+# Create and setup the db
+dokku postgresql:create &lt;db-name&gt;
 
-<h1 id="once-youve-deployed-your-app-once-you-can-link-the-db-to-the-app-like">Once you’ve deployed your app once, you can link the db to the app like:</h1>
-<p>dokku postgresql:link <app-name> <db-name>
-```</db-name></app-name></p>
+# Once you've deployed your app once, you can link the db to the app like:
+dokku postgresql:link &lt;app-name&gt; &lt;db-name&gt;</code></pre></figure>
 
-<p><code class="highlighter-rouge">
-remote: runtime: panic before malloc heap initialized
+<figure class="highlight"><pre><code class="language-text" data-lang="text">remote: runtime: panic before malloc heap initialized
 remote: fatal error: runtime: cannot allocate heap metadata
 To dokku@supurl-production:supurl-production
 ! [remote rejected] master -&gt; master (pre-receive hook declined)
-error: failed to push some refs to 'dokku@supurl-production:supurl-production'
-</code>
-https://github.com/docker/docker/issues/1555
+error: failed to push some refs to 'dokku@supurl-production:supurl-production'</code></pre></figure>
+
+<p>https://github.com/docker/docker/issues/1555
 http://stackoverflow.com/a/17174672/536890</p>
 
   </div>

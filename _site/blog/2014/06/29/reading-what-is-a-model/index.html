@@ -93,193 +93,184 @@
   </li>
 </ul>
 
-<p>```js
-Person = Backbone.Model.extend({
-  initialize: function() {
-    alert(“Welcome”);
-  }
-});</p>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Person</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="na">initialize</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="s2">"Welcome"</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
 
-<p>var person = new Person;
-```
-- <code class="highlighter-rouge">initialize()</code> is called when you create a new instance of a model.</p>
+<span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">;</span></code></pre></figure>
+
+<ul>
+  <li><code class="highlighter-rouge">initialize()</code> is called when you create a new instance of a model.</li>
+</ul>
 
 <h2 id="setting-attributes">Setting attributes</h2>
 
-<p>```js
-Person = Backbone.Model.extend({
-  initialize: function() {
-    alert(“Welcome to this world”);
-  }
-});</p>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Person</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="na">initialize</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="s2">"Welcome to this world"</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
 
-<p>var person = new Person({ name: “Thomas”, age: 67});
-var person = new Person();
-person.set({ name: “Thomas”, age: 67});
-```</p>
+<span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">({</span> <span class="na">name</span><span class="p">:</span> <span class="s2">"Thomas"</span><span class="p">,</span> <span class="na">age</span><span class="p">:</span> <span class="mi">67</span><span class="p">});</span>
+<span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span>
+<span class="nx">person</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span> <span class="na">name</span><span class="p">:</span> <span class="s2">"Thomas"</span><span class="p">,</span> <span class="na">age</span><span class="p">:</span> <span class="mi">67</span><span class="p">});</span></code></pre></figure>
 
 <h2 id="getting-attributes">Getting attributes</h2>
-<p>```js
-Person = Backbone.Model.extend({
-  initialize: function() {
-    alert(“Welcome to this world”);
-  }
-});</p>
 
-<p>var person = new Person({ name: “Thomas”, age: 67, child: ‘Ryan’});
-var age = person.get(“age”); // 67
-var name = person.get(“name”); // “Thomas”
-var child = person.get(“child”); // ‘Ryan’
-```</p>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Person</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="na">initialize</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="s2">"Welcome to this world"</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">({</span> <span class="na">name</span><span class="p">:</span> <span class="s2">"Thomas"</span><span class="p">,</span> <span class="na">age</span><span class="p">:</span> <span class="mi">67</span><span class="p">,</span> <span class="na">child</span><span class="p">:</span> <span class="s1">'Ryan'</span><span class="p">});</span>
+<span class="kd">var</span> <span class="nx">age</span> <span class="o">=</span> <span class="nx">person</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"age"</span><span class="p">);</span> <span class="c1">// 67</span>
+<span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">person</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"name"</span><span class="p">);</span> <span class="c1">// "Thomas"</span>
+<span class="kd">var</span> <span class="nx">child</span> <span class="o">=</span> <span class="nx">person</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"child"</span><span class="p">);</span> <span class="c1">// 'Ryan'</span></code></pre></figure>
 
 <h2 id="model-defaults">Model defaults</h2>
-<p>```js
-Person = Backbone.Model.extend({
-  defaults: {
-    name: ‘Fetus’,
-    age: 0,
-    child: ‘’
-  },
-  initialize: function() {
-    alert(“Welcome to this world”);
-  }
-});</p>
 
-<p>var person = new Person({ name: “Thomas”, age: 67, child: ‘Ryan’});</p>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Person</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="na">defaults</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="s1">'Fetus'</span><span class="p">,</span>
+    <span class="na">age</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="na">child</span><span class="p">:</span> <span class="s1">''</span>
+  <span class="p">},</span>
+  <span class="na">initialize</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="s2">"Welcome to this world"</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
 
-<p>var age = person.get(“age”); // 67
-var name = person.get(“name”); // “Thomas”
-var child = person.get(“child”); // ‘Ryan’
-```</p>
+<span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">({</span> <span class="na">name</span><span class="p">:</span> <span class="s2">"Thomas"</span><span class="p">,</span> <span class="na">age</span><span class="p">:</span> <span class="mi">67</span><span class="p">,</span> <span class="na">child</span><span class="p">:</span> <span class="s1">'Ryan'</span><span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">age</span> <span class="o">=</span> <span class="nx">person</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"age"</span><span class="p">);</span> <span class="c1">// 67</span>
+<span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">person</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"name"</span><span class="p">);</span> <span class="c1">// "Thomas"</span>
+<span class="kd">var</span> <span class="nx">child</span> <span class="o">=</span> <span class="nx">person</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"child"</span><span class="p">);</span> <span class="c1">// 'Ryan'</span></code></pre></figure>
 
 <h2 id="manipulate-model-attributes">Manipulate model attributes</h2>
-<p>```js
-Person = Backbone.Model.extend({
-  defaults: {
-    name: ‘Fetus’,
-    age: 0,
-    child: ‘’
-  },
-  initialize: function() {
-    alert(“Welcome to this world”);
-  },
-  adopt: function(newChildName) {
-    this.set({child: newChildName});
-  }
-});</p>
 
-<p>var person = new Person({ name: “Thomas”, age: 67, child: ‘Ryan’});
-person.adopt(‘John Resig’);
-var child = person.get(“child”); // ‘John Resig’
-```</p>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Person</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="na">defaults</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="s1">'Fetus'</span><span class="p">,</span>
+    <span class="na">age</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="na">child</span><span class="p">:</span> <span class="s1">''</span>
+  <span class="p">},</span>
+  <span class="na">initialize</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="s2">"Welcome to this world"</span><span class="p">);</span>
+  <span class="p">},</span>
+  <span class="na">adopt</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newChildName</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span><span class="na">child</span><span class="p">:</span> <span class="nx">newChildName</span><span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">({</span> <span class="na">name</span><span class="p">:</span> <span class="s2">"Thomas"</span><span class="p">,</span> <span class="na">age</span><span class="p">:</span> <span class="mi">67</span><span class="p">,</span> <span class="na">child</span><span class="p">:</span> <span class="s1">'Ryan'</span><span class="p">});</span>
+<span class="nx">person</span><span class="p">.</span><span class="nx">adopt</span><span class="p">(</span><span class="s1">'John Resig'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">child</span> <span class="o">=</span> <span class="nx">person</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"child"</span><span class="p">);</span> <span class="c1">// 'John Resig'</span></code></pre></figure>
 
 <h2 id="listen-to-changes-of-an-attribute">Listen to changes of an attribute</h2>
-<p>```js
-Person = Backbone.Model.extend({
-  defaults: {
-    name: ‘Fetus’,
-    age: 0
-  },
-  initialize: function(){
-    alert(“Welcome to this world”);
-    this.on(“change:name”, function(model){
-      var name = model.get(“name”); // ‘Stewie Griffin’
-      alert(“Changed my name to “ + name );
-    });
-  }
-});</p>
 
-<p>var person = new Person({ name: “Thomas”, age: 67});
-person.set({name: ‘Stewie Griffin’}); // This triggers a change and will alert()
-```</p>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">Person</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="na">defaults</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="s1">'Fetus'</span><span class="p">,</span>
+    <span class="na">age</span><span class="p">:</span> <span class="mi">0</span>
+  <span class="p">},</span>
+  <span class="na">initialize</span><span class="p">:</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="s2">"Welcome to this world"</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">"change:name"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">model</span><span class="p">){</span>
+      <span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"name"</span><span class="p">);</span> <span class="c1">// 'Stewie Griffin'</span>
+      <span class="nx">alert</span><span class="p">(</span><span class="s2">"Changed my name to "</span> <span class="o">+</span> <span class="nx">name</span> <span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">({</span> <span class="na">name</span><span class="p">:</span> <span class="s2">"Thomas"</span><span class="p">,</span> <span class="na">age</span><span class="p">:</span> <span class="mi">67</span><span class="p">});</span>
+<span class="nx">person</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span><span class="na">name</span><span class="p">:</span> <span class="s1">'Stewie Griffin'</span><span class="p">});</span> <span class="c1">// This triggers a change and will alert()</span></code></pre></figure>
 
 <h2 id="interacting-with-the-server">Interacting with the server</h2>
-<p>### Set url
-<code class="highlighter-rouge">js
-var UserModel = Backbone.Model.extend({
-  urlRoot: '/user',
-  defaults: {
-    name: '',
-    email: ''
-  }
-});
-</code></p>
+<p>### Set url</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">UserModel</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="na">urlRoot</span><span class="p">:</span> <span class="s1">'/user'</span><span class="p">,</span>
+  <span class="na">defaults</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="s1">''</span><span class="p">,</span>
+    <span class="na">email</span><span class="p">:</span> <span class="s1">''</span>
+  <span class="p">}</span>
+<span class="p">});</span></code></pre></figure>
 
 <h3 id="creating-a-new-model">Creating a new model</h3>
-<p><code class="highlighter-rouge">js
-var UserModel = Backbone.Model.extend({
-  urlRoot: '/user',
-  defaults: {
-    name: '',
-    email: ''
-  }
-});
-var user = new Usermodel();
-// Notice that we haven't set an `id`
-var userDetails = {
-  name: 'Thomas',
-  email: 'thomasalwyndavis@gmail.com'
-};
-// Because we have not set a `id` the server will call
-// POST /user with a payload of {name:'Thomas', email: 'thomasalwyndavis@gmail.com'}
-// The server should save the data and return a response containing the new `id`
-user.save(userDetails, {
-  success: function (user) {
-    alert(user.toJSON());
-  }
-});
-</code></p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">UserModel</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="na">urlRoot</span><span class="p">:</span> <span class="s1">'/user'</span><span class="p">,</span>
+  <span class="na">defaults</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="s1">''</span><span class="p">,</span>
+    <span class="na">email</span><span class="p">:</span> <span class="s1">''</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+<span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Usermodel</span><span class="p">();</span>
+<span class="c1">// Notice that we haven't set an `id`</span>
+<span class="kd">var</span> <span class="nx">userDetails</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">name</span><span class="p">:</span> <span class="s1">'Thomas'</span><span class="p">,</span>
+  <span class="na">email</span><span class="p">:</span> <span class="s1">'thomasalwyndavis@gmail.com'</span>
+<span class="p">};</span>
+<span class="c1">// Because we have not set a `id` the server will call</span>
+<span class="c1">// POST /user with a payload of {name:'Thomas', email: 'thomasalwyndavis@gmail.com'}</span>
+<span class="c1">// The server should save the data and return a response containing the new `id`</span>
+<span class="nx">user</span><span class="p">.</span><span class="nx">save</span><span class="p">(</span><span class="nx">userDetails</span><span class="p">,</span> <span class="p">{</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">user</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">toJSON</span><span class="p">());</span>
+  <span class="p">}</span>
+<span class="p">});</span></code></pre></figure>
 
 <h3 id="getting-a-model">Getting a model</h3>
-<p>```js
-// Here we have set the <code class="highlighter-rouge">id</code> of the model
-var user = new Usermodel({id: 1});</p>
 
-<p>// The fetch below will perform GET /user/1
-// The server should return the id, name and email from the database
-user.fetch({
-  success: function (user) {
-    alert(user.toJSON());
-  }
-});
-```</p>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// Here we have set the `id` of the model</span>
+<span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Usermodel</span><span class="p">({</span><span class="na">id</span><span class="p">:</span> <span class="mi">1</span><span class="p">});</span>
+
+<span class="c1">// The fetch below will perform GET /user/1</span>
+<span class="c1">// The server should return the id, name and email from the database</span>
+<span class="nx">user</span><span class="p">.</span><span class="nx">fetch</span><span class="p">({</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">user</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">toJSON</span><span class="p">());</span>
+  <span class="p">}</span>
+<span class="p">});</span></code></pre></figure>
 
 <h3 id="updating-a-model">Updating a model</h3>
-<p>```js
-// Here we have set the <code class="highlighter-rouge">id</code> of the model
-var user = new Usermodel({
-  id: 1,
-  name: ‘Thomas’,
-  email: ‘thomasalwyndavis@gmail.com’
-});</p>
 
-<p>// Let’s change the name and update the server
-// Because there is <code class="highlighter-rouge">id</code> present, Backbone.js will fire
-// PUT /user/1 with a payload of <code class="highlighter-rouge"><span class="p">{</span><span class="err">name:</span><span class="w"> </span><span class="err">'Davis',</span><span class="w"> </span><span class="err">email:</span><span class="w"> </span><span class="err">'thomasalwyndavis@gmail.com'</span><span class="p">}</span></code>
-user.save({name: ‘Davis’}, {
-  success: function (model) {
-    alert(user.toJSON());
-  }
-});
-```</p>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// Here we have set the `id` of the model</span>
+<span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Usermodel</span><span class="p">({</span>
+  <span class="na">id</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="na">name</span><span class="p">:</span> <span class="s1">'Thomas'</span><span class="p">,</span>
+  <span class="na">email</span><span class="p">:</span> <span class="s1">'thomasalwyndavis@gmail.com'</span>
+<span class="p">});</span>
+
+<span class="c1">// Let's change the name and update the server</span>
+<span class="c1">// Because there is `id` present, Backbone.js will fire</span>
+<span class="c1">// PUT /user/1 with a payload of `{name: 'Davis', email: 'thomasalwyndavis@gmail.com'}`</span>
+<span class="nx">user</span><span class="p">.</span><span class="nx">save</span><span class="p">({</span><span class="na">name</span><span class="p">:</span> <span class="s1">'Davis'</span><span class="p">},</span> <span class="p">{</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">model</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">toJSON</span><span class="p">());</span>
+  <span class="p">}</span>
+<span class="p">});</span></code></pre></figure>
 
 <h3 id="deleting-a-model">Deleting a model</h3>
-<p>```js
-// Here we have set the <code class="highlighter-rouge">id</code> of the model
-var user = new Usermodel({
-  id: 1,
-  name: ‘Thomas’,
-  email: ‘thomasalwyndavis@gmail.com’
-});</p>
 
-<p>// Because there is <code class="highlighter-rouge">id</code> present, Backbone.js will fire
-// DELETE /user/1
-user.destroy({
-  success: function () {
-    alert(‘Destroyed’);
-  }
-});
-```</p>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// Here we have set the `id` of the model</span>
+<span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Usermodel</span><span class="p">({</span>
+  <span class="na">id</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="na">name</span><span class="p">:</span> <span class="s1">'Thomas'</span><span class="p">,</span>
+  <span class="na">email</span><span class="p">:</span> <span class="s1">'thomasalwyndavis@gmail.com'</span>
+<span class="p">});</span>
+
+<span class="c1">// Because there is `id` present, Backbone.js will fire</span>
+<span class="c1">// DELETE /user/1</span>
+<span class="nx">user</span><span class="p">.</span><span class="nx">destroy</span><span class="p">({</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="s1">'Destroyed'</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span></code></pre></figure>
+
 
   </div>
 

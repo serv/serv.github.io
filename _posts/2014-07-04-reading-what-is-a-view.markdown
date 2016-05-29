@@ -15,7 +15,7 @@ categories: javascript
 - Reflects changes in model
 - Listens to events and react
 
-```js
+{% highlight js %}
 SearchView = Backbone.View.extend({
   initialize: function(){
     alert("Alerts suck.");
@@ -23,14 +23,14 @@ SearchView = Backbone.View.extend({
 });
 
 var search_view = new SearchView();
-```
+{% endhighlight %}
 
 ## `el` property
 
 - Refers to the DOM object created in the browser
 - Default: empty <div> element
 
-```js
+{% highlight html %}
 <div id="search_container"></div>
 
 <script type="text/javascript">
@@ -42,7 +42,7 @@ var search_view = new SearchView();
 
   var search_view = new SearchView({ el: $("#search_container") });
 </script>
-```
+{% endhighlight %}
 
 ## Loading a template
 
@@ -51,7 +51,7 @@ var search_view = new SearchView();
   - Called when view is initiated
   - Load the template into the view's `el` property using jQuery
 
-```js
+{% highlight html %}
 <script type="text/template" id="search_template">
   <label>Search</label>
   <input type="text" id="search_input" />
@@ -75,14 +75,14 @@ SearchView = Backbone.View.extend({
 
 var search_view = new SearchView({ el: $("#search_container") });
 </script>
-```
+{% endhighlight %}
 
 ## Listen for events
 
 - Listen with a listener
 - Even listen attached to child elements of `el`
 
-```js
+{% highlight html %}
 <script type="text/template" id="search_template">
   <label><%= search_label %></label>
   <input type="text" id="search_input" />
@@ -112,4 +112,4 @@ var search_view = new SearchView({ el: $("#search_container") });
 
   var search_view = new SearchView({ el: $("#search_container") });
 </script>
-```
+{% endhighlight %}

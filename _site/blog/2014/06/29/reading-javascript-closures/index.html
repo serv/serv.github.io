@@ -115,123 +115,118 @@
       </li>
     </ul>
   </li>
-  <li>
-    <p>Pure javascript example
-```javascript
-function showName(firstName, lastName) { 
-var nameIntro = “Your name is “;</p>
-
-    <p>function makeFullName () { 
-  return nameIntro + firstName + “ “ + lastName; 
-}</p>
-
-    <p>return makeFullName (); 
-} </p>
-  </li>
+  <li>Pure javascript example</li>
 </ul>
 
-<p>showName(“Michael”, “Jackson”); // Your name is Michael Jackson 
-<code class="highlighter-rouge">
-- jQuery example
-</code>javascript
-$(function() {</p>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">showName</span><span class="p">(</span><span class="nx">firstName</span><span class="p">,</span> <span class="nx">lastName</span><span class="p">)</span> <span class="p">{</span><span class="err"> </span>
+  <span class="kd">var</span> <span class="nx">nameIntro</span> <span class="o">=</span> <span class="s2">"Your name is "</span><span class="p">;</span>
 
-<p>var selections = [];
-  $(“.niners”).click(function() { // this closure has access to the selections variable
-    selections.push (this.prop(“name”)); // update the selections variable in the outer function’s scope
-  });</p>
+  <span class="kd">function</span> <span class="nx">makeFullName</span> <span class="p">()</span> <span class="p">{</span><span class="err"> </span>
+    <span class="k">return</span> <span class="nx">nameIntro</span> <span class="o">+</span> <span class="nx">firstName</span> <span class="o">+</span> <span class="s2">" "</span> <span class="o">+</span> <span class="nx">lastName</span><span class="p">;</span><span class="err"> </span>
+  <span class="p">}</span>
 
-<p>});
-```</p>
+  <span class="k">return</span> <span class="nx">makeFullName</span> <span class="p">();</span><span class="err"> </span>
+<span class="p">}</span><span class="err"> </span>
+
+<span class="nx">showName</span><span class="p">(</span><span class="s2">"Michael"</span><span class="p">,</span> <span class="s2">"Jackson"</span><span class="p">);</span> <span class="c1">// Your name is Michael Jackson </span></code></pre></figure>
+
+<ul>
+  <li>jQuery example</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+  <span class="kd">var</span> <span class="nx">selections</span> <span class="o">=</span> <span class="p">[];</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s2">".niners"</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="c1">// this closure has access to the selections variable</span>
+    <span class="nx">selections</span><span class="p">.</span><span class="nx">push</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">prop</span><span class="p">(</span><span class="s2">"name"</span><span class="p">));</span> <span class="c1">// update the selections variable in the outer function's scope</span>
+  <span class="p">});</span>
+
+<span class="p">});</span></code></pre></figure>
 
 <h2 id="rules-and-side-effects">Rules and side effects</h2>
 
 <ul>
   <li>Closures have access to the outer function’s variable even after the outer function returns
     <ul>
-      <li>You can call inner function later in the program
-```javascript
-function celebrityName(firstName) {
-var nameIntro = “This celebrity is “;
- function lastName(theLastName) {
-    return nameIntro + firstName + “ “ + theLastName;
-}
-return lastName;
-}</li>
+      <li>You can call inner function later in the program</li>
     </ul>
   </li>
 </ul>
 
-<p>var mjName = celebrityName(“Michael”);</p>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">celebrityName</span><span class="p">(</span><span class="nx">firstName</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">nameIntro</span> <span class="o">=</span> <span class="s2">"This celebrity is "</span><span class="p">;</span>
+   <span class="kd">function</span> <span class="nx">lastName</span><span class="p">(</span><span class="nx">theLastName</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">nameIntro</span> <span class="o">+</span> <span class="nx">firstName</span> <span class="o">+</span> <span class="s2">" "</span> <span class="o">+</span> <span class="nx">theLastName</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">lastName</span><span class="p">;</span>
+<span class="p">}</span>
 
-<p>mjName(“Jackson”);
-```</p>
+<span class="kd">var</span> <span class="nx">mjName</span> <span class="o">=</span> <span class="nx">celebrityName</span><span class="p">(</span><span class="s2">"Michael"</span><span class="p">);</span>
+
+<span class="nx">mjName</span><span class="p">(</span><span class="s2">"Jackson"</span><span class="p">);</span></code></pre></figure>
 
 <ul>
   <li>Closures store references to the outer function’s variables</li>
 </ul>
 
-<p>```javascript
-function celebrityID () {
-  var celebrityID = 999;</p>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">celebrityID</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">celebrityID</span> <span class="o">=</span> <span class="mi">999</span><span class="p">;</span>
 
-<p>return {
-    getID: function ()  {
-      return celebrityID;
-    },
-    setID: function (theNewID)  {
-      celebrityID = theNewID;
-    }
-  }
-}</p>
+  <span class="k">return</span> <span class="p">{</span>
+    <span class="na">getID</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span>  <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">celebrityID</span><span class="p">;</span>
+    <span class="p">},</span>
+    <span class="na">setID</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">theNewID</span><span class="p">)</span>  <span class="p">{</span>
+      <span class="nx">celebrityID</span> <span class="o">=</span> <span class="nx">theNewID</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
 
-<p>var mjID = celebrityID();
-mjID.getID(); // 999
-mjID.setID(567); // Changes the outer function’s variable
-mjID.getID(); // 567: It returns the updated celebrityId variable 
-```</p>
+<span class="kd">var</span> <span class="nx">mjID</span> <span class="o">=</span> <span class="nx">celebrityID</span><span class="p">();</span>
+<span class="nx">mjID</span><span class="p">.</span><span class="nx">getID</span><span class="p">();</span> <span class="c1">// 999</span>
+<span class="nx">mjID</span><span class="p">.</span><span class="nx">setID</span><span class="p">(</span><span class="mi">567</span><span class="p">);</span> <span class="c1">// Changes the outer function's variable</span>
+<span class="nx">mjID</span><span class="p">.</span><span class="nx">getID</span><span class="p">();</span> <span class="c1">// 567: It returns the updated celebrityId variable </span></code></pre></figure>
 
 <ul>
   <li>Immediately Invoked Function Expression</li>
 </ul>
 
-<p>```javascript
-function celebrityIDCreator (theCelebrities) {
-  var i;
-  var uniqueID = 100;
-  for (i = 0; i &lt; theCelebrities.length; i++) {
-    // the j parametric variable is the i passed in on invocation of this IIFE
-    theCelebrities[i][“id”] = function(j)  {
-      return function() {
-        // each iteration of the for loop passes the current value of i into
-        // this IIFE and it saves the correct value to the array
-        return uniqueID + j;
-      }()
-      // BY adding () at the end of this function,
-      // we are executing it immediately and returning just
-      // the value of uniqueID + j, instead of returning a function.
-    }(i);
-    // immediately invoke the function passing the i variable as a parameter
-    // basically j has the i value
-  }</p>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">celebrityIDCreator</span> <span class="p">(</span><span class="nx">theCelebrities</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">i</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">uniqueID</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">theCelebrities</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// the j parametric variable is the i passed in on invocation of this IIFE</span>
+    <span class="nx">theCelebrities</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="s2">"id"</span><span class="p">]</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">j</span><span class="p">)</span>  <span class="p">{</span>
+      <span class="k">return</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// each iteration of the for loop passes the current value of i into</span>
+        <span class="c1">// this IIFE and it saves the correct value to the array</span>
+        <span class="k">return</span> <span class="nx">uniqueID</span> <span class="o">+</span> <span class="nx">j</span><span class="p">;</span>
+      <span class="p">}()</span>
+      <span class="c1">// BY adding () at the end of this function,</span>
+      <span class="c1">// we are executing it immediately and returning just</span>
+      <span class="c1">// the value of uniqueID + j, instead of returning a function.</span>
+    <span class="p">}(</span><span class="nx">i</span><span class="p">);</span>
+    <span class="c1">// immediately invoke the function passing the i variable as a parameter</span>
+    <span class="c1">// basically j has the i value</span>
+  <span class="p">}</span>
 
-<p>return theCelebrities;
-}</p>
+  <span class="k">return</span> <span class="nx">theCelebrities</span><span class="p">;</span>
+<span class="p">}</span>
 
-<p>var actionCelebs = [
-  {name:”Stallone”, id:0},
-  {name:”Cruise”, id:0},
-  {name:”Willis”, id:0}
-];</p>
+<span class="kd">var</span> <span class="nx">actionCelebs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span><span class="na">name</span><span class="p">:</span><span class="s2">"Stallone"</span><span class="p">,</span> <span class="na">id</span><span class="p">:</span><span class="mi">0</span><span class="p">},</span>
+  <span class="p">{</span><span class="na">name</span><span class="p">:</span><span class="s2">"Cruise"</span><span class="p">,</span> <span class="na">id</span><span class="p">:</span><span class="mi">0</span><span class="p">},</span>
+  <span class="p">{</span><span class="na">name</span><span class="p">:</span><span class="s2">"Willis"</span><span class="p">,</span> <span class="na">id</span><span class="p">:</span><span class="mi">0</span><span class="p">}</span>
+<span class="p">];</span>
 
-<p>var createIdForActionCelebs = celebrityIDCreator(actionCelebs);</p>
+<span class="kd">var</span> <span class="nx">createIdForActionCelebs</span> <span class="o">=</span> <span class="nx">celebrityIDCreator</span><span class="p">(</span><span class="nx">actionCelebs</span><span class="p">);</span>
 
-<p>var stalloneID = createIdForActionCelebs[0];
- console.log(stalloneID.id); // 100</p>
+<span class="kd">var</span> <span class="nx">stalloneID</span> <span class="o">=</span> <span class="nx">createIdForActionCelebs</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="err"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">stalloneID</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span> <span class="c1">// 100</span>
 
-<p>var cruiseID = createIdForActionCelebs[1];
- console.log(cruiseID.id); // 101
-```</p>
+<span class="kd">var</span> <span class="nx">cruiseID</span> <span class="o">=</span> <span class="nx">createIdForActionCelebs</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<span class="err"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">cruiseID</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span> <span class="c1">// 101</span></code></pre></figure>
+
 
   </div>
 

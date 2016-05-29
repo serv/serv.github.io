@@ -122,27 +122,21 @@ add the bower package as the dependency.</p>
 
 <p>Create a file called <code class="highlighter-rouge">.bowerrc</code>, and add</p>
 
-<p><code class="highlighter-rouge"><span class="w">
-</span><span class="p">{</span><span class="w">
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nt">"directory"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vendor/assets/bower_components"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></p>
+</span><span class="p">}</span></code></pre></figure>
 
 <p><code class="highlighter-rouge">vendor/assets/bower_components</code> is where bower packages will be installed.</p>
 
 <p>At this point, let’s edit <code class="highlighter-rouge">.gitignore</code>, so we don’t commit npm packages or bower packages.
 At the end of <code class="highlighter-rouge">.gitignore</code> file, add</p>
 
-<p><code class="highlighter-rouge">
-node_modules
-vendor/assets/bower_components
-</code></p>
+<figure class="highlight"><pre><code class="language-text" data-lang="text">node_modules
+vendor/assets/bower_components</code></pre></figure>
 
 <p>In <code class="highlighter-rouge">config/application.rb</code>, add:</p>
 
-<p><code class="highlighter-rouge">
-config.assets.paths &lt;&lt; Rails.root.join('vendor', 'assets', 'bower_components')
-</code></p>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">config</span><span class="p">.</span><span class="nf">assets</span><span class="p">.</span><span class="nf">paths</span> <span class="o">&lt;&lt;</span> <span class="no">Rails</span><span class="p">.</span><span class="nf">root</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s1">'vendor'</span><span class="p">,</span> <span class="s1">'assets'</span><span class="p">,</span> <span class="s1">'bower_components'</span><span class="p">)</span></code></pre></figure>
 
 <p>This will ensure that Rails picks up asset files from where bower packages are
 installed.</p>
@@ -150,15 +144,11 @@ installed.</p>
 <p>If you wanna start using Bootstrap for example, in the <code class="highlighter-rouge">app/assets/stylesheets/application.css</code>,
 you can add:</p>
 
-<p><code class="highlighter-rouge">
-*= require bootstrap/dist/css/bootstrap
-</code></p>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="o">*=</span> <span class="nx">require</span> <span class="nx">bootstrap</span><span class="o">/</span><span class="nx">dist</span><span class="o">/</span><span class="nx">css</span><span class="o">/</span><span class="nx">bootstrap</span></code></pre></figure>
 
 <p>And in <code class="highlighter-rouge">app/assets/javascript/application.js</code>,</p>
 
-<p><code class="highlighter-rouge">
-//= require bootstrap/dist/js/bootstrap
-</code></p>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">//= require bootstrap/dist/js/bootstrap</span></code></pre></figure>
 
 <p>Make sure restart the Rails app to see the bower packages working with Rails.</p>
 
@@ -176,27 +166,23 @@ is trying to precompile assets.</p>
 
 <p>Create a file called: <code class="highlighter-rouge">.buildpacks</code> and add:</p>
 
-<p><code class="highlighter-rouge">
-https://github.com/heroku/heroku-buildpack-nodejs
-https://github.com/heroku/heroku-buildpack-ruby
-</code></p>
+<figure class="highlight"><pre><code class="language-text" data-lang="text">https://github.com/heroku/heroku-buildpack-nodejs
+https://github.com/heroku/heroku-buildpack-ruby</code></pre></figure>
 
 <p>Make sure that the ruby buildpack is the last one in the list.
 This will allow you to access the Rails console when running heroku run console.</p>
 
 <p>In the <code class="highlighter-rouge">package.json</code>, add a postinstall script. It should look like this.</p>
 
-<p>```
-{
-  …</p>
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="err">...</span><span class="w">
 
-<p>“scripts”: {
-    “postinstall”: “./node_modules/bower/bin/bower install”
-  }</p>
+  </span><span class="nt">"scripts"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"postinstall"</span><span class="p">:</span><span class="w"> </span><span class="s2">"./node_modules/bower/bin/bower install"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
 
-<p>…
-}
-```</p>
+  </span><span class="err">...</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
 
 <p>Now push to Heroku!</p>
 

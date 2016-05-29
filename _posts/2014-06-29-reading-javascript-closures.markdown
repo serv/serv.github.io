@@ -28,7 +28,7 @@ This is tldr for
       - But can call function parameters
 
 - Pure javascript example
-```javascript
+{% highlight js %}
 function showName(firstName, lastName) { 
   var nameIntro = "Your name is ";
 
@@ -40,9 +40,9 @@ function showName(firstName, lastName) { 
 } 
 
 showName("Michael", "Jackson"); // Your name is Michael Jackson 
-```
+{% endhighlight %}
 - jQuery example
-```javascript
+{% highlight js %}
 $(function() {
 
   var selections = [];
@@ -51,13 +51,13 @@ $(function() {
   });
 
 });
-```
+{% endhighlight %}
 
 ## Rules and side effects
 
 - Closures have access to the outer function’s variable even after the outer function returns
   - You can call inner function later in the program
-```javascript
+{% highlight js %}
 function celebrityName(firstName) {
     var nameIntro = "This celebrity is ";
    function lastName(theLastName) {
@@ -69,11 +69,11 @@ function celebrityName(firstName) {
 var mjName = celebrityName("Michael");
 
 mjName("Jackson");
-```
+{% endhighlight %}
 
 - Closures store references to the outer function’s variables
 
-```javascript
+{% highlight js %}
 function celebrityID () {
   var celebrityID = 999;
 
@@ -91,11 +91,11 @@ var mjID = celebrityID();
 mjID.getID(); // 999
 mjID.setID(567); // Changes the outer function's variable
 mjID.getID(); // 567: It returns the updated celebrityId variable 
-```
+{% endhighlight %}
 
 - Immediately Invoked Function Expression
 
-```javascript
+{% highlight js %}
 function celebrityIDCreator (theCelebrities) {
   var i;
   var uniqueID = 100;
@@ -131,4 +131,4 @@ var stalloneID = createIdForActionCelebs[0];
 
 var cruiseID = createIdForActionCelebs[1];
  console.log(cruiseID.id); // 101
-```
+{% endhighlight %}

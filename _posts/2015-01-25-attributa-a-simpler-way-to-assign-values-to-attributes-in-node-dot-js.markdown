@@ -14,7 +14,7 @@ in just one line.
 
 Did you ever have to do this?
 
-```js
+{% highlight js %}
 function User(data) {
   this.username = data.username;
   this.password = data.password;
@@ -24,17 +24,17 @@ function User(data) {
   // After a dozen more attributes...
   this.privacySetting = data.privacySetting;
 }
-```
+{% endhighlight %}
 
 ## Solution
 
 You can now do this instead!
 
-```js
+{% highlight js %}
 function User(data) {
   attributa(this, data);
 }
-```
+{% endhighlight %}
 
 The installation instructions and docs can be found in
 [the repository](https://github.com/serv/attributa).

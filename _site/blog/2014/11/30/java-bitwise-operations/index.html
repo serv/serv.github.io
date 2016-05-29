@@ -111,49 +111,45 @@
 
 <h2 id="example-1-getting-upper-case-for-a-letter">Example 1: Getting upper case for a letter</h2>
 
-<p>```java
-public class UpCase {
-  public static void main(String args[]) {
-    char ch;</p>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">UpCase</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="n">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+    <span class="kt">char</span> <span class="n">ch</span><span class="o">;</span>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>for(int i=0; i &lt; 10; i++) {
-  ch = (char) ('a' + i);
-  System.out.print(ch);
+    <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+      <span class="n">ch</span> <span class="o">=</span> <span class="o">(</span><span class="kt">char</span><span class="o">)</span> <span class="o">(</span><span class="sc">'a'</span> <span class="o">+</span> <span class="n">i</span><span class="o">);</span>
+      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">ch</span><span class="o">);</span>
 
-  ch = (char) ((int) ch &amp; 65503);
+      <span class="n">ch</span> <span class="o">=</span> <span class="o">(</span><span class="kt">char</span><span class="o">)</span> <span class="o">((</span><span class="kt">int</span><span class="o">)</span> <span class="n">ch</span> <span class="o">&amp;</span> <span class="mi">65503</span><span class="o">);</span>
 
-  System.out.print(ch + " ");
-}   } } ```
-</code></pre>
-</div>
+      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">ch</span> <span class="o">+</span> <span class="s">" "</span><span class="o">);</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
 
 <p>The value 65,503 used in the AND statement is the decimal representation of 1111 1111 1101 1111. Thus, the AND operation leaves all bits in ch unchanged except for the 6th one, which is set to 0.</p>
 
 <h2 id="iterating-through-bits">Iterating through bits</h2>
 
-<p><code class="highlighter-rouge">java
-for(int t = 128; t &gt; 0; t = t/2) {
-  // ...
-}
-</code></p>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">t</span> <span class="o">=</span> <span class="mi">128</span><span class="o">;</span> <span class="n">t</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">;</span> <span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="o">/</span><span class="mi">2</span><span class="o">)</span> <span class="o">{</span>
+  <span class="c1">// ...</span>
+<span class="o">}</span></code></pre></figure>
 
 <h2 id="example-2-getting-lower-case-for-a-letter">Example 2: Getting lower case for a letter</h2>
 
-<p>```java
-public class LowCase {
-  public static void main(String args[]) {
-    char ch;</p>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LowCase</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="n">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+    <span class="kt">char</span> <span class="n">ch</span><span class="o">;</span>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>for(int i = 0; i &lt; 10; i++) {
-  ch = (char) ('A' + i);
-  System.out.print(ch);
+    <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+      <span class="n">ch</span> <span class="o">=</span> <span class="o">(</span><span class="kt">char</span><span class="o">)</span> <span class="o">(</span><span class="sc">'A'</span> <span class="o">+</span> <span class="n">i</span><span class="o">);</span>
+      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">ch</span><span class="o">);</span>
 
-  ch = (char) ((int) ch | 32);
+      <span class="n">ch</span> <span class="o">=</span> <span class="o">(</span><span class="kt">char</span><span class="o">)</span> <span class="o">((</span><span class="kt">int</span><span class="o">)</span> <span class="n">ch</span> <span class="o">|</span> <span class="mi">32</span><span class="o">);</span>
 
-  System.out.print(ch + " ");
-}   } } ```
-</code></pre>
-</div>
+      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">ch</span> <span class="o">+</span> <span class="s">" "</span><span class="o">);</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
 
 <h2 id="shift-operators">Shift operators</h2>
 

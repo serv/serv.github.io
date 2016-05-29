@@ -86,15 +86,13 @@
   <li>Listens to events and react</li>
 </ul>
 
-<p>```js
-SearchView = Backbone.View.extend({
-  initialize: function(){
-    alert(“Alerts suck.”);
-  }
-});</p>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">SearchView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="na">initialize</span><span class="p">:</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="s2">"Alerts suck."</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
 
-<p>var search_view = new SearchView();
-```</p>
+<span class="kd">var</span> <span class="nx">search_view</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SearchView</span><span class="p">();</span></code></pre></figure>
 
 <h2 id="el-property"><code class="highlighter-rouge">el</code> property</h2>
 
@@ -103,20 +101,17 @@ SearchView = Backbone.View.extend({
   <li>Default: empty &lt;div&gt; element</li>
 </ul>
 
-<p>```js</p>
-<div id="search_container"></div>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"search_container"</span><span class="nt">&gt;&lt;/div&gt;</span>
 
-<script type="text/javascript">
-  SearchView = Backbone.View.extend({
-    initialize: function(){
-      alert("Alerts suck.");
-    }
-  });
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+  <span class="nx">SearchView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+    <span class="na">initialize</span><span class="p">:</span> <span class="kd">function</span><span class="p">(){</span>
+      <span class="nx">alert</span><span class="p">(</span><span class="s2">"Alerts suck."</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
 
-  var search_view = new SearchView({ el: $("#search_container") });
-</script>
-
-<p>```</p>
+  <span class="kd">var</span> <span class="nx">search_view</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SearchView</span><span class="p">({</span> <span class="na">el</span><span class="p">:</span> <span class="nx">$</span><span class="p">(</span><span class="s2">"#search_container"</span><span class="p">)</span> <span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span></code></pre></figure>
 
 <h2 id="loading-a-template">Loading a template</h2>
 
@@ -130,32 +125,29 @@ SearchView = Backbone.View.extend({
   </li>
 </ul>
 
-<p>```js
-<script type="text/template" id="search_template">
-  <label>Search</label>
-  <input type="text" id="search_input" />
-  <input type="button" id="search_button" value="Search" />
-</script></p>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/template"</span> <span class="na">id=</span><span class="s">"search_template"</span><span class="nt">&gt;</span>
+  <span class="o">&lt;</span><span class="nx">label</span><span class="o">&gt;</span><span class="nx">Search</span><span class="o">&lt;</span><span class="sr">/label</span><span class="err">&gt;
+</span>  <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text"</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"search_input"</span> <span class="o">/&gt;</span>
+  <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"button"</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"search_button"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"Search"</span> <span class="o">/&gt;</span>
+<span class="nt">&lt;/script&gt;</span>
 
-<div id="search_container"></div>
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"search_container"</span><span class="nt">&gt;&lt;/div&gt;</span>
 
-<script type="text/javascript">
-SearchView = Backbone.View.extend({
-  initialize: function(){
-    this.render();
-  },
-  render: function(){
-    // Compile the template using underscore
-    var template = _.template( $("#search_template").html(), {} );
-    // Load the compiled HTML into the Backbone "el"
-    this.$el.html( template );
-  }
-});
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+<span class="nx">SearchView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="na">initialize</span><span class="p">:</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span>
+  <span class="p">},</span>
+  <span class="na">render</span><span class="p">:</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="c1">// Compile the template using underscore</span>
+    <span class="kd">var</span> <span class="nx">template</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">template</span><span class="p">(</span> <span class="nx">$</span><span class="p">(</span><span class="s2">"#search_template"</span><span class="p">).</span><span class="nx">html</span><span class="p">(),</span> <span class="p">{}</span> <span class="p">);</span>
+    <span class="c1">// Load the compiled HTML into the Backbone "el"</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span> <span class="nx">template</span> <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
 
-var search_view = new SearchView({ el: $("#search_container") });
-</script>
-
-<p>```</p>
+<span class="kd">var</span> <span class="nx">search_view</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SearchView</span><span class="p">({</span> <span class="na">el</span><span class="p">:</span> <span class="nx">$</span><span class="p">(</span><span class="s2">"#search_container"</span><span class="p">)</span> <span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span></code></pre></figure>
 
 <h2 id="listen-for-events">Listen for events</h2>
 
@@ -164,38 +156,36 @@ var search_view = new SearchView({ el: $("#search_container") });
   <li>Even listen attached to child elements of <code class="highlighter-rouge">el</code></li>
 </ul>
 
-<p>```js
-<script type="text/template" id="search_template">
-  <label>&lt;%= search_label %&gt;</label>
-  <input type="text" id="search_input" />
-  <input type="button" id="search_button" value="Search" />
-</script></p>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/template"</span> <span class="na">id=</span><span class="s">"search_template"</span><span class="nt">&gt;</span>
+  <span class="o">&lt;</span><span class="nx">label</span><span class="o">&gt;&lt;%=</span> <span class="nx">search_label</span> <span class="o">%&gt;&lt;</span><span class="sr">/label</span><span class="err">&gt;
+</span>  <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text"</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"search_input"</span> <span class="o">/&gt;</span>
+  <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"button"</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"search_button"</span> <span class="nx">value</span><span class="o">=</span><span class="s2">"Search"</span> <span class="o">/&gt;</span>
+<span class="nt">&lt;/script&gt;</span>
 
-<div id="search_container"></div>
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"search_container"</span><span class="nt">&gt;&lt;/div&gt;</span>
 
-<script type="text/javascript">
-  SearchView = Backbone.View.extend({
-    initialize: function(){
-      this.render();
-    },
-    render: function(){
-      var variables = { search_label: "My Search" };
-      var template = _.template( $("#search_template").html(), variables );
-      this.$el.html( template );
-    },
-    events: {
-      "click input[type=button]": "doSearch"
-    },
-    doSearch: function( event ){
-      // Button clicked, you can access the element that was clicked with event.currentTarget
-      alert( "Search for " + $("#search_input").val() );
-    }
-  });
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+  <span class="nx">SearchView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+    <span class="na">initialize</span><span class="p">:</span> <span class="kd">function</span><span class="p">(){</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span>
+    <span class="p">},</span>
+    <span class="na">render</span><span class="p">:</span> <span class="kd">function</span><span class="p">(){</span>
+      <span class="kd">var</span> <span class="nx">variables</span> <span class="o">=</span> <span class="p">{</span> <span class="na">search_label</span><span class="p">:</span> <span class="s2">"My Search"</span> <span class="p">};</span>
+      <span class="kd">var</span> <span class="nx">template</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">template</span><span class="p">(</span> <span class="nx">$</span><span class="p">(</span><span class="s2">"#search_template"</span><span class="p">).</span><span class="nx">html</span><span class="p">(),</span> <span class="nx">variables</span> <span class="p">);</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span> <span class="nx">template</span> <span class="p">);</span>
+    <span class="p">},</span>
+    <span class="na">events</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">"click input[type=button]"</span><span class="p">:</span> <span class="s2">"doSearch"</span>
+    <span class="p">},</span>
+    <span class="na">doSearch</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">event</span> <span class="p">){</span>
+      <span class="c1">// Button clicked, you can access the element that was clicked with event.currentTarget</span>
+      <span class="nx">alert</span><span class="p">(</span> <span class="s2">"Search for "</span> <span class="o">+</span> <span class="nx">$</span><span class="p">(</span><span class="s2">"#search_input"</span><span class="p">).</span><span class="nx">val</span><span class="p">()</span> <span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
 
-  var search_view = new SearchView({ el: $("#search_container") });
-</script>
+  <span class="kd">var</span> <span class="nx">search_view</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SearchView</span><span class="p">({</span> <span class="na">el</span><span class="p">:</span> <span class="nx">$</span><span class="p">(</span><span class="s2">"#search_container"</span><span class="p">)</span> <span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span></code></pre></figure>
 
-<p>```</p>
 
   </div>
 

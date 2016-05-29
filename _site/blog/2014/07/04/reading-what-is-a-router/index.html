@@ -86,25 +86,23 @@
   <li>Example: http://example.com/#/pages/help</li>
 </ul>
 
-<p>```js
-<script>
-var AppRouter = Backbone.Router.extend({
-  routes: {
-    "*actions": "defaultRoute" // matches http://example.com/#anything-here
-  }
-});
-// Initiate the router
-var app_router = new AppRouter;</script></p>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script&gt;</span>
+<span class="kd">var</span> <span class="nx">AppRouter</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Router</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="na">routes</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"*actions"</span><span class="p">:</span> <span class="s2">"defaultRoute"</span> <span class="c1">// matches http://example.com/#anything-here</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+<span class="c1">// Initiate the router</span>
+<span class="kd">var</span> <span class="nx">app_router</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AppRouter</span><span class="p">;</span>
 
-<p>app_router.on(‘route:defaultRoute’, function(actions) {
-  alert(actions);
-});</p>
+<span class="nx">app_router</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'route:defaultRoute'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">actions</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">alert</span><span class="p">(</span><span class="nx">actions</span><span class="p">);</span>
+<span class="p">});</span>
 
-<p>// Start Backbone history a necessary step for bookmarkable URL’s
-Backbone.history.start();</p>
+<span class="c1">// Start Backbone history a necessary step for bookmarkable URL's</span>
+<span class="nx">Backbone</span><span class="p">.</span><span class="nx">history</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span>
 
-<p>&lt;/script&gt;
-```</p>
+<span class="nt">&lt;/script&gt;</span></code></pre></figure>
 
 <h2 id="dynamic-routing">Dynamic routing</h2>
 
@@ -112,28 +110,26 @@ Backbone.history.start();</p>
   <li>Example: http://example.com/#/posts/12</li>
 </ul>
 
-<p>```js
-<script>
-var AppRouter = Backbone.Router.extend({
-  routes: {
-    "posts/:id": "getPost",
-    "*actions": "defaultRoute"
-  }
-});</script></p>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script&gt;</span>
+<span class="kd">var</span> <span class="nx">AppRouter</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Router</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="na">routes</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"posts/:id"</span><span class="p">:</span> <span class="s2">"getPost"</span><span class="p">,</span>
+    <span class="s2">"*actions"</span><span class="p">:</span> <span class="s2">"defaultRoute"</span>
+  <span class="p">}</span>
+<span class="p">});</span>
 
-<p>var app_router = new AppRouter;
-app_router.on(‘route:getPost’, function (id) {
-  // Note the variable in the route definition being passed in here
-  alert( “Get post number “ + id );
-});
-app_router.on(‘route:defaultRoute’, function (actions) {
-  alert( actions );
-});</p>
+<span class="kd">var</span> <span class="nx">app_router</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AppRouter</span><span class="p">;</span>
+<span class="nx">app_router</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'route:getPost'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">id</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Note the variable in the route definition being passed in here</span>
+  <span class="nx">alert</span><span class="p">(</span> <span class="s2">"Get post number "</span> <span class="o">+</span> <span class="nx">id</span> <span class="p">);</span>
+<span class="p">});</span>
+<span class="nx">app_router</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'route:defaultRoute'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">actions</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">alert</span><span class="p">(</span> <span class="nx">actions</span> <span class="p">);</span>
+<span class="p">});</span>
 
-<p>Backbone.history.start();</p>
+<span class="nx">Backbone</span><span class="p">.</span><span class="nx">history</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span>
 
-<p>&lt;/script&gt;
-```</p>
+<span class="nt">&lt;/script&gt;</span></code></pre></figure>
 
 <h2 id="params-and-splats">“:params” and “*splats”</h2>
 
@@ -156,30 +152,29 @@ app_router.on(‘route:defaultRoute’, function (actions) {
   <li>These are passed as arguments</li>
 </ul>
 
-<p>```js
-var AppRouter = Backbone.Router.extend({
-  routes: {
-    “posts/:id”: “getPost”,
-    // <a href="http://example.com/#/posts/121">Example</a></p>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">AppRouter</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Router</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+  <span class="na">routes</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"posts/:id"</span><span class="p">:</span> <span class="s2">"getPost"</span><span class="p">,</span>
+    <span class="c1">// &lt;a href="http://example.com/#/posts/121"&gt;Example&lt;/a&gt;</span>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>"download/*path": "downloadFile",
-// &lt;a href="http://example.com/#/download/user/images/hey.gif"&gt;Download&lt;/a&gt;
+    <span class="s2">"download/*path"</span><span class="p">:</span> <span class="s2">"downloadFile"</span><span class="p">,</span>
+    <span class="c1">// &lt;a href="http://example.com/#/download/user/images/hey.gif"&gt;Download&lt;/a&gt;</span>
 
-":route/:action": "loadView",
-// &lt;a href="http://example.com/#/dashboard/graph"&gt;Load Route/Action View&lt;/a&gt;   }, });
-</code></pre>
-</div>
+    <span class="s2">":route/:action"</span><span class="p">:</span> <span class="s2">"loadView"</span><span class="p">,</span>
+    <span class="c1">// &lt;a href="http://example.com/#/dashboard/graph"&gt;Load Route/Action View&lt;/a&gt;</span>
+  <span class="p">},</span>
+<span class="p">});</span>
 
-<p>app_router.on(‘route:getPost’, function( id ){
-  alert(id); // 121
-});
-app_router.on(‘route:downloadFile’, function( path ){
-  alert(path); // user/images/hey.gif
-});
-app_router.on(‘route:loadView’, function( route, action ){
-  alert(route + “_” + action); // dashboard_graph
-});
-```</p>
+<span class="nx">app_router</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'route:getPost'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">id</span> <span class="p">){</span>
+  <span class="nx">alert</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span> <span class="c1">// 121</span>
+<span class="p">});</span>
+<span class="nx">app_router</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'route:downloadFile'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">path</span> <span class="p">){</span>
+  <span class="nx">alert</span><span class="p">(</span><span class="nx">path</span><span class="p">);</span> <span class="c1">// user/images/hey.gif</span>
+<span class="p">});</span>
+<span class="nx">app_router</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'route:loadView'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">route</span><span class="p">,</span> <span class="nx">action</span> <span class="p">){</span>
+  <span class="nx">alert</span><span class="p">(</span><span class="nx">route</span> <span class="o">+</span> <span class="s2">"_"</span> <span class="o">+</span> <span class="nx">action</span><span class="p">);</span> <span class="c1">// dashboard_graph</span>
+<span class="p">});</span></code></pre></figure>
+
 
   </div>
 

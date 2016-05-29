@@ -12,7 +12,7 @@ Reading [What is a collection?](http://backbonetutorials.com/what-is-a-collectio
 ## What is a collection
 
 - an ordered set of models
-```js
+{% highlight js %}
 var Song = Backbone.Model.extend({
   initialize: function(){
     console.log("Music is the answer");
@@ -22,11 +22,11 @@ var Song = Backbone.Model.extend({
 var Album = Backbone.Collection.extend({
   model: Song
 });
-```
+{% endhighlight %}
 
 ## Building a collection
 
-```js
+{% highlight js %}
 var Song = Backbone.Model.extend({
   defaults: {
     name: "Not specified",
@@ -47,4 +47,4 @@ var song3 = new Song({ name: "Talk It Over In Bed", artist: "OMC" });
 
 var myAlbum = new Album([ song1, song2, song3]);
 console.log( myAlbum.models ); // [song1, song2, song3]
-```
+{% endhighlight %}
