@@ -171,24 +171,22 @@ model.</p>
 <p>Now that we know what attributes are needed for models, we can
 build factories.</p>
 
-<p><code class="highlighter-rouge">ruby spec/factories/lists.rb
-FactoryGirl.define do
-  factory :list do
-    head  { head }
-    tail  { tail }
-    count { count }
-  end
-end
-</code></p>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># spec/factories/lists.rb</span>
+<span class="no">FactoryGirl</span><span class="p">.</span><span class="nf">define</span> <span class="k">do</span>
+  <span class="n">factory</span> <span class="ss">:list</span> <span class="k">do</span>
+    <span class="n">head</span>  <span class="p">{</span> <span class="n">head</span> <span class="p">}</span>
+    <span class="n">tail</span>  <span class="p">{</span> <span class="n">tail</span> <span class="p">}</span>
+    <span class="n">count</span> <span class="p">{</span> <span class="n">count</span> <span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></figure>
 
-<p><code class="highlighter-rouge">ruby spec/factories/nodes.rb
-FactoryGirl.define do
-  factory :node do
-    value { value }
-    point { point }
-  end
-end
-</code></p>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># spec/factories/nodes.rb</span>
+<span class="no">FactoryGirl</span><span class="p">.</span><span class="nf">define</span> <span class="k">do</span>
+  <span class="n">factory</span> <span class="ss">:node</span> <span class="k">do</span>
+    <span class="n">value</span> <span class="p">{</span> <span class="n">value</span> <span class="p">}</span>
+    <span class="n">point</span> <span class="p">{</span> <span class="n">point</span> <span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></figure>
 
 <p>Running the tests now should result in failure.</p>
 
@@ -196,52 +194,50 @@ end
 
 <p>Let’s write some tests for building list and node instantiations.</p>
 
-<p>``` ruby spec/models/list_spec.rb
-require ‘spec_helper’</p>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># spec/models/list_spec.rb</span>
+<span class="nb">require</span> <span class="s1">'spec_helper'</span>
 
-<p>describe List do
-  describe ‘instantiation’ do
-    let!(:list) { build(:list, head: nil, tail: nil, count: 0) }</p>
+<span class="n">describe</span> <span class="no">List</span> <span class="k">do</span>
+  <span class="n">describe</span> <span class="s1">'instantiation'</span> <span class="k">do</span>
+    <span class="n">let!</span><span class="p">(</span><span class="ss">:list</span><span class="p">)</span> <span class="p">{</span> <span class="n">build</span><span class="p">(</span><span class="ss">:list</span><span class="p">,</span> <span class="ss">head: </span><span class="kp">nil</span><span class="p">,</span> <span class="ss">tail: </span><span class="kp">nil</span><span class="p">,</span> <span class="ss">count: </span><span class="mi">0</span><span class="p">)</span> <span class="p">}</span>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>it 'instantiates a list' do
-  expect(list.class.name).to eq("List")
-end   end
-</code></pre>
-</div>
+    <span class="n">it</span> <span class="s1">'instantiates a list'</span> <span class="k">do</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">list</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">name</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="s2">"List"</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
 
-<p>describe ‘#new’ do
-    let!(:list) { List.new }</p>
+  <span class="n">describe</span> <span class="s1">'#new'</span> <span class="k">do</span>
+    <span class="n">let!</span><span class="p">(</span><span class="ss">:list</span><span class="p">)</span> <span class="p">{</span> <span class="no">List</span><span class="p">.</span><span class="nf">new</span> <span class="p">}</span>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>it 'build a list' do
-  expect(list.head).to eq(nil)
-  expect(list.tail).to eq(nil)
-  expect(list.count).to eq(0)
-end   end end ```
-</code></pre>
-</div>
+    <span class="n">it</span> <span class="s1">'build a list'</span> <span class="k">do</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">list</span><span class="p">.</span><span class="nf">head</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="kp">nil</span><span class="p">)</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">list</span><span class="p">.</span><span class="nf">tail</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="kp">nil</span><span class="p">)</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">list</span><span class="p">.</span><span class="nf">count</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></figure>
 
-<p>``` ruby spec/models/node_spec.rb
-require ‘spec_helper’</p>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># spec/models/node_spec.rb</span>
+<span class="nb">require</span> <span class="s1">'spec_helper'</span>
 
-<p>describe Node do
-  describe ‘instantiation’ do
-    let!(:node) { build(:node, value: 1, point: nil) }</p>
+<span class="n">describe</span> <span class="no">Node</span> <span class="k">do</span>
+  <span class="n">describe</span> <span class="s1">'instantiation'</span> <span class="k">do</span>
+    <span class="n">let!</span><span class="p">(</span><span class="ss">:node</span><span class="p">)</span> <span class="p">{</span> <span class="n">build</span><span class="p">(</span><span class="ss">:node</span><span class="p">,</span> <span class="ss">value: </span><span class="mi">1</span><span class="p">,</span> <span class="ss">point: </span><span class="kp">nil</span><span class="p">)</span> <span class="p">}</span>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>it 'instantiates a list' do
-  expect(node.class.name).to eq("Node")
-end   end
-</code></pre>
-</div>
+    <span class="n">it</span> <span class="s1">'instantiates a list'</span> <span class="k">do</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">name</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="s2">"Node"</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
 
-<p>describe ‘#new’ do
-    let!(:node) { Node.new }</p>
+  <span class="n">describe</span> <span class="s1">'#new'</span> <span class="k">do</span>
+    <span class="n">let!</span><span class="p">(</span><span class="ss">:node</span><span class="p">)</span> <span class="p">{</span> <span class="no">Node</span><span class="p">.</span><span class="nf">new</span> <span class="p">}</span>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>it 'build a list' do
-  expect(node.value).to eq(nil)
-  expect(node.point).to eq(nil)
-end   end end ```
-</code></pre>
-</div>
+    <span class="n">it</span> <span class="s1">'build a list'</span> <span class="k">do</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="nf">value</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="kp">nil</span><span class="p">)</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="nf">point</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="kp">nil</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></figure>
 
 <p>If you run the tests now, they should still fail. This is because we
 haven’t written <code class="highlighter-rouge">new</code> methods for the models yet.</p>
@@ -250,420 +246,401 @@ haven’t written <code class="highlighter-rouge">new</code> methods for the mod
 
 <p>Now we will write new methods and attributes for the models.</p>
 
-<p>``` ruby lib/models/node.rb
-class Node
-  attr_accessor :value, :point</p>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># lib/models/node.rb</span>
+<span class="k">class</span> <span class="nc">Node</span>
+  <span class="kp">attr_accessor</span> <span class="ss">:value</span><span class="p">,</span> <span class="ss">:point</span>
 
-<p>def initialize
-    @value = nil
-    @point = nil
-  end
-end
-```</p>
+  <span class="k">def</span> <span class="nf">initialize</span>
+    <span class="vi">@value</span> <span class="o">=</span> <span class="kp">nil</span>
+    <span class="vi">@point</span> <span class="o">=</span> <span class="kp">nil</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></figure>
 
-<p>``` ruby lib/models/list.rb
-class List
-  attr_accessor :head, :tail, :count</p>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># lib/models/list.rb</span>
+<span class="k">class</span> <span class="nc">List</span>
+  <span class="kp">attr_accessor</span> <span class="ss">:head</span><span class="p">,</span> <span class="ss">:tail</span><span class="p">,</span> <span class="ss">:count</span>
 
-<p>def initialize
-    @head = nil
-    @tail = nil
-    @count = 0
-  end
-end
-```</p>
+  <span class="k">def</span> <span class="nf">initialize</span>
+    <span class="vi">@head</span> <span class="o">=</span> <span class="kp">nil</span>
+    <span class="vi">@tail</span> <span class="o">=</span> <span class="kp">nil</span>
+    <span class="vi">@count</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></figure>
 
 <h3 id="all-methods-with-tests">All Methods with Tests</h3>
 
-<p>``` ruby spec/models/list_spec.rb
-require ‘spec_helper’</p>
-
-<p>describe List do
-  describe ‘instantiation’ do
-    let!(:list) { build(:list, head: nil, tail: nil, count: 0) }</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>it 'instantiates a list' do
-  expect(list.class.name).to eq("List")
-end   end
-</code></pre>
-</div>
-
-<p>describe ‘#new’ do
-    let!(:list) { List.new }</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>it 'build a list' do
-  expect(list.head).to eq(nil)
-  expect(list.tail).to eq(nil)
-  expect(list.count).to eq(0)
-end   end
-</code></pre>
-</div>
-
-<p>describe ‘#push_head(value)’ do
-    let!(:list) { build(:list, head: nil, tail: nil, count: 0) }</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>it 'no node in the list' do
-  random_value = rand(10)
-  list.push_head(random_value)
-  list.head.value.should == random_value
-end
-
-it 'one node in the list already' do
-  random_value_1 = rand(10)
-  random_value_2 = rand(10)
-  list.push_head(random_value_1)
-  list.push_head(random_value_2)
-  list.head.value.should == random_value_2
-  list.tail.value.should == random_value_1
-end
-
-it 'many nodes in the list already' do
-  tail = rand(10)
-  head = rand(10)
-  list.push_head(tail)
-  list.push_head(rand(10))
-  list.push_head(rand(10))
-  list.push_head(head)
-  list.head.value.should == head
-  list.tail.value.should == tail
-end
-
-it 'increments count' do
-  list.count.should == 0
-  list.push_head(rand(10))
-  list.push_head(rand(10))
-  list.count.should == 2
-  list.push_head(rand(10))
-  list.count.should == 3
-end   end
-</code></pre>
-</div>
-
-<p>describe ‘#push_tail(value)’ do
-    let!(:list) { build(:list, head: nil, tail: nil, count: 0) }</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>it 'no node in the list' do
-  random_value = rand(10)
-  list.push_tail(random_value)
-  list.head.value.should == random_value
-  list.tail.value.should == random_value
-end
-
-it 'one node in the list already' do
-  random_value_1 = rand(10)
-  random_value_2 = rand(10)
-  list.push_tail(random_value_1)
-  list.push_tail(random_value_2)
-  list.head.value.should == random_value_1
-  list.tail.value.should == random_value_2
-end
-
-it 'many nodes in the list already' do
-  tail = rand(10)
-  head = rand(10)
-  list.push_tail(head)
-  list.push_tail(rand(10))
-  list.push_tail(rand(10))
-  list.push_tail(tail)
-  list.head.value.should == head
-  list.tail.value.should == tail
-end
-
-it 'increments count' do
-  list.count.should == 0
-  list.push_tail(rand(10))
-  list.push_tail(rand(10))
-  list.count.should == 2
-  list.push_tail(rand(10))
-  list.count.should == 3
-end   end
-</code></pre>
-</div>
-
-<p>describe ‘#pop_head’ do
-    let!(:list) { build(:list, head: nil, tail: nil, count: 0) }</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>it 'no node in the list' do
-  list.pop_head.should == false
-end
-
-it 'one node in the list already' do
-  random_value_1 = rand(10)
-  list.push_tail(random_value_1)
-  list.head.value.should == random_value_1
-  list.tail.value.should == random_value_1
-  list.pop_head.should == random_value_1
-  list.count.should == 0
-end
-
-it 'many nodes in the list already' do
-  tail = rand(10)
-  head = rand(10)
-  list.push_tail(head)
-  list.push_tail(tail)
-  list.head.value.should == head
-  list.tail.value.should == tail
-
-  list.pop_head.should == head
-  list.count.should == 1
-  list.head.value.should == tail
-  list.tail.value.should == tail
-end   end
-</code></pre>
-</div>
-
-<p>describe ‘#pop_tail’ do
-    let!(:list) { build(:list, head: nil, tail: nil, count: 0) }</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>it 'no node in the list' do
-  list.pop_tail.should == false
-end
-
-it 'one node in the list already' do
-  random_value_1 = rand(10)
-  list.push_tail(random_value_1)
-  list.head.value.should == random_value_1
-  list.tail.value.should == random_value_1
-  list.pop_tail.should == random_value_1
-  list.count.should == 0
-end
-
-it 'many nodes in the list already' do
-  tail = 1
-  head = 2
-  list.push_head(head)
-  list.push_tail(tail)
-  list.head.value.should == head
-  list.tail.value.should == tail
-
-  list.pop_tail.should == tail
-  list.count.should == 1
-  list.head.value.should == head
-  list.tail.value.should == tail
-end   end
-</code></pre>
-</div>
-
-<p>describe ‘#nodes’ do
-    let!(:list) { build(:list, head: nil, tail: nil, count: 0) }</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>it 'prints lists' do
-  nodes = []
-
-  5.times do |i|
-    x = rand(5)
-    nodes &lt;&lt; x
-    list.push_tail(x)
-  end
-
-  list.nodes.should == nodes
-end   end
-</code></pre>
-</div>
-
-<p>describe ‘#reverse’ do
-    let!(:list) { build(:list, head: nil, tail: nil, count: 0) }</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>it 'reverses list with many nodes' do
-  nodes = [1,2,3,4,5]
-
-  nodes.each do |n|
-    list.push_tail(n)
-  end
-
-  list.reverse.nodes.should == nodes.reverse
-end
-
-it 'reverses list with one node' do
-  nodes = [1]
-
-  nodes.each do |n|
-    list.push_tail(n)
-  end
-
-  list.reverse.nodes.should == nodes.reverse
-end
-
-it 'reverses list with no node' do
-  nodes = []
-
-  nodes.each do |n|
-    list.push_tail(n)
-  end
-
-  list.reverse.should == false
-end   end
-</code></pre>
-</div>
-
-<p>describe ‘#search(value)’ do
-    let!(:list) { build(:list, head: nil, tail: nil, count: 0) }</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>it 'search a node in a list with no nodes' do
-  list.search(1).should == false
-end
-
-it 'search a node in a list' do
-  nodes = [1,2,3,4,5]
-
-  nodes.each do |n|
-    list.push_tail(n)
-  end
-
-  list.search(4).value.should == 4
-  list.search(6).should == false
-end   end end
-</code></pre>
-</div>
-
-<p>```</p>
-
-<p>``` ruby lib/models/list.rb
-class List
-  attr_accessor :head, :tail, :count</p>
-
-<p>def initialize
-    @head = nil
-    @tail = nil
-    @count = 0
-  end</p>
-
-<p># Push a tail node
-  def push_head(value)
-    node = Node.new
-    node.value = value</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>if @count == 0
-  @head = node
-  @tail = node
-  node.point = nil
-else
-  node.point = @head
-  @head = node
-end
-@count += 1   end
-</code></pre>
-</div>
-
-<p># Push a head node
-  def push_tail(value)
-    node = Node.new
-    node.value = value</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>if @count == 0
-  @head = node
-  @tail = node
-  node.point = nil
-else
-  @tail.point = node
-  @tail = node
-  node.point = nil
-end
-
-@count += 1   end
-</code></pre>
-</div>
-
-<p># Get head value and delete head node
-  def pop_head
-    return false if @count &lt; 1</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>pop = @head.value
-@head = @head.point
-@count -= 1
-pop   end
-</code></pre>
-</div>
-
-<p># Get tail value and delete tail node
-  def pop_tail
-    return false if @count &lt; 1</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>pop = @tail.value
-prev = nil
-current = @head
-
-while current
-  prev = current
-  current = current.point
-end
-
-@tail = prev
-prev.point = nil
-
-@count -= 1
-pop   end
-</code></pre>
-</div>
-
-<p># Returns all nodes in a list
-  def nodes
-    return false if @count &lt; 1</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>current = @head
-str = []
-
-while current
-  str &lt;&lt; current.value
-  current = current.point
-end
-
-str   end
-</code></pre>
-</div>
-
-<p># Prints all nodes in a list
-  def print
-    puts nodes.join(‘-‘)
-  end</p>
-
-<p># Reverse a list
-  def reverse
-    if @count &lt; 1
-      false
-    elsif @count == 1
-      self
-    else
-      first = nil
-      second = @head</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>  while second
-    temp = second.point
-
-    second.point = first
-    first = second
-
-    second = temp
-  end
-
-  @head.point = nil
-  t_head = @head
-  @head = @tail
-  @tail = t_head
-
-  self
-end   end
-</code></pre>
-</div>
-
-<p># Searches a value in a list
-  def search(value)
-    if @count &lt; 1
-      false
-    else
-      current = @head</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>  while current
-    return current if value == current.value
-    current = current.point
-  end
-
-  false
-end   end end
-</code></pre>
-</div>
-
-<p>```</p>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># spec/models/list_spec.rb</span>
+<span class="nb">require</span> <span class="s1">'spec_helper'</span>
+
+<span class="n">describe</span> <span class="no">List</span> <span class="k">do</span>
+  <span class="n">describe</span> <span class="s1">'instantiation'</span> <span class="k">do</span>
+    <span class="n">let!</span><span class="p">(</span><span class="ss">:list</span><span class="p">)</span> <span class="p">{</span> <span class="n">build</span><span class="p">(</span><span class="ss">:list</span><span class="p">,</span> <span class="ss">head: </span><span class="kp">nil</span><span class="p">,</span> <span class="ss">tail: </span><span class="kp">nil</span><span class="p">,</span> <span class="ss">count: </span><span class="mi">0</span><span class="p">)</span> <span class="p">}</span>
+
+    <span class="n">it</span> <span class="s1">'instantiates a list'</span> <span class="k">do</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">list</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">name</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="s2">"List"</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="n">describe</span> <span class="s1">'#new'</span> <span class="k">do</span>
+    <span class="n">let!</span><span class="p">(</span><span class="ss">:list</span><span class="p">)</span> <span class="p">{</span> <span class="no">List</span><span class="p">.</span><span class="nf">new</span> <span class="p">}</span>
+
+    <span class="n">it</span> <span class="s1">'build a list'</span> <span class="k">do</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">list</span><span class="p">.</span><span class="nf">head</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="kp">nil</span><span class="p">)</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">list</span><span class="p">.</span><span class="nf">tail</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="kp">nil</span><span class="p">)</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">list</span><span class="p">.</span><span class="nf">count</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="n">describe</span> <span class="s1">'#push_head(value)'</span> <span class="k">do</span>
+    <span class="n">let!</span><span class="p">(</span><span class="ss">:list</span><span class="p">)</span> <span class="p">{</span> <span class="n">build</span><span class="p">(</span><span class="ss">:list</span><span class="p">,</span> <span class="ss">head: </span><span class="kp">nil</span><span class="p">,</span> <span class="ss">tail: </span><span class="kp">nil</span><span class="p">,</span> <span class="ss">count: </span><span class="mi">0</span><span class="p">)</span> <span class="p">}</span>
+
+    <span class="n">it</span> <span class="s1">'no node in the list'</span> <span class="k">do</span>
+      <span class="n">random_value</span> <span class="o">=</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">push_head</span><span class="p">(</span><span class="n">random_value</span><span class="p">)</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">head</span><span class="p">.</span><span class="nf">value</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="n">random_value</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="s1">'one node in the list already'</span> <span class="k">do</span>
+      <span class="n">random_value_1</span> <span class="o">=</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+      <span class="n">random_value_2</span> <span class="o">=</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">push_head</span><span class="p">(</span><span class="n">random_value_1</span><span class="p">)</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">push_head</span><span class="p">(</span><span class="n">random_value_2</span><span class="p">)</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">head</span><span class="p">.</span><span class="nf">value</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="n">random_value_2</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">tail</span><span class="p">.</span><span class="nf">value</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="n">random_value_1</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="s1">'many nodes in the list already'</span> <span class="k">do</span>
+      <span class="n">tail</span> <span class="o">=</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+      <span class="n">head</span> <span class="o">=</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">push_head</span><span class="p">(</span><span class="n">tail</span><span class="p">)</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">push_head</span><span class="p">(</span><span class="nb">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">push_head</span><span class="p">(</span><span class="nb">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">push_head</span><span class="p">(</span><span class="n">head</span><span class="p">)</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">head</span><span class="p">.</span><span class="nf">value</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="n">head</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">tail</span><span class="p">.</span><span class="nf">value</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="n">tail</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="s1">'increments count'</span> <span class="k">do</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">count</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="mi">0</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">push_head</span><span class="p">(</span><span class="nb">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">push_head</span><span class="p">(</span><span class="nb">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">count</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="mi">2</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">push_head</span><span class="p">(</span><span class="nb">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">count</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="mi">3</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="n">describe</span> <span class="s1">'#push_tail(value)'</span> <span class="k">do</span>
+    <span class="n">let!</span><span class="p">(</span><span class="ss">:list</span><span class="p">)</span> <span class="p">{</span> <span class="n">build</span><span class="p">(</span><span class="ss">:list</span><span class="p">,</span> <span class="ss">head: </span><span class="kp">nil</span><span class="p">,</span> <span class="ss">tail: </span><span class="kp">nil</span><span class="p">,</span> <span class="ss">count: </span><span class="mi">0</span><span class="p">)</span> <span class="p">}</span>
+
+    <span class="n">it</span> <span class="s1">'no node in the list'</span> <span class="k">do</span>
+      <span class="n">random_value</span> <span class="o">=</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">push_tail</span><span class="p">(</span><span class="n">random_value</span><span class="p">)</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">head</span><span class="p">.</span><span class="nf">value</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="n">random_value</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">tail</span><span class="p">.</span><span class="nf">value</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="n">random_value</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="s1">'one node in the list already'</span> <span class="k">do</span>
+      <span class="n">random_value_1</span> <span class="o">=</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+      <span class="n">random_value_2</span> <span class="o">=</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">push_tail</span><span class="p">(</span><span class="n">random_value_1</span><span class="p">)</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">push_tail</span><span class="p">(</span><span class="n">random_value_2</span><span class="p">)</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">head</span><span class="p">.</span><span class="nf">value</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="n">random_value_1</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">tail</span><span class="p">.</span><span class="nf">value</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="n">random_value_2</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="s1">'many nodes in the list already'</span> <span class="k">do</span>
+      <span class="n">tail</span> <span class="o">=</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+      <span class="n">head</span> <span class="o">=</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">push_tail</span><span class="p">(</span><span class="n">head</span><span class="p">)</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">push_tail</span><span class="p">(</span><span class="nb">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">push_tail</span><span class="p">(</span><span class="nb">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">push_tail</span><span class="p">(</span><span class="n">tail</span><span class="p">)</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">head</span><span class="p">.</span><span class="nf">value</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="n">head</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">tail</span><span class="p">.</span><span class="nf">value</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="n">tail</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="s1">'increments count'</span> <span class="k">do</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">count</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="mi">0</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">push_tail</span><span class="p">(</span><span class="nb">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">push_tail</span><span class="p">(</span><span class="nb">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">count</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="mi">2</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">push_tail</span><span class="p">(</span><span class="nb">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">count</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="mi">3</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="n">describe</span> <span class="s1">'#pop_head'</span> <span class="k">do</span>
+    <span class="n">let!</span><span class="p">(</span><span class="ss">:list</span><span class="p">)</span> <span class="p">{</span> <span class="n">build</span><span class="p">(</span><span class="ss">:list</span><span class="p">,</span> <span class="ss">head: </span><span class="kp">nil</span><span class="p">,</span> <span class="ss">tail: </span><span class="kp">nil</span><span class="p">,</span> <span class="ss">count: </span><span class="mi">0</span><span class="p">)</span> <span class="p">}</span>
+
+    <span class="n">it</span> <span class="s1">'no node in the list'</span> <span class="k">do</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">pop_head</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="kp">false</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="s1">'one node in the list already'</span> <span class="k">do</span>
+      <span class="n">random_value_1</span> <span class="o">=</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">push_tail</span><span class="p">(</span><span class="n">random_value_1</span><span class="p">)</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">head</span><span class="p">.</span><span class="nf">value</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="n">random_value_1</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">tail</span><span class="p">.</span><span class="nf">value</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="n">random_value_1</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">pop_head</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="n">random_value_1</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">count</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="s1">'many nodes in the list already'</span> <span class="k">do</span>
+      <span class="n">tail</span> <span class="o">=</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+      <span class="n">head</span> <span class="o">=</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">push_tail</span><span class="p">(</span><span class="n">head</span><span class="p">)</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">push_tail</span><span class="p">(</span><span class="n">tail</span><span class="p">)</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">head</span><span class="p">.</span><span class="nf">value</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="n">head</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">tail</span><span class="p">.</span><span class="nf">value</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="n">tail</span>
+
+      <span class="n">list</span><span class="p">.</span><span class="nf">pop_head</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="n">head</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">count</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="mi">1</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">head</span><span class="p">.</span><span class="nf">value</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="n">tail</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">tail</span><span class="p">.</span><span class="nf">value</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="n">tail</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="n">describe</span> <span class="s1">'#pop_tail'</span> <span class="k">do</span>
+    <span class="n">let!</span><span class="p">(</span><span class="ss">:list</span><span class="p">)</span> <span class="p">{</span> <span class="n">build</span><span class="p">(</span><span class="ss">:list</span><span class="p">,</span> <span class="ss">head: </span><span class="kp">nil</span><span class="p">,</span> <span class="ss">tail: </span><span class="kp">nil</span><span class="p">,</span> <span class="ss">count: </span><span class="mi">0</span><span class="p">)</span> <span class="p">}</span>
+
+    <span class="n">it</span> <span class="s1">'no node in the list'</span> <span class="k">do</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">pop_tail</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="kp">false</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="s1">'one node in the list already'</span> <span class="k">do</span>
+      <span class="n">random_value_1</span> <span class="o">=</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">push_tail</span><span class="p">(</span><span class="n">random_value_1</span><span class="p">)</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">head</span><span class="p">.</span><span class="nf">value</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="n">random_value_1</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">tail</span><span class="p">.</span><span class="nf">value</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="n">random_value_1</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">pop_tail</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="n">random_value_1</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">count</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="s1">'many nodes in the list already'</span> <span class="k">do</span>
+      <span class="n">tail</span> <span class="o">=</span> <span class="mi">1</span>
+      <span class="n">head</span> <span class="o">=</span> <span class="mi">2</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">push_head</span><span class="p">(</span><span class="n">head</span><span class="p">)</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">push_tail</span><span class="p">(</span><span class="n">tail</span><span class="p">)</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">head</span><span class="p">.</span><span class="nf">value</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="n">head</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">tail</span><span class="p">.</span><span class="nf">value</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="n">tail</span>
+
+      <span class="n">list</span><span class="p">.</span><span class="nf">pop_tail</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="n">tail</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">count</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="mi">1</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">head</span><span class="p">.</span><span class="nf">value</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="n">head</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">tail</span><span class="p">.</span><span class="nf">value</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="n">tail</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="n">describe</span> <span class="s1">'#nodes'</span> <span class="k">do</span>
+    <span class="n">let!</span><span class="p">(</span><span class="ss">:list</span><span class="p">)</span> <span class="p">{</span> <span class="n">build</span><span class="p">(</span><span class="ss">:list</span><span class="p">,</span> <span class="ss">head: </span><span class="kp">nil</span><span class="p">,</span> <span class="ss">tail: </span><span class="kp">nil</span><span class="p">,</span> <span class="ss">count: </span><span class="mi">0</span><span class="p">)</span> <span class="p">}</span>
+
+    <span class="n">it</span> <span class="s1">'prints lists'</span> <span class="k">do</span>
+      <span class="n">nodes</span> <span class="o">=</span> <span class="p">[]</span>
+
+      <span class="mi">5</span><span class="p">.</span><span class="nf">times</span> <span class="k">do</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">nodes</span> <span class="o">&lt;&lt;</span> <span class="n">x</span>
+        <span class="n">list</span><span class="p">.</span><span class="nf">push_tail</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+      <span class="k">end</span>
+
+      <span class="n">list</span><span class="p">.</span><span class="nf">nodes</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="n">nodes</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="n">describe</span> <span class="s1">'#reverse'</span> <span class="k">do</span>
+    <span class="n">let!</span><span class="p">(</span><span class="ss">:list</span><span class="p">)</span> <span class="p">{</span> <span class="n">build</span><span class="p">(</span><span class="ss">:list</span><span class="p">,</span> <span class="ss">head: </span><span class="kp">nil</span><span class="p">,</span> <span class="ss">tail: </span><span class="kp">nil</span><span class="p">,</span> <span class="ss">count: </span><span class="mi">0</span><span class="p">)</span> <span class="p">}</span>
+
+    <span class="n">it</span> <span class="s1">'reverses list with many nodes'</span> <span class="k">do</span>
+      <span class="n">nodes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+
+      <span class="n">nodes</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">n</span><span class="o">|</span>
+        <span class="n">list</span><span class="p">.</span><span class="nf">push_tail</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+      <span class="k">end</span>
+
+      <span class="n">list</span><span class="p">.</span><span class="nf">reverse</span><span class="p">.</span><span class="nf">nodes</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="n">nodes</span><span class="p">.</span><span class="nf">reverse</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="s1">'reverses list with one node'</span> <span class="k">do</span>
+      <span class="n">nodes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+      <span class="n">nodes</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">n</span><span class="o">|</span>
+        <span class="n">list</span><span class="p">.</span><span class="nf">push_tail</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+      <span class="k">end</span>
+
+      <span class="n">list</span><span class="p">.</span><span class="nf">reverse</span><span class="p">.</span><span class="nf">nodes</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="n">nodes</span><span class="p">.</span><span class="nf">reverse</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="s1">'reverses list with no node'</span> <span class="k">do</span>
+      <span class="n">nodes</span> <span class="o">=</span> <span class="p">[]</span>
+
+      <span class="n">nodes</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">n</span><span class="o">|</span>
+        <span class="n">list</span><span class="p">.</span><span class="nf">push_tail</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+      <span class="k">end</span>
+
+      <span class="n">list</span><span class="p">.</span><span class="nf">reverse</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="kp">false</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="n">describe</span> <span class="s1">'#search(value)'</span> <span class="k">do</span>
+    <span class="n">let!</span><span class="p">(</span><span class="ss">:list</span><span class="p">)</span> <span class="p">{</span> <span class="n">build</span><span class="p">(</span><span class="ss">:list</span><span class="p">,</span> <span class="ss">head: </span><span class="kp">nil</span><span class="p">,</span> <span class="ss">tail: </span><span class="kp">nil</span><span class="p">,</span> <span class="ss">count: </span><span class="mi">0</span><span class="p">)</span> <span class="p">}</span>
+
+    <span class="n">it</span> <span class="s1">'search a node in a list with no nodes'</span> <span class="k">do</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">search</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nf">should</span> <span class="o">==</span> <span class="kp">false</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="s1">'search a node in a list'</span> <span class="k">do</span>
+      <span class="n">nodes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+
+      <span class="n">nodes</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">n</span><span class="o">|</span>
+        <span class="n">list</span><span class="p">.</span><span class="nf">push_tail</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+      <span class="k">end</span>
+
+      <span class="n">list</span><span class="p">.</span><span class="nf">search</span><span class="p">(</span><span class="mi">4</span><span class="p">).</span><span class="nf">value</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="mi">4</span>
+      <span class="n">list</span><span class="p">.</span><span class="nf">search</span><span class="p">(</span><span class="mi">6</span><span class="p">).</span><span class="nf">should</span> <span class="o">==</span> <span class="kp">false</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># lib/models/list.rb</span>
+<span class="k">class</span> <span class="nc">List</span>
+  <span class="kp">attr_accessor</span> <span class="ss">:head</span><span class="p">,</span> <span class="ss">:tail</span><span class="p">,</span> <span class="ss">:count</span>
+
+  <span class="k">def</span> <span class="nf">initialize</span>
+    <span class="vi">@head</span> <span class="o">=</span> <span class="kp">nil</span>
+    <span class="vi">@tail</span> <span class="o">=</span> <span class="kp">nil</span>
+    <span class="vi">@count</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">end</span>
+
+  <span class="c1"># Push a tail node</span>
+  <span class="k">def</span> <span class="nf">push_head</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="n">node</span> <span class="o">=</span> <span class="no">Node</span><span class="p">.</span><span class="nf">new</span>
+    <span class="n">node</span><span class="p">.</span><span class="nf">value</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="k">if</span> <span class="vi">@count</span> <span class="o">==</span> <span class="mi">0</span>
+      <span class="vi">@head</span> <span class="o">=</span> <span class="n">node</span>
+      <span class="vi">@tail</span> <span class="o">=</span> <span class="n">node</span>
+      <span class="n">node</span><span class="p">.</span><span class="nf">point</span> <span class="o">=</span> <span class="kp">nil</span>
+    <span class="k">else</span>
+      <span class="n">node</span><span class="p">.</span><span class="nf">point</span> <span class="o">=</span> <span class="vi">@head</span>
+      <span class="vi">@head</span> <span class="o">=</span> <span class="n">node</span>
+    <span class="k">end</span>
+    <span class="vi">@count</span> <span class="o">+=</span> <span class="mi">1</span>
+  <span class="k">end</span>
+
+  <span class="c1"># Push a head node</span>
+  <span class="k">def</span> <span class="nf">push_tail</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="n">node</span> <span class="o">=</span> <span class="no">Node</span><span class="p">.</span><span class="nf">new</span>
+    <span class="n">node</span><span class="p">.</span><span class="nf">value</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="k">if</span> <span class="vi">@count</span> <span class="o">==</span> <span class="mi">0</span>
+      <span class="vi">@head</span> <span class="o">=</span> <span class="n">node</span>
+      <span class="vi">@tail</span> <span class="o">=</span> <span class="n">node</span>
+      <span class="n">node</span><span class="p">.</span><span class="nf">point</span> <span class="o">=</span> <span class="kp">nil</span>
+    <span class="k">else</span>
+      <span class="vi">@tail</span><span class="p">.</span><span class="nf">point</span> <span class="o">=</span> <span class="n">node</span>
+      <span class="vi">@tail</span> <span class="o">=</span> <span class="n">node</span>
+      <span class="n">node</span><span class="p">.</span><span class="nf">point</span> <span class="o">=</span> <span class="kp">nil</span>
+    <span class="k">end</span>
+
+    <span class="vi">@count</span> <span class="o">+=</span> <span class="mi">1</span>
+  <span class="k">end</span>
+
+  <span class="c1"># Get head value and delete head node</span>
+  <span class="k">def</span> <span class="nf">pop_head</span>
+    <span class="k">return</span> <span class="kp">false</span> <span class="k">if</span> <span class="vi">@count</span> <span class="o">&lt;</span> <span class="mi">1</span>
+
+    <span class="n">pop</span> <span class="o">=</span> <span class="vi">@head</span><span class="p">.</span><span class="nf">value</span>
+    <span class="vi">@head</span> <span class="o">=</span> <span class="vi">@head</span><span class="p">.</span><span class="nf">point</span>
+    <span class="vi">@count</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="n">pop</span>
+  <span class="k">end</span>
+
+  <span class="c1"># Get tail value and delete tail node</span>
+  <span class="k">def</span> <span class="nf">pop_tail</span>
+    <span class="k">return</span> <span class="kp">false</span> <span class="k">if</span> <span class="vi">@count</span> <span class="o">&lt;</span> <span class="mi">1</span>
+
+    <span class="n">pop</span> <span class="o">=</span> <span class="vi">@tail</span><span class="p">.</span><span class="nf">value</span>
+    <span class="n">prev</span> <span class="o">=</span> <span class="kp">nil</span>
+    <span class="n">current</span> <span class="o">=</span> <span class="vi">@head</span>
+
+    <span class="k">while</span> <span class="n">current</span>
+      <span class="n">prev</span> <span class="o">=</span> <span class="n">current</span>
+      <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="p">.</span><span class="nf">point</span>
+    <span class="k">end</span>
+
+    <span class="vi">@tail</span> <span class="o">=</span> <span class="n">prev</span>
+    <span class="n">prev</span><span class="p">.</span><span class="nf">point</span> <span class="o">=</span> <span class="kp">nil</span>
+
+    <span class="vi">@count</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="n">pop</span>
+  <span class="k">end</span>
+
+  <span class="c1"># Returns all nodes in a list</span>
+  <span class="k">def</span> <span class="nf">nodes</span>
+    <span class="k">return</span> <span class="kp">false</span> <span class="k">if</span> <span class="vi">@count</span> <span class="o">&lt;</span> <span class="mi">1</span>
+
+    <span class="n">current</span> <span class="o">=</span> <span class="vi">@head</span>
+    <span class="n">str</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">while</span> <span class="n">current</span>
+      <span class="n">str</span> <span class="o">&lt;&lt;</span> <span class="n">current</span><span class="p">.</span><span class="nf">value</span>
+      <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="p">.</span><span class="nf">point</span>
+    <span class="k">end</span>
+
+    <span class="n">str</span>
+  <span class="k">end</span>
+
+  <span class="c1"># Prints all nodes in a list</span>
+  <span class="k">def</span> <span class="nf">print</span>
+    <span class="nb">puts</span> <span class="n">nodes</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s1">'-'</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="c1"># Reverse a list</span>
+  <span class="k">def</span> <span class="nf">reverse</span>
+    <span class="k">if</span> <span class="vi">@count</span> <span class="o">&lt;</span> <span class="mi">1</span>
+      <span class="kp">false</span>
+    <span class="k">elsif</span> <span class="vi">@count</span> <span class="o">==</span> <span class="mi">1</span>
+      <span class="nb">self</span>
+    <span class="k">else</span>
+      <span class="n">first</span> <span class="o">=</span> <span class="kp">nil</span>
+      <span class="n">second</span> <span class="o">=</span> <span class="vi">@head</span>
+
+      <span class="k">while</span> <span class="n">second</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">second</span><span class="p">.</span><span class="nf">point</span>
+
+        <span class="n">second</span><span class="p">.</span><span class="nf">point</span> <span class="o">=</span> <span class="n">first</span>
+        <span class="n">first</span> <span class="o">=</span> <span class="n">second</span>
+
+        <span class="n">second</span> <span class="o">=</span> <span class="n">temp</span>
+      <span class="k">end</span>
+
+      <span class="vi">@head</span><span class="p">.</span><span class="nf">point</span> <span class="o">=</span> <span class="kp">nil</span>
+      <span class="n">t_head</span> <span class="o">=</span> <span class="vi">@head</span>
+      <span class="vi">@head</span> <span class="o">=</span> <span class="vi">@tail</span>
+      <span class="vi">@tail</span> <span class="o">=</span> <span class="n">t_head</span>
+
+      <span class="nb">self</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="c1"># Searches a value in a list</span>
+  <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">if</span> <span class="vi">@count</span> <span class="o">&lt;</span> <span class="mi">1</span>
+      <span class="kp">false</span>
+    <span class="k">else</span>
+      <span class="n">current</span> <span class="o">=</span> <span class="vi">@head</span>
+
+      <span class="k">while</span> <span class="n">current</span>
+        <span class="k">return</span> <span class="n">current</span> <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="n">current</span><span class="p">.</span><span class="nf">value</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="p">.</span><span class="nf">point</span>
+      <span class="k">end</span>
+
+      <span class="kp">false</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></figure>
+
 
   </div>
 

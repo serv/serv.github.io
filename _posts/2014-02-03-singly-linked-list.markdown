@@ -90,7 +90,8 @@ model.
 Now that we know what attributes are needed for models, we can
 build factories.
 
-``` ruby spec/factories/lists.rb
+{% highlight ruby %}
+# spec/factories/lists.rb
 FactoryGirl.define do
   factory :list do
     head  { head }
@@ -98,16 +99,17 @@ FactoryGirl.define do
     count { count }
   end
 end
-```
+{% endhighlight %}
 
-``` ruby spec/factories/nodes.rb
+{% highlight ruby %}
+# spec/factories/nodes.rb
 FactoryGirl.define do
   factory :node do
     value { value }
     point { point }
   end
 end
-```
+{% endhighlight %}
 
 Running the tests now should result in failure.
 
@@ -115,7 +117,8 @@ Running the tests now should result in failure.
 
 Let's write some tests for building list and node instantiations.
 
-``` ruby spec/models/list_spec.rb
+{% highlight ruby %}
+# spec/models/list_spec.rb
 require 'spec_helper'
 
 describe List do
@@ -137,9 +140,10 @@ describe List do
     end
   end
 end
-```
+{% endhighlight %}
 
-``` ruby spec/models/node_spec.rb
+{% highlight ruby %}
+# spec/models/node_spec.rb
 require 'spec_helper'
 
 describe Node do
@@ -160,7 +164,7 @@ describe Node do
     end
   end
 end
-```
+{% endhighlight %}
 
 If you run the tests now, they should still fail. This is because we
 haven't written `new` methods for the models yet.
@@ -169,7 +173,8 @@ haven't written `new` methods for the models yet.
 
 Now we will write new methods and attributes for the models.
 
-``` ruby lib/models/node.rb
+{% highlight ruby %}
+# lib/models/node.rb
 class Node
   attr_accessor :value, :point
 
@@ -178,9 +183,10 @@ class Node
     @point = nil
   end
 end
-```
+{% endhighlight %}
 
-``` ruby lib/models/list.rb
+{% highlight ruby %}
+# lib/models/list.rb
 class List
   attr_accessor :head, :tail, :count
 
@@ -190,13 +196,12 @@ class List
     @count = 0
   end
 end
-```
+{% endhighlight %}
 
 ### All Methods with Tests
 
-
-
-``` ruby spec/models/list_spec.rb
+{% highlight ruby %}
+# spec/models/list_spec.rb
 require 'spec_helper'
 
 describe List do
@@ -428,10 +433,10 @@ describe List do
     end
   end
 end
+{% endhighlight %}
 
-```
-
-``` ruby lib/models/list.rb
+{% highlight ruby %}
+# lib/models/list.rb
 class List
   attr_accessor :head, :tail, :count
 
@@ -569,5 +574,4 @@ class List
     end
   end
 end
-
-```
+{% endhighlight %}
