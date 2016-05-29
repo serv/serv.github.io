@@ -161,12 +161,11 @@ FactoryGirl</li>
 
 <p>Prepare Gemfile with RSpec and FactoryGirl.</p>
 
-<p>``` ruby Gemfile
-source ‘https://rubygems.org’</p>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Gemfile</span>
+<span class="n">source</span> <span class="s1">'https://rubygems.org'</span>
 
-<p>gem “rspec”
-gem “factory_girl”
-```</p>
+<span class="n">gem</span> <span class="s2">"rspec"</span>
+<span class="n">gem</span> <span class="s2">"factory_girl"</span></code></pre></figure>
 
 <p>Run <code class="highlighter-rouge">$ bundle install</code>.</p>
 
@@ -174,12 +173,11 @@ gem “factory_girl”
 
 <p>RSpec is a Ruby Gem that helps you write automated tests.</p>
 
-<p>``` ruby spec/spec_helper.rb
-require ‘rubygems’</p>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># spec/spec_helper.rb</span>
+<span class="nb">require</span> <span class="s1">'rubygems'</span>
 
-<p>RSpec.configure do |config|
-end
-```</p>
+<span class="no">RSpec</span><span class="p">.</span><span class="nf">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+<span class="k">end</span></code></pre></figure>
 
 <h3 id="prepare-factorygirl">3. Prepare FactoryGirl</h3>
 
@@ -189,52 +187,47 @@ lists.</p>
 
 <p>Add this to the RSpec config.</p>
 
-<p>``` ruby spec/spec_helper.rb
-require ‘rubygems’
-require ‘factory_girl’</p>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># spec/spec_helper.rb</span>
+<span class="nb">require</span> <span class="s1">'rubygems'</span>
+<span class="nb">require</span> <span class="s1">'factory_girl'</span>
 
-<p>RSpec.configure do |config|
-  config.include FactoryGirl::Syntax::Methods
-end
-```</p>
+<span class="no">RSpec</span><span class="p">.</span><span class="nf">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">include</span> <span class="no">FactoryGirl</span><span class="o">::</span><span class="no">Syntax</span><span class="o">::</span><span class="no">Methods</span>
+<span class="k">end</span></code></pre></figure>
 
 <h3 id="building-factories">4. Building Factories</h3>
 
 <p>These are just empty factories.</p>
 
-<p><code class="highlighter-rouge">ruby spec/factories/lists.rb
-FactoryGirl.define do
-  factory :list do
-  end
-end
-</code></p>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># spec/factories/lists.rb</span>
+<span class="no">FactoryGirl</span><span class="p">.</span><span class="nf">define</span> <span class="k">do</span>
+  <span class="n">factory</span> <span class="ss">:list</span> <span class="k">do</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></figure>
 
-<p><code class="highlighter-rouge">ruby spec/factories/nodes.rb
-FactoryGirl.define do
-  factory :node do
-  end
-end
-</code></p>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># spec/factories/nodes.rb</span>
+<span class="no">FactoryGirl</span><span class="p">.</span><span class="nf">define</span> <span class="k">do</span>
+  <span class="n">factory</span> <span class="ss">:node</span> <span class="k">do</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></figure>
 
 <h3 id="describing-models-in-rspec">5. Describing Models in RSpec</h3>
 
 <p>And these are just empty model specs.</p>
 
-<p>``` ruby spec/models/node_spec.rb
-require ‘spec_helper’</p>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># spec/models/node_spec.rb</span>
+<span class="nb">require</span> <span class="s1">'spec_helper'</span>
 
-<p>describe Node do</p>
+<span class="n">describe</span> <span class="no">Node</span> <span class="k">do</span>
 
-<p>end
-```</p>
+<span class="k">end</span></code></pre></figure>
 
-<p>``` ruby spec/models/list_spec.rb
-require ‘spec_helper’</p>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># spec/models/list_spec.rb</span>
+<span class="nb">require</span> <span class="s1">'spec_helper'</span>
 
-<p>describe List do</p>
+<span class="n">describe</span> <span class="no">List</span> <span class="k">do</span>
 
-<p>end
-```</p>
+<span class="k">end</span></code></pre></figure>
 
 <p>Try running RSpec tests now. Run <code class="highlighter-rouge">$ rspec spec</code>.</p>
 
@@ -249,15 +242,13 @@ require ‘spec_helper’</p>
 <p>The error above is caused by the fact that we don’t actually
 have any models yet.</p>
 
-<p><code class="highlighter-rouge">ruby lib/models/node.rb
-class Node
-end
-</code></p>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># lib/models/node.rb</span>
+<span class="k">class</span> <span class="nc">Node</span>
+<span class="k">end</span></code></pre></figure>
 
-<p><code class="highlighter-rouge">ruby lib/models/list.rb
-class List
-end
-</code></p>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># lib/models/list.rb</span>
+<span class="k">class</span> <span class="nc">List</span>
+<span class="k">end</span></code></pre></figure>
 
 <p>Try running RSpec tests again. Run <code class="highlighter-rouge">$ rspec spec</code>.</p>
 
@@ -271,17 +262,16 @@ end
 
 <p>We are getting this error because RSpec is unable to location the models we just created.</p>
 
-<p>``` ruby spec/spec_helper
-require ‘rubygems’
-require ‘factory_girl’</p>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># spec/spec_helper</span>
+<span class="nb">require</span> <span class="s1">'rubygems'</span>
+<span class="nb">require</span> <span class="s1">'factory_girl'</span>
 
-<p>require_relative ‘../lib/models/list’
-require_relative ‘../lib/models/node’</p>
+<span class="nb">require_relative</span> <span class="s1">'../lib/models/list'</span>
+<span class="nb">require_relative</span> <span class="s1">'../lib/models/node'</span>
 
-<p>RSpec.configure do |config|
-  config.include FactoryGirl::Syntax::Methods
-end
-```</p>
+<span class="no">RSpec</span><span class="p">.</span><span class="nf">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">include</span> <span class="no">FactoryGirl</span><span class="o">::</span><span class="no">Syntax</span><span class="o">::</span><span class="no">Methods</span>
+<span class="k">end</span></code></pre></figure>
 
 <p>Now try running <code class="highlighter-rouge">$ rspec spec</code>.</p>
 
@@ -301,31 +291,31 @@ Finished in 0.00006 seconds
 <p>We will write very basic test that confirms that we can create
 a Node object and a List object.</p>
 
-<p>```ruby spec/models/node_spec.rb
-require ‘spec_helper’</p>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># spec/models/node_spec.rb</span>
+<span class="nb">require</span> <span class="s1">'spec_helper'</span>
 
-<p>describe Node do<br />
-  describe ‘instantiation’ do
-    let!(:node) { build(:node) }</p>
+<span class="n">describe</span> <span class="no">Node</span> <span class="k">do</span>  
+  <span class="n">describe</span> <span class="s1">'instantiation'</span> <span class="k">do</span>
+    <span class="n">let!</span><span class="p">(</span><span class="ss">:node</span><span class="p">)</span> <span class="p">{</span> <span class="n">build</span><span class="p">(</span><span class="ss">:node</span><span class="p">)</span> <span class="p">}</span>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>it 'instantiates a list' do
-  expect(node.class.name).to eq("Node")
-end   end end ```
-</code></pre>
-</div>
+    <span class="n">it</span> <span class="s1">'instantiates a list'</span> <span class="k">do</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">name</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="s2">"Node"</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></figure>
 
-<p>```ruby spec/models/list_spec.rb
-require ‘spec_helper’</p>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># spec/models/list_spec.rb</span>
+<span class="nb">require</span> <span class="s1">'spec_helper'</span>
 
-<p>describe List do<br />
-  describe ‘instantiation’ do
-    let!(:list) { build(:list) }</p>
+<span class="n">describe</span> <span class="no">List</span> <span class="k">do</span>  
+  <span class="n">describe</span> <span class="s1">'instantiation'</span> <span class="k">do</span>
+    <span class="n">let!</span><span class="p">(</span><span class="ss">:list</span><span class="p">)</span> <span class="p">{</span> <span class="n">build</span><span class="p">(</span><span class="ss">:list</span><span class="p">)</span> <span class="p">}</span>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>it 'instantiates a list' do
-  expect(list.class.name).to eq("List")
-end   end end ```
-</code></pre>
-</div>
+    <span class="n">it</span> <span class="s1">'instantiates a list'</span> <span class="k">do</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">list</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">name</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="s2">"List"</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></figure>
 
 <p>Try running the tests <code class="highlighter-rouge">$ rspec spec</code>.</p>
 
@@ -363,19 +353,18 @@ FactoryGirl files.</p>
 
 <p>Add FactoryGirl files as dependancies running RSpec.</p>
 
-<p>```ruby spec/spec_helper.rb
-require ‘rubygems’
-require ‘factory_girl’</p>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># spec/spec_helper.rb</span>
+<span class="nb">require</span> <span class="s1">'rubygems'</span>
+<span class="nb">require</span> <span class="s1">'factory_girl'</span>
 
-<p>require_relative ‘../lib/models/list’
-require_relative ‘../lib/models/node’
-require_relative ‘../spec/factories/lists.rb’
-require_relative ‘../spec/factories/nodes.rb’</p>
+<span class="nb">require_relative</span> <span class="s1">'../lib/models/list'</span>
+<span class="nb">require_relative</span> <span class="s1">'../lib/models/node'</span>
+<span class="nb">require_relative</span> <span class="s1">'../spec/factories/lists.rb'</span>
+<span class="nb">require_relative</span> <span class="s1">'../spec/factories/nodes.rb'</span>
 
-<p>RSpec.configure do |config|
-  config.include FactoryGirl::Syntax::Methods
-end
-```</p>
+<span class="no">RSpec</span><span class="p">.</span><span class="nf">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">include</span> <span class="no">FactoryGirl</span><span class="o">::</span><span class="no">Syntax</span><span class="o">::</span><span class="no">Methods</span>
+<span class="k">end</span></code></pre></figure>
 
 <p>Now you should be able to run tests successfully.</p>
 

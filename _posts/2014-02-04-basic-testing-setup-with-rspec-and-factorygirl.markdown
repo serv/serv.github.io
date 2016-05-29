@@ -84,12 +84,13 @@ FactoryGirl
 
 Prepare Gemfile with RSpec and FactoryGirl.
 
-``` ruby Gemfile
+{% highlight ruby %}
+# Gemfile
 source 'https://rubygems.org'
 
 gem "rspec"
 gem "factory_girl"
-```
+{% endhighlight %}
 
 Run `$ bundle install`.
 
@@ -97,12 +98,13 @@ Run `$ bundle install`.
 
 RSpec is a Ruby Gem that helps you write automated tests.
 
-``` ruby spec/spec_helper.rb
+{% highlight ruby %}
+# spec/spec_helper.rb
 require 'rubygems'
 
 RSpec.configure do |config|
 end
-```
+{% endhighlight %}
 
 ### 3. Prepare FactoryGirl
 
@@ -112,52 +114,57 @@ lists.
 
 Add this to the RSpec config.
 
-``` ruby spec/spec_helper.rb
+{% highlight ruby %}
+# spec/spec_helper.rb
 require 'rubygems'
 require 'factory_girl'
 
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
 end
-```
+{% endhighlight %}
 
 ### 4. Building Factories
 
 These are just empty factories.
 
-``` ruby spec/factories/lists.rb
+{% highlight ruby %}
+# spec/factories/lists.rb
 FactoryGirl.define do
   factory :list do
   end
 end
-```
+{% endhighlight %}
 
-``` ruby spec/factories/nodes.rb
+{% highlight ruby %}
+# spec/factories/nodes.rb
 FactoryGirl.define do
   factory :node do
   end
 end
-```
+{% endhighlight %}
 
 ### 5. Describing Models in RSpec
 
 And these are just empty model specs.
 
-``` ruby spec/models/node_spec.rb
+{% highlight ruby %}
+# spec/models/node_spec.rb
 require 'spec_helper'
 
 describe Node do
 
 end
-```
+{% endhighlight %}
 
-``` ruby spec/models/list_spec.rb
+{% highlight ruby %}
+# spec/models/list_spec.rb
 require 'spec_helper'
 
 describe List do
 
 end
-```
+{% endhighlight %}
 
 Try running RSpec tests now. Run `$ rspec spec`.
 
@@ -170,15 +177,17 @@ You should get an error message that reads something like:
 The error above is caused by the fact that we don't actually
 have any models yet.
 
-``` ruby lib/models/node.rb
+{% highlight ruby %}
+# lib/models/node.rb
 class Node
 end
-```
+{% endhighlight %}
 
-``` ruby lib/models/list.rb
+{% highlight ruby %}
+# lib/models/list.rb
 class List
 end
-```
+{% endhighlight %}
 
 Try running RSpec tests again. Run `$ rspec spec`.
 
@@ -190,7 +199,8 @@ You should get the same error message that reads:
 
 We are getting this error because RSpec is unable to location the models we just created.
 
-``` ruby spec/spec_helper
+{% highlight ruby %}
+# spec/spec_helper
 require 'rubygems'
 require 'factory_girl'
 
@@ -200,7 +210,7 @@ require_relative '../lib/models/node'
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
 end
-```
+{% endhighlight %}
 
 Now try running `$ rspec spec`.
 
@@ -218,7 +228,8 @@ but we have RSpec finally running.
 We will write very basic test that confirms that we can create
 a Node object and a List object.
 
-```ruby spec/models/node_spec.rb
+{% highlight ruby %}
+# spec/models/node_spec.rb
 require 'spec_helper'
 
 describe Node do  
@@ -230,9 +241,10 @@ describe Node do
     end
   end
 end
-```
+{% endhighlight %}
 
-```ruby spec/models/list_spec.rb
+{% highlight ruby %}
+# spec/models/list_spec.rb
 require 'spec_helper'
 
 describe List do  
@@ -244,7 +256,7 @@ describe List do
     end
   end
 end
-```
+{% endhighlight %}
 
 Try running the tests `$ rspec spec`.
 
@@ -280,7 +292,8 @@ FactoryGirl files.
 
 Add FactoryGirl files as dependancies running RSpec.
 
-```ruby spec/spec_helper.rb
+{% highlight ruby %}
+# spec/spec_helper.rb
 require 'rubygems'
 require 'factory_girl'
 
@@ -292,7 +305,7 @@ require_relative '../spec/factories/nodes.rb'
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
 end
-```
+{% endhighlight %}
 
 Now you should be able to run tests successfully.
 
