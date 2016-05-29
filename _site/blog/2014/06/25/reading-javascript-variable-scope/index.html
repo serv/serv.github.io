@@ -92,26 +92,25 @@
   <li>Function-level scope</li>
 </ul>
 
-<p>```javascript
-var name = ‘Rich’;</p>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="s1">'Rich'</span><span class="p">;</span>
 
-<p>function showName() {
-  var name = ‘Jack’;
-  console.log(name); // Jack
-}
-console.log(name); // Rich
-```
-- There’s no block level scope</p>
+<span class="kd">function</span> <span class="nx">showName</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="s1">'Jack'</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// Jack</span>
+<span class="p">}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// Rich</span></code></pre></figure>
 
-<p>```javascript
-var name = ‘Rich’;</p>
+<ul>
+  <li>There’s no block level scope</li>
+</ul>
 
-<p>function showName() {
-  name = ‘Jack’;
-  console.log(name); // Jack
-}
-console.log(name); // Jack
-```</p>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="s1">'Rich'</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nx">showName</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">name</span> <span class="o">=</span> <span class="s1">'Jack'</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// Jack</span>
+<span class="p">}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// Jack</span></code></pre></figure>
 
 <h2 id="global-variables">Global Variables</h2>
 
@@ -121,16 +120,14 @@ console.log(name); // Jack
   <li>Don’t forget <code class="highlighter-rouge">var</code></li>
 </ul>
 
-<p>``` javascript
-function showAge () {
-	age = 90;
-	console.log(age);
-}</p>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">showAge</span> <span class="p">()</span> <span class="p">{</span>
+	<span class="nx">age</span> <span class="o">=</span> <span class="mi">90</span><span class="p">;</span>
+	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">age</span><span class="p">);</span>
+<span class="p">}</span>
 
-<p>showAge(); // 90</p>
+<span class="nx">showAge</span><span class="p">();</span> <span class="c1">// 90</span>
 
-<p>console.log(age); // 90
-```</p>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">age</span><span class="p">);</span> <span class="c1">// 90</span></code></pre></figure>
 
 <ul>
   <li>Don’t pollute the global scope. Wrap them up as a local variable.</li>

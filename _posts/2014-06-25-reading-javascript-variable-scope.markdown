@@ -20,7 +20,7 @@ This is tldr for the first half of [Javascript Is Sexy's article titled "JavaScr
 - Local variables have precedence over global variables
 - Function-level scope
 
-```javascript
+{% highlight js %}
 var name = 'Rich';
 
 function showName() {
@@ -28,10 +28,10 @@ function showName() {
   console.log(name); // Jack
 }
 console.log(name); // Rich
-```
+{% endhighlight %}
 - There's no block level scope
 
-```javascript
+{% highlight js %}
 var name = 'Rich';
 
 function showName() {
@@ -39,7 +39,7 @@ function showName() {
   console.log(name); // Jack
 }
 console.log(name); // Jack
-```
+{% endhighlight %}
 
 ## Global Variables
 
@@ -47,7 +47,7 @@ console.log(name); // Jack
 - Available in the whole app
 - Don't forget `var`
 
-``` javascript
+{% highlight js %}
 function showAge () {
 	age = 90;
 	console.log(age);
@@ -56,6 +56,6 @@ function showAge () {
 showAge(); // 90
 
 console.log(age); // 90
-```
+{% endhighlight %}
 
 - Don't pollute the global scope. Wrap them up as a local variable.
