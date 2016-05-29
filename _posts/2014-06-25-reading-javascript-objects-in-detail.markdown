@@ -23,9 +23,9 @@ This is tldr of [Javascript Is Sexy's article titled "JavaScript Objects in Deta
 
 ## What is an Object
 
-```javascript
+{% highlight js %}
 var myName = {firstName: 'Jason', lastName: 'Kim'};
-```
+{% endhighlight %}
 
 - Unordered
   - Like a dictionary or a hash table
@@ -44,24 +44,28 @@ var myName = {firstName: 'Jason', lastName: 'Kim'};
 - Primitive data types
   - directly stored on the variable
 - Saved-as-value
-```javascript
+
+{% highlight js %}
 var person = 'Kobe';
 var anotherPerson = person;
 person = 'Bryant';
 
 console.log(anotherPerson); // Kobe
 console.log(person); // Bryant
-```
+{% endhighlight %}
+
   `anotherPerson` was saved a value.
 - Saved-as-reference
-```javascript
+
+{% highlight js %}
 var person = {name: "Kobe"};
 var anotherPerson = person;
 person.name = "Bryant";
 
 console.log(anotherPerson.name); // Bryant
 console.log(person.name); // Bryant
-```
+{% endhighlight %}
+
   `anotherPerson` was saved as a reference to `person`. Changes to the property of `person` affects `anotherPerson` as well.
 
 ## Object Data Properties Have Attributes
@@ -80,7 +84,8 @@ console.log(person.name); // Bryant
   - Arrays
   - Other Objects
 - Object literal
-```javascript
+
+{% highlight js %}
 var myBooks = {};
 
 var mango = {
@@ -92,9 +97,10 @@ var mango = {
     console.log("Hmm Hmm Good");
   }
 }
-```
+{% endhighlight %}
 - Object constructor
-```javascript
+
+{% highlight js %}
 var mango =  new Object ();
 mango.color = "yellow";
 mango.shape= "round";
@@ -103,14 +109,15 @@ mango.sweetness = 8;
 mango.howSweetAmI = function () {
   console.log("Hmm Hmm Good");
 }
-```
+{% endhighlight %}
 
 ## Practical Patterns for Creating Objects
 
 - Use these patterns when you want to create objects
   repeatedly many times
 - Constructor pattern for creating objects
-```javascript
+
+{% highlight js %}
 function Fruit (theColor, theSweetness, theFruitName, theNativeToLand) {
 
   this.color = theColor;
@@ -128,9 +135,10 @@ function Fruit (theColor, theSweetness, theFruitName, theNativeToLand) {
     });
   }
 }
-```
+{% endhighlight %}
 - Prototype pattern for creating objects
-```javascript
+
+{% highlight js %}
 function Fruit () {
 
 }
@@ -147,4 +155,4 @@ Fruit.prototype.showName = function () {
 Fruit.prototype.nativeTo = function () {
   console.log("Grown in:" + this.nativeToLand);
 }
-```
+{% endhighlight %}

@@ -98,9 +98,7 @@
 
 <h2 id="what-is-an-object">What is an Object</h2>
 
-<p><code class="highlighter-rouge">javascript
-var myName = {firstName: 'Jason', lastName: 'Kim'};
-</code></p>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">myName</span> <span class="o">=</span> <span class="p">{</span><span class="na">firstName</span><span class="p">:</span> <span class="s1">'Jason'</span><span class="p">,</span> <span class="na">lastName</span><span class="p">:</span> <span class="s1">'Kim'</span><span class="p">};</span></code></pre></figure>
 
 <ul>
   <li>Unordered
@@ -136,27 +134,27 @@ var myName = {firstName: 'Jason', lastName: 'Kim'};
       <li>directly stored on the variable</li>
     </ul>
   </li>
-  <li>Saved-as-value
-```javascript
-var person = ‘Kobe’;
-var anotherPerson = person;
-person = ‘Bryant’;</li>
+  <li>Saved-as-value</li>
 </ul>
 
-<p>console.log(anotherPerson); // Kobe
-console.log(person); // Bryant
-<code class="highlighter-rouge">
-  `anotherPerson` was saved a value.
-- Saved-as-reference
-</code>javascript
-var person = {name: “Kobe”};
-var anotherPerson = person;
-person.name = “Bryant”;</p>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="s1">'Kobe'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">anotherPerson</span> <span class="o">=</span> <span class="nx">person</span><span class="p">;</span>
+<span class="nx">person</span> <span class="o">=</span> <span class="s1">'Bryant'</span><span class="p">;</span>
 
-<p>console.log(anotherPerson.name); // Bryant
-console.log(person.name); // Bryant
-```
-  <code class="highlighter-rouge">anotherPerson</code> was saved as a reference to <code class="highlighter-rouge">person</code>. Changes to the property of <code class="highlighter-rouge">person</code> affects <code class="highlighter-rouge">anotherPerson</code> as well.</p>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">anotherPerson</span><span class="p">);</span> <span class="c1">// Kobe</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span> <span class="c1">// Bryant</span></code></pre></figure>
+
+<p><code class="highlighter-rouge">anotherPerson</code> was saved a value.
+- Saved-as-reference</p>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span><span class="na">name</span><span class="p">:</span> <span class="s2">"Kobe"</span><span class="p">};</span>
+<span class="kd">var</span> <span class="nx">anotherPerson</span> <span class="o">=</span> <span class="nx">person</span><span class="p">;</span>
+<span class="nx">person</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s2">"Bryant"</span><span class="p">;</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">anotherPerson</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// Bryant</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// Bryant</span></code></pre></figure>
+
+<p><code class="highlighter-rouge">anotherPerson</code> was saved as a reference to <code class="highlighter-rouge">person</code>. Changes to the property of <code class="highlighter-rouge">person</code> affects <code class="highlighter-rouge">anotherPerson</code> as well.</p>
 
 <h2 id="object-data-properties-have-attributes">Object Data Properties Have Attributes</h2>
 
@@ -182,80 +180,81 @@ console.log(person.name); // Bryant
       <li>Other Objects</li>
     </ul>
   </li>
-  <li>Object literal
-```javascript
-var myBooks = {};</li>
+  <li>Object literal</li>
 </ul>
 
-<p>var mango = {
-  color: “yellow”,
-  shape: “round”,
-  sweetness: 8,</p>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">myBooks</span> <span class="o">=</span> <span class="p">{};</span>
 
-<p>howSweetAmI: function () {
-    console.log(“Hmm Hmm Good”);
-  }
-}
-<code class="highlighter-rouge">
-- Object constructor
-</code>javascript
-var mango =  new Object ();
-mango.color = “yellow”;
-mango.shape= “round”;
-mango.sweetness = 8;</p>
+<span class="kd">var</span> <span class="nx">mango</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">color</span><span class="p">:</span> <span class="s2">"yellow"</span><span class="p">,</span>
+  <span class="na">shape</span><span class="p">:</span> <span class="s2">"round"</span><span class="p">,</span>
+  <span class="na">sweetness</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
 
-<p>mango.howSweetAmI = function () {
-  console.log(“Hmm Hmm Good”);
-}
-```</p>
+  <span class="na">howSweetAmI</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Hmm Hmm Good"</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<ul>
+  <li>Object constructor</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">mango</span> <span class="o">=</span>  <span class="k">new</span> <span class="nb">Object</span> <span class="p">();</span>
+<span class="nx">mango</span><span class="p">.</span><span class="nx">color</span> <span class="o">=</span> <span class="s2">"yellow"</span><span class="p">;</span>
+<span class="nx">mango</span><span class="p">.</span><span class="nx">shape</span><span class="o">=</span> <span class="s2">"round"</span><span class="p">;</span>
+<span class="nx">mango</span><span class="p">.</span><span class="nx">sweetness</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
+
+<span class="nx">mango</span><span class="p">.</span><span class="nx">howSweetAmI</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Hmm Hmm Good"</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
 
 <h2 id="practical-patterns-for-creating-objects">Practical Patterns for Creating Objects</h2>
 
 <ul>
   <li>Use these patterns when you want to create objects
 repeatedly many times</li>
-  <li>
-    <p>Constructor pattern for creating objects
-```javascript
-function Fruit (theColor, theSweetness, theFruitName, theNativeToLand) {</p>
-
-    <p>this.color = theColor;
-this.sweetness = theSweetness;
-this.fruitName = theFruitName;
-this.nativeToLand = theNativeToLand;</p>
-
-    <p>this.showName = function () {
-  console.log(“This is a “ + this.fruitName);
-}</p>
-
-    <p>this.nativeTo = function () {
-  this.nativeToLand.forEach(function (eachCountry)  {
-    console.log(“Grown in:” + eachCountry);
-  });
-}
-}
-```</p>
-  </li>
-  <li>Prototype pattern for creating objects
-```javascript
-function Fruit () {</li>
+  <li>Constructor pattern for creating objects</li>
 </ul>
 
-<p>}</p>
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">Fruit</span> <span class="p">(</span><span class="nx">theColor</span><span class="p">,</span> <span class="nx">theSweetness</span><span class="p">,</span> <span class="nx">theFruitName</span><span class="p">,</span> <span class="nx">theNativeToLand</span><span class="p">)</span> <span class="p">{</span>
 
-<p>Fruit.prototype.color = “Yellow”;
-Fruit.prototype.sweetness = 7;
-Fruit.prototype.fruitName = “Generic Fruit”;
-Fruit.prototype.nativeToLand = “USA”;</p>
+  <span class="k">this</span><span class="p">.</span><span class="nx">color</span> <span class="o">=</span> <span class="nx">theColor</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">sweetness</span> <span class="o">=</span> <span class="nx">theSweetness</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">fruitName</span> <span class="o">=</span> <span class="nx">theFruitName</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">nativeToLand</span> <span class="o">=</span> <span class="nx">theNativeToLand</span><span class="p">;</span>
 
-<p>Fruit.prototype.showName = function () {
-  console.log(“This is a “ + this.fruitName);
-}</p>
+  <span class="k">this</span><span class="p">.</span><span class="nx">showName</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"This is a "</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">fruitName</span><span class="p">);</span>
+  <span class="p">}</span>
 
-<p>Fruit.prototype.nativeTo = function () {
-  console.log(“Grown in:” + this.nativeToLand);
-}
-```</p>
+  <span class="k">this</span><span class="p">.</span><span class="nx">nativeTo</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">nativeToLand</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">eachCountry</span><span class="p">)</span>  <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Grown in:"</span> <span class="o">+</span> <span class="nx">eachCountry</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<ul>
+  <li>Prototype pattern for creating objects</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">Fruit</span> <span class="p">()</span> <span class="p">{</span>
+
+<span class="p">}</span>
+
+<span class="nx">Fruit</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">color</span> <span class="o">=</span> <span class="s2">"Yellow"</span><span class="p">;</span>
+<span class="nx">Fruit</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">sweetness</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
+<span class="nx">Fruit</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">fruitName</span> <span class="o">=</span> <span class="s2">"Generic Fruit"</span><span class="p">;</span>
+<span class="nx">Fruit</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">nativeToLand</span> <span class="o">=</span> <span class="s2">"USA"</span><span class="p">;</span>
+
+<span class="nx">Fruit</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">showName</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"This is a "</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">fruitName</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">Fruit</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">nativeTo</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Grown in:"</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">nativeToLand</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
 
   </div>
 
