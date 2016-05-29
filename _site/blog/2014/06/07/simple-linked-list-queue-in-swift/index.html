@@ -87,39 +87,33 @@ XCode 6 Beta in order to run Swift.</p>
 
 <h3 id="define-classes">1. Define classes</h3>
 
-<p>```js
-import Foundation</p>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="kd">import</span> <span class="kt">Foundation</span>
 
-<p>class Queue {</p>
+<span class="kd">class</span> <span class="kt">Queue</span> <span class="p">{</span>
 
-<p>}
-```</p>
+<span class="p">}</span></code></pre></figure>
 
-<p>```js
-import Foundation</p>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="kd">import</span> <span class="kt">Foundation</span>
 
-<p>class Node {</p>
+<span class="kd">class</span> <span class="kt">Node</span> <span class="p">{</span>
 
-<p>}
-```</p>
+<span class="p">}</span></code></pre></figure>
 
 <p>I created two classes in different files in XCode.</p>
 
 <h3 id="attributes-and-constructors-for-node-class">2. Attributes and Constructors for Node class</h3>
 
-<p>```js
-class Node<t:nsobject> {
-    var value: T? = nil
-    var next: Node<t>? = nil</t></t:nsobject></p>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="kd">class</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">:</span><span class="kt">NSObject</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">T</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span>
+    <span class="k">var</span> <span class="nv">next</span><span class="p">:</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>init() {
-}
+    <span class="nf">init</span><span class="p">()</span> <span class="p">{</span>
+    <span class="p">}</span>
 
-init(value: T) {
-    self.value = value
-} } ```
-</code></pre>
-</div>
+    <span class="nf">init</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
 
 <p><code class="highlighter-rouge">Node</code> has two attributes: <code class="highlighter-rouge">value</code> and <code class="highlighter-rouge">next</code>.
 <code class="highlighter-rouge">value</code> has an optional generic type <code class="highlighter-rouge">T</code> which may have <code class="highlighter-rouge">nil</code> value.
@@ -130,74 +124,68 @@ argument, and another one that doesn’t take any argument.</p>
 
 <h3 id="attributes-and-constructor-for-queue-class">3. Attributes and Constructor for Queue class</h3>
 
-<p>```js
-import Foundation</p>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="kd">import</span> <span class="kt">Foundation</span>
 
-<p>class Queue<t:nsobject> {
-    var count: Int = 0
-    var head: Node<t> = Node<t>()
-    var tail: Node<t> = Node<t>()</t></t></t></t></t:nsobject></p>
+<span class="kd">class</span> <span class="kt">Queue</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">:</span><span class="kt">NSObject</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nv">count</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">var</span> <span class="nv">head</span><span class="p">:</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">()</span>
+    <span class="k">var</span> <span class="nv">tail</span><span class="p">:</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">()</span>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>init() {
-} } ```
-</code></pre>
-</div>
+    <span class="nf">init</span><span class="p">()</span> <span class="p">{</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
 
 <p><code class="highlighter-rouge">Queue</code> class has three attributes <code class="highlighter-rouge">count</code>, <code class="highlighter-rouge">head</code> and <code class="highlighter-rouge">tail</code>.
 <code class="highlighter-rouge">head</code> is the beginning of the queue and <code class="highlighter-rouge">tail</code> is the end of the queue.</p>
 
 <h3 id="isempty-function">4. <code class="highlighter-rouge">isEmpty</code> function</h3>
 
-<p>```js
-import Foundation</p>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="kd">import</span> <span class="kt">Foundation</span>
 
-<p>class Queue<t:nsobject> {
-    var count: Int = 0
-    var head: Node<t> = Node<t>()
-    var tail: Node<t> = Node<t>()</t></t></t></t></t:nsobject></p>
+<span class="kd">class</span> <span class="kt">Queue</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">:</span><span class="kt">NSObject</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nv">count</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">var</span> <span class="nv">head</span><span class="p">:</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">()</span>
+    <span class="k">var</span> <span class="nv">tail</span><span class="p">:</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">()</span>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>init() {
-}
+    <span class="nf">init</span><span class="p">()</span> <span class="p">{</span>
+    <span class="p">}</span>
 
-func isEmpty() -&gt; Bool {
-    return self.count == 0
-} } ```
-</code></pre>
-</div>
+    <span class="kd">func</span> <span class="nf">isEmpty</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">self</span><span class="o">.</span><span class="n">count</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
 
 <p><code class="highlighter-rouge">isEmpty</code> is simply comparing <code class="highlighter-rouge">self.count == 0</code>.
 If the queue is empty, returns true, if not, false.</p>
 
 <h3 id="enqueue-function">5. <code class="highlighter-rouge">enqueue</code> function</h3>
 
-<p>```js
-import Foundation</p>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="kd">import</span> <span class="kt">Foundation</span>
 
-<p>class Queue<t:nsobject> {
-    var count: Int = 0
-    var head: Node<t> = Node<t>()
-    var tail: Node<t> = Node<t>()</t></t></t></t></t:nsobject></p>
+<span class="kd">class</span> <span class="kt">Queue</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">:</span><span class="kt">NSObject</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nv">count</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">var</span> <span class="nv">head</span><span class="p">:</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">()</span>
+    <span class="k">var</span> <span class="nv">tail</span><span class="p">:</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">()</span>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>init() {
-}
+    <span class="nf">init</span><span class="p">()</span> <span class="p">{</span>
+    <span class="p">}</span>
 
-func isEmpty() -&gt; Bool {
-    return self.count == 0
-}
+    <span class="kd">func</span> <span class="nf">isEmpty</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">self</span><span class="o">.</span><span class="n">count</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="p">}</span>
 
-func enqueue(value: T) {
-    var node = Node&lt;T&gt;(value: value)
-    if self.isEmpty() {
-        self.head = node
-        self.tail = node
-    } else {
-        node.next = self.head
-        self.head = node
-    }
-    self.count++
-} } ```
-</code></pre>
-</div>
+    <span class="kd">func</span> <span class="nf">enqueue</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">var</span> <span class="nv">node</span> <span class="o">=</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="k">self</span><span class="o">.</span><span class="nf">isEmpty</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="n">node</span>
+            <span class="k">self</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">node</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">head</span>
+            <span class="k">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="n">node</span>
+        <span class="p">}</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">count</span><span class="o">++</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
 
 <p><code class="highlighter-rouge">enqueue</code> function takes a value and creates a node out of it.
 It first checks if the queue is empty.
@@ -207,51 +195,49 @@ Then increment <code class="highlighter-rouge">count</code>.</p>
 
 <h3 id="dequeue-function">6. <code class="highlighter-rouge">dequeue</code> function</h3>
 
-<p>```js
-import Foundation</p>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="kd">import</span> <span class="kt">Foundation</span>
 
-<p>class Queue<t:nsobject> {
-    var count: Int = 0
-    var head: Node<t> = Node<t>()
-    var tail: Node<t> = Node<t>()</t></t></t></t></t:nsobject></p>
+<span class="kd">class</span> <span class="kt">Queue</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">:</span><span class="kt">NSObject</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nv">count</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">var</span> <span class="nv">head</span><span class="p">:</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">()</span>
+    <span class="k">var</span> <span class="nv">tail</span><span class="p">:</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">()</span>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>init() {
-}
+    <span class="nf">init</span><span class="p">()</span> <span class="p">{</span>
+    <span class="p">}</span>
 
-func isEmpty() -&gt; Bool {
-    return self.count == 0
-}
+    <span class="kd">func</span> <span class="nf">isEmpty</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">self</span><span class="o">.</span><span class="n">count</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="p">}</span>
 
-func enqueue(value: T) {
-    var node = Node&lt;T&gt;(value: value)
-    if self.isEmpty() {
-        self.head = node
-        self.tail = node
-    } else {
-        node.next = self.head
-        self.head = node
-    }
-    self.count++
-}
+    <span class="kd">func</span> <span class="nf">enqueue</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">var</span> <span class="nv">node</span> <span class="o">=</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="k">self</span><span class="o">.</span><span class="nf">isEmpty</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="n">node</span>
+            <span class="k">self</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">node</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">head</span>
+            <span class="k">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="n">node</span>
+        <span class="p">}</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">count</span><span class="o">++</span>
+    <span class="p">}</span>
 
-func dequeue() -&gt; T? {
-    if self.isEmpty() {
-        return nil
-    } else if self.count == 1 {
-        var temp: Node&lt;T&gt; = self.tail
-        self.count--
-        return temp.value
-    } else {
-        var temp: Node&lt;T&gt; = self.tail
+    <span class="kd">func</span> <span class="nf">dequeue</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">T</span><span class="p">?</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="k">self</span><span class="o">.</span><span class="nf">isEmpty</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="kc">nil</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="k">self</span><span class="o">.</span><span class="n">count</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">{</span>
+            <span class="k">var</span> <span class="nv">temp</span><span class="p">:</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">tail</span>
+            <span class="k">self</span><span class="o">.</span><span class="n">count</span><span class="o">--</span>
+            <span class="k">return</span> <span class="n">temp</span><span class="o">.</span><span class="n">value</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">var</span> <span class="nv">temp</span><span class="p">:</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">tail</span>
 
-        // ??????
+            <span class="c1">// ??????</span>
 
-        self.count--
-        return temp.value
-    }
-} } ```
-</code></pre>
-</div>
+            <span class="k">self</span><span class="o">.</span><span class="n">count</span><span class="o">--</span>
+            <span class="k">return</span> <span class="n">temp</span><span class="o">.</span><span class="n">value</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
 
 <p><code class="highlighter-rouge">dequeue</code> function has 3 cases to handle.</p>
 
@@ -271,69 +257,65 @@ the tail node. <strong>We need <code class="highlighter-rouge">prev</code> attri
 
 <h3 id="adding-prev-attribute-to-node-class">7. Adding <code class="highlighter-rouge">prev</code> attribute to Node class</h3>
 
-<p>```js
-import Foundation</p>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="kd">import</span> <span class="kt">Foundation</span>
 
-<p>class Node<t:nsobject> {
-    var value: T? = nil
-    var next: Node<t>? = nil
-    var prev: Node<t>? = nil</t></t></t:nsobject></p>
+<span class="kd">class</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">:</span><span class="kt">NSObject</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">T</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span>
+    <span class="k">var</span> <span class="nv">next</span><span class="p">:</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span>
+    <span class="k">var</span> <span class="nv">prev</span><span class="p">:</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>init() {
-}
+    <span class="nf">init</span><span class="p">()</span> <span class="p">{</span>
+    <span class="p">}</span>
 
-init(value: T) {
-    self.value = value
-} } ```
-</code></pre>
-</div>
+    <span class="nf">init</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
 
 <p><code class="highlighter-rouge">prev</code> attribute is written the same way as <code class="highlighter-rouge">next</code>.</p>
 
-<p>```js
-import Foundation</p>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="kd">import</span> <span class="kt">Foundation</span>
 
-<p>class Queue<t:nsobject> {
-    var count: Int = 0
-    var head: Node<t> = Node<t>()
-    var tail: Node<t> = Node<t>()</t></t></t></t></t:nsobject></p>
+<span class="kd">class</span> <span class="kt">Queue</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">:</span><span class="kt">NSObject</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nv">count</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">var</span> <span class="nv">head</span><span class="p">:</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">()</span>
+    <span class="k">var</span> <span class="nv">tail</span><span class="p">:</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">()</span>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>init() {
-}
+    <span class="nf">init</span><span class="p">()</span> <span class="p">{</span>
+    <span class="p">}</span>
 
-func isEmpty() -&gt; Bool {
-    return self.count == 0
-}
+    <span class="kd">func</span> <span class="nf">isEmpty</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">self</span><span class="o">.</span><span class="n">count</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="p">}</span>
 
-func enqueue(value: T) {
-    var node = Node&lt;T&gt;(value: value)
-    if self.isEmpty() {
-        self.head = node
-        self.tail = node
-    } else {
-        node.next = self.head
-        self.head.prev = node
-        self.head = node
-    }
-    self.count++
-}
+    <span class="kd">func</span> <span class="nf">enqueue</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">var</span> <span class="nv">node</span> <span class="o">=</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="k">self</span><span class="o">.</span><span class="nf">isEmpty</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="n">node</span>
+            <span class="k">self</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">node</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">head</span>
+            <span class="k">self</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">prev</span> <span class="o">=</span> <span class="n">node</span>
+            <span class="k">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="n">node</span>
+        <span class="p">}</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">count</span><span class="o">++</span>
+    <span class="p">}</span>
 
-func dequeue() -&gt; T? {
-    if self.isEmpty() {
-        return nil
-    } else if self.count == 1 {
-        var temp: Node&lt;T&gt; = self.tail
-        self.count--
-        return temp.value
-    } else {
-        var temp: Node&lt;T&gt; = self.tail
-        self.tail = self.tail.prev!
-        self.count--
-        return temp.value
-    }
-} } ```
-</code></pre>
-</div>
+    <span class="kd">func</span> <span class="nf">dequeue</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">T</span><span class="p">?</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="k">self</span><span class="o">.</span><span class="nf">isEmpty</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="kc">nil</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="k">self</span><span class="o">.</span><span class="n">count</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">{</span>
+            <span class="k">var</span> <span class="nv">temp</span><span class="p">:</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">tail</span>
+            <span class="k">self</span><span class="o">.</span><span class="n">count</span><span class="o">--</span>
+            <span class="k">return</span> <span class="n">temp</span><span class="o">.</span><span class="n">value</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">var</span> <span class="nv">temp</span><span class="p">:</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">tail</span>
+            <span class="k">self</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">tail</span><span class="o">.</span><span class="n">prev</span><span class="o">!</span>
+            <span class="k">self</span><span class="o">.</span><span class="n">count</span><span class="o">--</span>
+            <span class="k">return</span> <span class="n">temp</span><span class="o">.</span><span class="n">value</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
 
 <p>We add <code class="highlighter-rouge">self.tail = self.tail.prev!</code>, which
 sets the new tail node, when the current tail

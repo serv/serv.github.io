@@ -20,27 +20,27 @@ XCode 6 Beta in order to run Swift.
 
 ### 1. Define classes
 
-```js
+{% highlight swift %}
 import Foundation
 
 class Queue {
 
 }
-```
+{% endhighlight %}
 
-```js
+{% highlight swift %}
 import Foundation
 
 class Node {
 
 }
-```
+{% endhighlight %}
 
 I created two classes in different files in XCode.
 
 ### 2. Attributes and Constructors for Node class
 
-```js
+{% highlight swift %}
 class Node<T:NSObject> {
     var value: T? = nil
     var next: Node<T>? = nil
@@ -52,7 +52,7 @@ class Node<T:NSObject> {
         self.value = value
     }
 }
-```
+{% endhighlight %}
 
 `Node` has two attributes: `value` and `next`.
 `value` has an optional generic type `T` which may have `nil` value.
@@ -63,7 +63,7 @@ argument, and another one that doesn't take any argument.
 
 ### 3. Attributes and Constructor for Queue class
 
-```js
+{% highlight swift %}
 import Foundation
 
 class Queue<T:NSObject> {
@@ -74,14 +74,14 @@ class Queue<T:NSObject> {
     init() {
     }
 }
-```
+{% endhighlight %}
 
 `Queue` class has three attributes `count`, `head` and `tail`.
 `head` is the beginning of the queue and `tail` is the end of the queue.
 
 ### 4. `isEmpty` function
 
-```js
+{% highlight swift %}
 import Foundation
 
 class Queue<T:NSObject> {
@@ -96,14 +96,14 @@ class Queue<T:NSObject> {
         return self.count == 0
     }
 }
-```
+{% endhighlight %}
 
 `isEmpty` is simply comparing `self.count == 0`.
 If the queue is empty, returns true, if not, false.
 
 ### 5. `enqueue` function
 
-```js
+{% highlight swift %}
 import Foundation
 
 class Queue<T:NSObject> {
@@ -130,7 +130,7 @@ class Queue<T:NSObject> {
         self.count++
     }
 }
-```
+{% endhighlight %}
 
 `enqueue` function takes a value and creates a node out of it.
 It first checks if the queue is empty.
@@ -140,7 +140,7 @@ Then increment `count`.
 
 ### 6. `dequeue` function
 
-```js
+{% highlight swift %}
 import Foundation
 
 class Queue<T:NSObject> {
@@ -184,7 +184,7 @@ class Queue<T:NSObject> {
         }
     }
 }
-```
+{% endhighlight %}
 
 `dequeue` function has 3 cases to handle.
 
@@ -202,7 +202,7 @@ the tail node. **We need `prev` attribute for nodes.**
 
 ### 7. Adding `prev` attribute to Node class
 
-```js
+{% highlight swift %}
 import Foundation
 
 class Node<T:NSObject> {
@@ -217,11 +217,11 @@ class Node<T:NSObject> {
         self.value = value
     }
 }
-```
+{% endhighlight %}
 
 `prev` attribute is written the same way as `next`.
 
-```js
+{% highlight swift %}
 import Foundation
 
 class Queue<T:NSObject> {
@@ -264,7 +264,7 @@ class Queue<T:NSObject> {
         }
     }
 }
-```
+{% endhighlight %}
 
 We add `self.tail = self.tail.prev!`, which
 sets the new tail node, when the current tail
