@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Battle Technical Assumptions"
-date: 2015-06-01 22:30:56 -0700
+date: 2016-06-01 22:30:56 -0700
 comments: true
 categories: 'software development'
 ---
