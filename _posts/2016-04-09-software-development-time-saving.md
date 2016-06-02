@@ -3,7 +3,7 @@ layout: post
 title: "Time Saving Tips for Software Development for Developers"
 date: 2016-04-09 16:47:42 -0800
 comments: true
-categories: ['Dev Ops']
+categories: ['software development']
 ---
 
 I waste a lot of time not coding. Typical work involves many activities,
