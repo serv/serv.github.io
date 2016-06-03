@@ -10,8 +10,9 @@ The last few days at work were rough.
 My team was intensely focused on
 preparing the production environment to be stable.
 We've been having some
-serious issues on the production environment and the
-last of the most serious issues was a nasty memory leak.
+serious issues on the production environment.
+One of the most serious production issues was a
+nasty memory leak.
 
 ![](http://i.imgur.com/lEnDrWZ.png)
 
@@ -19,10 +20,10 @@ The graph above displays the memory usage of
 12 node applications on our production
 environment. The y-axis shows the memory usage
 in percentage and the x-axis shows the time
-span of 7 days. This sawtooth pattern on memory
-usage is extremely bad.
+span of 7 days. This narrow sawtooth
+pattern on memory usage is extremely bad.
 As you can see, all 12 servers
-are accumulating memory usage rapidly.
+are accumulating usage in memory rapidly.
 As a remedy for the memory leak, we had to
 periodically restart our servers. This was less
 than ideal, but because we had so many other
@@ -35,8 +36,9 @@ then every day, then it came to a point where we
 were restarting our servers every 4 to 5 hours.
 Thank god we have a globally distributed team
 (Croatia, and Argentina), it could've been a
-lot tougher without having team member. I can't
-emphasize this point enough, but I will take
+lot tougher without having team members in other
+timezones. I can't
+emphasize this point enough, and I will take
 another opportunity to praise having globally
 distributed software development team in another
 post in the future.
@@ -134,13 +136,13 @@ happening on the production environment.
 We get some benefits of having NewRelic monitoring, but disabling NewRelic on
 production was no-brainer at this point.
 We had to do it. We all acknowledged that
-NewRelic is the initial cause of the memory leak.
+NewRelic is not the initial cause of the memory leak.
 There is still something in our code that is
 behaving naughtily with NewRelic, but we
 got to put our the damn fire on production
 first. So we did it. We disabled NewRelic
 on production and the memory usage stopped
-climbing and it remains very steady now.
+climbing and it remains very steady for now.
 
 I want to thank [Yunong Xiao for sharing
 Netflix's experience on debugging Node.js in
