@@ -6,9 +6,82 @@
 </description>
     <link>http://jasonkim.ca/</link>
     <atom:link href="http://jasonkim.ca/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 03 Jun 2016 10:02:39 -0700</pubDate>
-    <lastBuildDate>Fri, 03 Jun 2016 10:02:39 -0700</lastBuildDate>
+    <pubDate>Sun, 24 Jul 2016 23:32:46 -0700</pubDate>
+    <lastBuildDate>Sun, 24 Jul 2016 23:32:46 -0700</lastBuildDate>
     <generator>Jekyll v3.0.2</generator>
+    
+      <item>
+        <title>Benchmarking Web Frameworks</title>
+        <description>&lt;p&gt;I had some time over the weekend, and I decided that I would benchmark some
+web frameworks for possible backend API to work with in the future. I copied
+&lt;a href=&quot;https://github.com/koajs/koa/blob/master/benchmarks/run&quot;&gt;how Koa.js does its benchmark&lt;/a&gt;.
+I prepared &lt;a href=&quot;http://rubyonrails.org/&quot;&gt;Ruby on Rails&lt;/a&gt;,
+&lt;a href=&quot;http://restify.com/&quot;&gt;Restify&lt;/a&gt;, and &lt;a href=&quot;http://sparkjava.com/&quot;&gt;Spark&lt;/a&gt; to be
+benchmarked. You can see &lt;a href=&quot;https://github.com/serv/framework-benchmarks&quot;&gt;the code hosted on GitHub here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Here are the results of the benchmarks. The number represents requests / second.
+Higher is better.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;frameworks&lt;/th&gt;
+      &lt;th&gt;req/s&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;ruby on rails&lt;/td&gt;
+      &lt;td&gt;48.73&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;restify&lt;/td&gt;
+      &lt;td&gt;8117.63&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;spark&lt;/td&gt;
+      &lt;td&gt;32634.10&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/gOoneii.png&quot; alt=&quot;Web framework benchmarked&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I knew Ruby on Rails is slow, but I had no idea that it’s this slow. And on
+the other hand, I knew Java web frameworks are generally fast, but I had no
+idea that Spark is that fast! And Restify occupies a sweet spot between
+Ruby on Rails and Spark.&lt;/p&gt;
+
+&lt;p&gt;We can draw some conclusions from the findings.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Use Spark for very highly trafficked microservices that requires requests
+to be served at low latency&lt;/li&gt;
+  &lt;li&gt;Use Restify for all kinds of backend API when you want to leverage a vast
+catalog of Node.js packages and great development tools&lt;/li&gt;
+  &lt;li&gt;Reserve using Ruby on Rails for product oriented application only.
+I would not recommend Ruby on Rails for backend API that needs to
+serve a large traffic.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Thu, 21 Jul 2016 21:45:58 -0700</pubDate>
+        <link>http://jasonkim.ca/blog/2016/07/21/benchmarking-web-frameworks/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2016/07/21/benchmarking-web-frameworks/</guid>
+        
+        
+        <category>node.js</category>
+        
+        <category>ruby</category>
+        
+        <category>java</category>
+        
+        <category>restify</category>
+        
+        <category>spark</category>
+        
+        <category>ruby on rails</category>
+        
+      </item>
     
       <item>
         <title>Fixing Memory Leak on Production Node.js Application</title>
@@ -667,39 +740,6 @@ This will allow you to access the Rails console when running heroku run console.
         
         
         <category>rails</category>
-        
-      </item>
-    
-      <item>
-        <title>Metaprogramming in Ruby should be avoided if possible</title>
-        <description>&lt;p&gt;This isn’t the first time &lt;a href=&quot;https://www.google.com/webhp?sourceid=chrome-instant&amp;amp;ion=1&amp;amp;espv=2&amp;amp;ie=UTF-8#q=metaprogramming%20harmful&quot;&gt;someone has considered metaprogramming in ruby to be harmful&lt;/a&gt;,
-and it won’t be the last. Metaprogramming is useful when you are programming
-reactively against external changes that you have to account for with your
-code. An example I like to use is the time when I had to create attributes
-for an object based on external json object. So even if the json object
-changes its attributes, the ruby program is able to account for the changed
-attributes.&lt;/p&gt;
-
-&lt;p&gt;However, in the real world, proper use of metaprogramming is infrequent.
-I would even venture to say that, if you are considering doing something
-with metaprogramming in Ruby, stop and try to solve it without metaprogramming.&lt;/p&gt;
-
-&lt;p&gt;Metaprogramming is not obvious and even to the author himself, it’ll become
-less obvious over time. Metaprogramming often ends up ugly. This is
-certainly true for someone else reading the code. It is harder to debug.
-You end up having a hard time finding the code using &lt;code class=&quot;highlighter-rouge&quot;&gt;grep&lt;/code&gt; or the text editor because
-the code is obscured via metaprogramming.&lt;/p&gt;
-
-&lt;p&gt;If you must metaprogram, document it well. Let your colleagues know what you
-are doing. Be very open about how your metaprogramming works. And it never
-hurts to get a second opinion on how you can avoid doing this altogether.&lt;/p&gt;
-</description>
-        <pubDate>Sat, 06 Jun 2015 10:36:48 -0700</pubDate>
-        <link>http://jasonkim.ca/blog/2015/06/06/dont-over-metaprogram-in-ruby/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2015/06/06/dont-over-metaprogram-in-ruby/</guid>
-        
-        
-        <category>ruby</category>
         
       </item>
     
