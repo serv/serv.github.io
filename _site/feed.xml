@@ -6,9 +6,83 @@
 </description>
     <link>http://jasonkim.ca/</link>
     <atom:link href="http://jasonkim.ca/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 24 Jul 2016 23:32:46 -0700</pubDate>
-    <lastBuildDate>Sun, 24 Jul 2016 23:32:46 -0700</lastBuildDate>
+    <pubDate>Sun, 09 Oct 2016 10:56:04 -0700</pubDate>
+    <lastBuildDate>Sun, 09 Oct 2016 10:56:04 -0700</lastBuildDate>
     <generator>Jekyll v3.0.2</generator>
+    
+      <item>
+        <title>Easily Overlook Parts on Developing REST API</title>
+        <description>&lt;p&gt;I recently transitioned off the API team and moved
+work on web client team at work. I wanted to share
+some things I wish I had known when I was deepdiving
+in developing REST API.&lt;/p&gt;
+
+&lt;h2 id=&quot;stability-uber-alles&quot;&gt;1. Stability uber alles&lt;/h2&gt;
+
+&lt;p&gt;You can drop nearly everything on the ground and
+focus on restoring stability of the API. No one
+will mind.&lt;/p&gt;
+
+&lt;h2 id=&quot;versioned-api-from-the-start&quot;&gt;2. Versioned API from the start&lt;/h2&gt;
+
+&lt;p&gt;APIs are suppose to return consistent data that’s
+been agreed by the server and the client. There
+are times when the server must change the response
+body structure to serve the needs of some clients
+better. You should not change the response structure
+for a given endpoint in such case. You should
+version your API so that you can serve the needs
+of the old clients and new clients equally well.&lt;/p&gt;
+
+&lt;p&gt;Versioning can easily be a topic of conversation
+on its own, but here are several considerations
+you need to make when you implement versioning.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Where is versioning going to occur?
+At load balancer or at app?&lt;/li&gt;
+  &lt;li&gt;Is it going to be done via header or url?&lt;/li&gt;
+  &lt;li&gt;How are you going to isolate the code change to
+remain within a specific version? Also while
+ensuring that the versioning doesn’t make coding
+any more difficult.&lt;/li&gt;
+  &lt;li&gt;How will you automatically test the newly
+versioned APIs?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;use-api-specs&quot;&gt;3. Use API specs&lt;/h2&gt;
+
+&lt;p&gt;Make use of spec to come to an agreement between
+you and the clients before building the API.
+You will be able to serve their needs better and
+also possibly explain to the clients your limitations.&lt;/p&gt;
+
+&lt;h2 id=&quot;load-testing&quot;&gt;4. Load testing&lt;/h2&gt;
+
+&lt;p&gt;I didn’t realize how important this is until
+our production environment was adversely affected
+by some feature changes we made without properly
+load testing them first. Develop a load testing
+strategy for your codebase and be ready to reject
+code changes that could affect production
+environment negatively.&lt;/p&gt;
+
+&lt;h2 id=&quot;leverage-your-teammates-and-clients-for-advice&quot;&gt;5. Leverage your teammates and clients for advice&lt;/h2&gt;
+
+&lt;p&gt;Compared to other kind of products I used to work
+on developers usually have more correct opinions
+about building API.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 09 Oct 2016 09:45:58 -0700</pubDate>
+        <link>http://jasonkim.ca/blog/2016/10/09/easily-overlooked-parts-on-developing-rest-api/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2016/10/09/easily-overlooked-parts-on-developing-rest-api/</guid>
+        
+        
+        <category>api</category>
+        
+        <category>rest</category>
+        
+      </item>
     
       <item>
         <title>Benchmarking Web Frameworks</title>
@@ -612,134 +686,6 @@ A chance some others don’t have.&lt;/p&gt;
         
         
         <category>musings</category>
-        
-      </item>
-    
-      <item>
-        <title>Setting up Bower on Rails 4 for Heroku</title>
-        <description>&lt;p&gt;We know Bower is great for managing frontend packages such as jQuery and Bootstrap.
-I noticed that it’s not obvious how I can use Bower with Rails and Heroku.
-Here is how I set up Bower to work with Rails 4 app running on Heroku.&lt;/p&gt;
-
-&lt;p&gt;My local system setup looks like this.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;OS X Yosemite V 10.10.3&lt;/li&gt;
-  &lt;li&gt;ruby 2.2.1p85 (2015-02-26 revision 49769) [x86_64-darwin14]&lt;/li&gt;
-  &lt;li&gt;Rails 4.2.3&lt;/li&gt;
-  &lt;li&gt;Bower 1.4.1&lt;/li&gt;
-  &lt;li&gt;Node v0.10.38&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;prerequisites&quot;&gt;1. Prerequisites&lt;/h2&gt;
-
-&lt;p&gt;I’m gonna assume that you have some basics down already.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Install Ruby and Ruby on Rails.&lt;/li&gt;
-  &lt;li&gt;Install Node and have npm working.&lt;/li&gt;
-  &lt;li&gt;Install Bower&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;configure-npm-package-and-bower-package&quot;&gt;2. Configure npm package and bower package&lt;/h2&gt;
-
-&lt;p&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;npm init&lt;/code&gt; to create &lt;code class=&quot;highlighter-rouge&quot;&gt;package.json&lt;/code&gt; file with correct npm
-configuration for your app.&lt;/p&gt;
-
-&lt;p&gt;Now run &lt;code class=&quot;highlighter-rouge&quot;&gt;npm install bower --save&lt;/code&gt;. This will include bower as a
-dependency for your npm package.json.&lt;/p&gt;
-
-&lt;p&gt;Whenever you install a npm package, add &lt;code class=&quot;highlighter-rouge&quot;&gt;--save&lt;/code&gt; to automatically
-add the package as the dependency.&lt;/p&gt;
-
-&lt;p&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;bower init&lt;/code&gt; to create &lt;code class=&quot;highlighter-rouge&quot;&gt;bower.json&lt;/code&gt; file with correct bower
-configuration for your app.&lt;/p&gt;
-
-&lt;p&gt;Now install your packages running &lt;code class=&quot;highlighter-rouge&quot;&gt;npm install [pakcage-name] --save&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Again, whenever you install a bower package, add &lt;code class=&quot;highlighter-rouge&quot;&gt;--save&lt;/code&gt; to automatically
-add the bower package as the dependency.&lt;/p&gt;
-
-&lt;h2 id=&quot;make-bower-work-with-rails&quot;&gt;3. Make Bower work with Rails&lt;/h2&gt;
-
-&lt;p&gt;Let’s specify where bower packages are installed on the Rails app.&lt;/p&gt;
-
-&lt;p&gt;Create a file called &lt;code class=&quot;highlighter-rouge&quot;&gt;.bowerrc&lt;/code&gt;, and add&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;directory&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;vendor/assets/bower_components&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;vendor/assets/bower_components&lt;/code&gt; is where bower packages will be installed.&lt;/p&gt;
-
-&lt;p&gt;At this point, let’s edit &lt;code class=&quot;highlighter-rouge&quot;&gt;.gitignore&lt;/code&gt;, so we don’t commit npm packages or bower packages.
-At the end of &lt;code class=&quot;highlighter-rouge&quot;&gt;.gitignore&lt;/code&gt; file, add&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;node_modules
-vendor/assets/bower_components&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;In &lt;code class=&quot;highlighter-rouge&quot;&gt;config/application.rb&lt;/code&gt;, add:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;assets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;paths&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;vendor&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;assets&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;bower_components&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;This will ensure that Rails picks up asset files from where bower packages are
-installed.&lt;/p&gt;
-
-&lt;p&gt;If you wanna start using Bootstrap for example, in the &lt;code class=&quot;highlighter-rouge&quot;&gt;app/assets/stylesheets/application.css&lt;/code&gt;,
-you can add:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;o&quot;&gt;*=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;bootstrap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;dist&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;css&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;bootstrap&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;And in &lt;code class=&quot;highlighter-rouge&quot;&gt;app/assets/javascript/application.js&lt;/code&gt;,&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;c1&quot;&gt;//= require bootstrap/dist/js/bootstrap&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Make sure restart the Rails app to see the bower packages working with Rails.&lt;/p&gt;
-
-&lt;h2 id=&quot;use-bower-on-heroku&quot;&gt;4. Use Bower on Heroku&lt;/h2&gt;
-
-&lt;p&gt;At this point, Bower should be working well with Rails on your local environment.
-However, when you try to use it on Heroku, it’ll error out while it
-is trying to precompile assets.&lt;/p&gt;
-
-&lt;p&gt;This part, I am following some steps taken in &lt;a href=&quot;https://coderwall.com/p/6bmygq/heroku-rails-bower&quot;&gt;Anthony Smith’s post&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Configure Heroku to use ddollar’s multi-buildpack:&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;heroku config:add BUILDPACK_URL=https://github.com/ddollar/heroku-buildpack-multi.git&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Create a file called: &lt;code class=&quot;highlighter-rouge&quot;&gt;.buildpacks&lt;/code&gt; and add:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;https://github.com/heroku/heroku-buildpack-nodejs
-https://github.com/heroku/heroku-buildpack-ruby&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Make sure that the ruby buildpack is the last one in the list.
-This will allow you to access the Rails console when running heroku run console.&lt;/p&gt;
-
-&lt;p&gt;In the &lt;code class=&quot;highlighter-rouge&quot;&gt;package.json&lt;/code&gt;, add a postinstall script. It should look like this.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-
-  &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;scripts&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;postinstall&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;./node_modules/bower/bin/bower install&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-
-  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Now push to Heroku!&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;git push heroku master&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;npm install&lt;/code&gt; will take a while to finish.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 29 Jun 2015 10:51:56 -0700</pubDate>
-        <link>http://jasonkim.ca/blog/2015/06/29/setting-up-bower-on-rails-4-for-heroku/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2015/06/29/setting-up-bower-on-rails-4-for-heroku/</guid>
-        
-        
-        <category>rails</category>
         
       </item>
     
