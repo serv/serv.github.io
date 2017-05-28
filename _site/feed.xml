@@ -6,9 +6,96 @@
 </description>
     <link>http://jasonkim.ca/</link>
     <atom:link href="http://jasonkim.ca/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 01 Jan 2017 20:06:32 -0800</pubDate>
-    <lastBuildDate>Sun, 01 Jan 2017 20:06:32 -0800</lastBuildDate>
+    <pubDate>Sun, 28 May 2017 15:44:57 -0700</pubDate>
+    <lastBuildDate>Sun, 28 May 2017 15:44:57 -0700</lastBuildDate>
     <generator>Jekyll v3.0.2</generator>
+    
+      <item>
+        <title>What I learned upgrading a large Ember.js project from v2.3.0 to v2.12.1</title>
+        <description>&lt;p&gt;I worked on upgrading a ~19 KLOC Ember.js codebase.
+The previous Ember.js version was 2.3.0.
+Now it is 2.12.1. Here, I am going to discuss why I had to upgrade
+Ember.js, general approach to solving problems while upgrading a
+framework.&lt;/p&gt;
+
+&lt;p&gt;For a long time, Ember.js version 2.3.0 served us just fine. The framework
+pretty much provided us with everything we needed out of
+the box and small flaws here and there didn’t bother us. However, over
+time, there started to arise several glaring problems with using an
+older Ember.js version.&lt;/p&gt;
+
+&lt;p&gt;As our app grew larger with some pages generating a large number of
+components in a view, we experienced noticeable performance degredation in
+DOM rendering. To mitigate this problem, we used an alternative way to
+render components, &lt;a href=&quot;https://www.npmjs.com/package/ember-cli-raw-handlebars&quot;&gt;ember-cli-raw-handlebars&lt;/a&gt; which stripped away much of Ember related functionalities from the view
+in order to increase the DOM rendering speed. The trade off for this was
+introducing the “none-Ember.js” way of organizing our codebase, which made
+our codebase look rather messy.&lt;/p&gt;
+
+&lt;p&gt;Using older Ember.js also made it hard to use newer packages out in the wild.
+When we wanted to introduce a new package or upgrade an existing package
+to a newer version, the Ember framework started to throw cryptic errors
+that were hard to debug and fix. The cost of not upgrading Ember.js became
+greater than the convenience of relying on an older Ember.js.&lt;/p&gt;
+
+&lt;h2 id=&quot;procedure-to-upgrade-emberjs&quot;&gt;Procedure to upgrade Ember.js&lt;/h2&gt;
+
+&lt;p&gt;Ember v2.3.0 came out on Jan 17, 2016. A lot has changed since then. Simply
+bumping the Ember version to the latest simply will not work. There will
+be a lot of noticeable and unnoticeable bugs from doing that. Fixing those bugs
+all at once is very difficult. I built a procedure to safely upgrade Ember.js
+without creating tons of regressions.&lt;/p&gt;
+
+&lt;p&gt;I needed Ember.js upgrade only branch on beta environment. Upgrading Ember.js
+of a large endeavor takes a long time. Most likely, you will be asked to develop
+features and fix bugs while you are working on upgrade Ember. For that reason,
+preparing an isolated Ember.js upgrade only branch on beta will be
+useful to allow QA to test the branch while you are working on other features.&lt;/p&gt;
+
+&lt;p&gt;I wrote more automated tests. While I was making changes to the Ember.js
+upgrade branch, I needed to make sure that I wasn’t breaking things while
+I fix an issue. Automated tests helped me make sure that I make
+safe changes that are tested.&lt;/p&gt;
+
+&lt;p&gt;Since your team most likely will QA and review your changes, they will
+also need to know how to prepare the development environment for the
+Ember upgrade and how to bring it back to their own normal development
+environment. I made sure this is clearly described and communicated to
+others.&lt;/p&gt;
+
+&lt;p&gt;Having some dedicated QA time is also really important. Framework update
+touches all aspects of the app, and every core functionalities need to
+be tested thoroughly before the change is released on production.&lt;/p&gt;
+
+&lt;p&gt;I used binary search like algorithm to bump the versions to the move towards
+the latest version.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;next_non_erroring_version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start_version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;destination_version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start_version&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start_version&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;destination_version&lt;/span&gt;
+
+  &lt;span class=&quot;n&quot;&gt;half_way&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;destination_version&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start_version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;causes_error?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;half_way&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;next_non_erroring_version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start_version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;half_way&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;patch_version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;0.0.1&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;next_non_erroring_version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;half_way&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;patch_version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;0.0.1&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;destination_version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;next_non_erroring_version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;2.3.0&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;2.12.1&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;patch_version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;0.0.1&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The method above tries to find the first version closest to the original
+version to causes error.&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 28 May 2017 13:00:00 -0700</pubDate>
+        <link>http://jasonkim.ca/blog/2017/05/28/upgrading-ember/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2017/05/28/upgrading-ember/</guid>
+        
+        
+        <category>software development</category>
+        
+      </item>
     
       <item>
         <title>My Macbook Alternative</title>
@@ -636,100 +723,6 @@ Maybe I’ll come up with some solution for them later down the road.&lt;/p&gt;
         
         
         <category>Dev Ops</category>
-        
-      </item>
-    
-      <item>
-        <title>Setting up Phoenix 1.0 on Mac OS X Yosemite (With Troubleshooting Steps)</title>
-        <description>&lt;p&gt;&lt;a href=&quot;http://www.phoenixframework.org/&quot;&gt;Phoenix&lt;/a&gt; is a promising
-&lt;a href=&quot;http://elixir-lang.org/&quot;&gt;Elixir&lt;/a&gt; web framework that is fast and productive.
-I heard about Phoenix through a coworker a couple of weeks
-ago and started playing with it.
-Then stopped for a while, until I heard that the framework finally
-hit &lt;a href=&quot;https://news.ycombinator.com/item?id=10135825&quot;&gt;1.0 on Hacker News&lt;/a&gt;.
-There were many praises for the framework and success stories
-that I thought I had to try it again.&lt;/p&gt;
-
-&lt;p&gt;This is a summary of what I did to set up Phoenix 1.0 on
-Mac OS X Yosemite (Version 10.10.5). I also included how
-I solved some odd errors that appeared during installation process.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;$ brew install elixir&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;$ mix local.hex&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;$ mix archive.install https://github.com/phoenixframework/phoenix/releases/download/v1.0.0/phoenix_new-1.0.0.ez&lt;/code&gt;&lt;/p&gt;
-
-    &lt;p&gt;In this step, you might see this error.&lt;/p&gt;
-
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
- ** (Mix) Could not access url https://github.com/phoenixframework/phoenix/releases/download/v1.0.0/phoenix_new-1.0.0.ez, error: {:failed_connect, [{:to_address, {&#39;github.com&#39;, 443}}, {:inet, [:inet], :nxdomain}]}
-&lt;/code&gt;&lt;/p&gt;
-
-    &lt;p&gt;To solve this issue, you need to ensure that &lt;code class=&quot;highlighter-rouge&quot;&gt;~/.mix/archives directory&lt;/code&gt; has write permission.&lt;/p&gt;
-
-    &lt;p&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;$ sudo chmod a+rw ~/.mix/archives/&lt;/code&gt; then try running #3 again.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Go into the directory where you want your Phoenix app to live.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;$ mix phoenix.new hello_phoenix&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Say yes to &lt;code class=&quot;highlighter-rouge&quot;&gt;Fetch and install dependencies? [Yn] y&lt;/code&gt;&lt;/p&gt;
-
-    &lt;p&gt;You might see an error during this process. And most likely, it’s happening because your Phoenix project directory doesn’t have write permission.&lt;/p&gt;
-
-    &lt;p&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;$ sudo chmod -R a+rw hello_phoenix&lt;/code&gt;.
- Then try running #5 again.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;$ npm install&lt;/code&gt; with node &amp;gt; 0.12.0&lt;/li&gt;
-  &lt;li&gt;Ensure that you have postgresql running.&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;$ mix ecto.create&lt;/code&gt;&lt;/p&gt;
-
-    &lt;p&gt;You might get this error.
- &lt;code class=&quot;highlighter-rouge&quot;&gt;
- ** (Mix) The database for HelloPhoenix.Repo couldn&#39;t be created, reason given: &quot;psql: FATAL:  role \&quot;postgres\&quot; is not permitted to log in\n&quot;.
-&lt;/code&gt;&lt;/p&gt;
-
-    &lt;p&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;$ psql postgres&lt;/code&gt;&lt;/p&gt;
-
-    &lt;p&gt;In the psql, run &lt;code class=&quot;highlighter-rouge&quot;&gt;CREATE ROLE postgres;&lt;/code&gt;&lt;/p&gt;
-
-    &lt;p&gt;Try running &lt;code class=&quot;highlighter-rouge&quot;&gt;$ mix ecto.create&lt;/code&gt; again.&lt;/p&gt;
-
-    &lt;p&gt;You might get this error.
- &lt;code class=&quot;highlighter-rouge&quot;&gt;
- ** (Mix) The database for HelloPhoenix.Repo couldn&#39;t be created, reason given: &quot;psql: FATAL:  role \&quot;postgres\&quot; is not permitted to log in\n&quot;.
-&lt;/code&gt;&lt;/p&gt;
-
-    &lt;p&gt;In the psql, run &lt;code class=&quot;highlighter-rouge&quot;&gt;ALTER ROLE postgres LOGIN;&lt;/code&gt;&lt;/p&gt;
-
-    &lt;p&gt;Try running &lt;code class=&quot;highlighter-rouge&quot;&gt;$ mix ecto.create&lt;/code&gt; again.&lt;/p&gt;
-
-    &lt;p&gt;You might get this error.
- &lt;code class=&quot;highlighter-rouge&quot;&gt;
- ** (Mix) The database for HelloPhoenix.Repo couldn&#39;t be created, reason given: &quot;ERROR:  permission denied to create database\n&quot;.
-&lt;/code&gt;&lt;/p&gt;
-
-    &lt;p&gt;In the psql, run &lt;code class=&quot;highlighter-rouge&quot;&gt;ALTER ROLE postgres CREATEDB;&lt;/code&gt;&lt;/p&gt;
-
-    &lt;p&gt;Now try &lt;code class=&quot;highlighter-rouge&quot;&gt;$ mix ecto.create&lt;/code&gt; again&lt;/p&gt;
-
-    &lt;p&gt;You should see &lt;code class=&quot;highlighter-rouge&quot;&gt;The database for HelloPhoenix.Repo has been created.&lt;/code&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;$ mix phoenix.server&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;Go to http://localhost:4000/&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/o7mD8Fv.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-</description>
-        <pubDate>Tue, 01 Sep 2015 22:15:10 -0700</pubDate>
-        <link>http://jasonkim.ca/blog/2015/09/01/setting-up-phoenix-1-dot-0-on-mac-os-x-yosemite/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2015/09/01/setting-up-phoenix-1-dot-0-on-mac-os-x-yosemite/</guid>
-        
-        
-        <category>elixir</category>
-        
-        <category>phoenix</category>
         
       </item>
     
