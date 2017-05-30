@@ -65,7 +65,7 @@ I used binary search like algorithm to bump the versions to the move towards
 the latest version.
 
 {% highlight ruby %}
-next_non_erroring_version(start_version, destination_version)
+def next_non_erroring_version(start_version, destination_version)
   return start_version if start_version == destination_version
 
   half_way = (destination_version - start_version) / 2
