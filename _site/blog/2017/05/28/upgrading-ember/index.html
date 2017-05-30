@@ -131,7 +131,7 @@ be tested thoroughly before the change is released on production.</p>
 <p>I used binary search like algorithm to bump the versions to the move towards
 the latest version.</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">next_non_erroring_version</span><span class="p">(</span><span class="n">start_version</span><span class="p">,</span> <span class="n">destination_version</span><span class="p">)</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">next_non_erroring_version</span><span class="p">(</span><span class="n">start_version</span><span class="p">,</span> <span class="n">destination_version</span><span class="p">)</span>
   <span class="k">return</span> <span class="n">start_version</span> <span class="k">if</span> <span class="n">start_version</span> <span class="o">==</span> <span class="n">destination_version</span>
 
   <span class="n">half_way</span> <span class="o">=</span> <span class="p">(</span><span class="n">destination_version</span> <span class="o">-</span> <span class="n">start_version</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
