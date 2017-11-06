@@ -10,8 +10,8 @@
   <meta name="description" content="tl;dr">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://jasonkim.ca/blog/2014/02/06/quick-find-and-quick-union-in-java/">
-  <link rel="alternate" type="application/rss+xml" title="Jason Kim" href="http://jasonkim.ca/feed.xml">
+  <link rel="canonical" href="http://localhost:4000/blog/2014/02/06/quick-find-and-quick-union-in-java/">
+  <link rel="alternate" type="application/rss+xml" title="Jason Kim" href="http://localhost:4000/feed.xml">
 </head>
 
   <script>
@@ -47,6 +47,8 @@
         
           
           <a class="page-link" href="/about/">About</a>
+          
+        
           
         
           
@@ -129,7 +131,7 @@ with O(N) runtime.</p>
 
   <span class="c1">// constructor</span>
   <span class="c1">// Given N, create an array with N elements</span>
-  <span class="kd">public</span> <span class="n">QuickFind</span><span class="o">(</span><span class="kt">int</span> <span class="n">N</span><span class="o">)</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="nf">QuickFind</span><span class="o">(</span><span class="kt">int</span> <span class="n">N</span><span class="o">)</span> <span class="o">{</span>
     <span class="n">count</span> <span class="o">=</span> <span class="n">N</span><span class="o">;</span>
     <span class="n">id</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">N</span><span class="o">];</span>
     <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
@@ -139,12 +141,12 @@ with O(N) runtime.</p>
 
   <span class="c1">// if values of two index are the same,</span>
   <span class="c1">// return true, else false</span>
-  <span class="kd">public</span> <span class="kt">boolean</span> <span class="n">connected</span><span class="o">(</span><span class="kt">int</span> <span class="n">p</span><span class="o">,</span> <span class="kt">int</span> <span class="n">q</span><span class="o">)</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">connected</span><span class="o">(</span><span class="kt">int</span> <span class="n">p</span><span class="o">,</span> <span class="kt">int</span> <span class="n">q</span><span class="o">)</span> <span class="o">{</span>
     <span class="k">return</span> <span class="n">id</span><span class="o">[</span><span class="n">p</span><span class="o">]</span> <span class="o">==</span> <span class="n">id</span><span class="o">[</span><span class="n">q</span><span class="o">];</span>
   <span class="o">}</span>
 
   <span class="c1">// connect two nodes</span>
-  <span class="kd">public</span> <span class="kt">void</span> <span class="n">union</span><span class="o">(</span><span class="kt">int</span> <span class="n">p</span><span class="o">,</span> <span class="kt">int</span> <span class="n">q</span><span class="o">)</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">union</span><span class="o">(</span><span class="kt">int</span> <span class="n">p</span><span class="o">,</span> <span class="kt">int</span> <span class="n">q</span><span class="o">)</span> <span class="o">{</span>
     <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">count</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
       <span class="k">if</span> <span class="o">(</span><span class="n">id</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">==</span> <span class="n">id</span><span class="o">[</span><span class="n">p</span><span class="o">])</span> <span class="o">{</span>
         <span class="n">id</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">id</span><span class="o">[</span><span class="n">q</span><span class="o">];</span>
@@ -153,7 +155,7 @@ with O(N) runtime.</p>
     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">p</span> <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> <span class="n">q</span><span class="o">);</span>
   <span class="o">}</span>
 
-  <span class="kd">public</span> <span class="kt">void</span> <span class="n">print</span><span class="o">()</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">print</span><span class="o">()</span> <span class="o">{</span>
     <span class="n">StringBuilder</span> <span class="n">temp</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">();</span>
     <span class="n">temp</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">""</span><span class="o">);</span>
 
@@ -165,7 +167,7 @@ with O(N) runtime.</p>
     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">strI</span><span class="o">);</span>
   <span class="o">}</span>
 
-  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="n">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
     <span class="n">QuickFind</span> <span class="n">qf</span> <span class="o">=</span> <span class="k">new</span> <span class="n">QuickFind</span><span class="o">(</span><span class="mi">10</span><span class="o">);</span>
     <span class="n">qf</span><span class="o">.</span><span class="na">union</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span><span class="mi">6</span><span class="o">);</span>
     <span class="n">qf</span><span class="o">.</span><span class="na">print</span><span class="o">();</span>
@@ -182,7 +184,7 @@ with O(N) runtime.</p>
   <span class="o">}</span>
 <span class="o">}</span></code></pre></figure>
 
-<h3 id="to-run-this-java-program">To run this java program</h3>
+<p>###To run this java program</p>
 
 <ol>
   <li>Compile the program. <code class="highlighter-rouge">javac QuickFind.java</code></li>
@@ -201,7 +203,7 @@ root to another’s root.</p>
   <span class="kd">private</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">sz</span><span class="o">;</span>
   <span class="kd">private</span> <span class="kt">int</span> <span class="n">count</span><span class="o">;</span>
 
-  <span class="kd">public</span> <span class="n">QuickUnion</span><span class="o">(</span><span class="kt">int</span> <span class="n">N</span><span class="o">)</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="nf">QuickUnion</span><span class="o">(</span><span class="kt">int</span> <span class="n">N</span><span class="o">)</span> <span class="o">{</span>
     <span class="n">count</span> <span class="o">=</span> <span class="n">N</span><span class="o">;</span>
     <span class="n">id</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">N</span><span class="o">];</span>
     <span class="n">sz</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">N</span><span class="o">];</span>
@@ -211,18 +213,18 @@ root to another’s root.</p>
     <span class="o">}</span>
   <span class="o">}</span>
 
-  <span class="kd">private</span> <span class="kt">int</span> <span class="n">root</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+  <span class="kd">private</span> <span class="kt">int</span> <span class="nf">root</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span>
     <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">!=</span> <span class="n">id</span><span class="o">[</span><span class="n">i</span><span class="o">])</span> <span class="o">{</span>
       <span class="n">i</span> <span class="o">=</span> <span class="n">id</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
     <span class="o">}</span>
     <span class="k">return</span> <span class="n">i</span><span class="o">;</span>
   <span class="o">}</span>
 
-  <span class="kd">public</span> <span class="kt">boolean</span> <span class="n">connected</span><span class="o">(</span><span class="kt">int</span> <span class="n">p</span><span class="o">,</span> <span class="kt">int</span> <span class="n">q</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">return</span> <span class="n">root</span><span class="o">(</span><span class="n">p</span><span class="o">)</span> <span class="o">==</span> <span class="n">root</span><span class="o">(</span><span class="n">q</span><span class="o">);</span>
+  <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">connected</span><span class="o">(</span><span class="kt">int</span> <span class="n">p</span><span class="o">,</span> <span class="kt">int</span> <span class="n">q</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="nf">root</span><span class="o">(</span><span class="n">p</span><span class="o">)</span> <span class="o">==</span> <span class="n">root</span><span class="o">(</span><span class="n">q</span><span class="o">);</span>
   <span class="o">}</span>
 
-  <span class="kd">public</span> <span class="kt">void</span> <span class="n">union</span><span class="o">(</span><span class="kt">int</span> <span class="n">p</span><span class="o">,</span> <span class="kt">int</span> <span class="n">q</span><span class="o">)</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">union</span><span class="o">(</span><span class="kt">int</span> <span class="n">p</span><span class="o">,</span> <span class="kt">int</span> <span class="n">q</span><span class="o">)</span> <span class="o">{</span>
     <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">root</span><span class="o">(</span><span class="n">p</span><span class="o">);</span>
     <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">root</span><span class="o">(</span><span class="n">q</span><span class="o">);</span>
     <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">j</span><span class="o">)</span> <span class="k">return</span><span class="o">;</span>
@@ -230,7 +232,7 @@ root to another’s root.</p>
     <span class="k">else</span> <span class="o">{</span> <span class="n">id</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">i</span><span class="o">;</span> <span class="n">sz</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">+=</span> <span class="n">sz</span><span class="o">[</span><span class="n">j</span><span class="o">];</span> <span class="o">}</span>
   <span class="o">}</span>
 
-  <span class="kd">public</span> <span class="kt">void</span> <span class="n">print</span><span class="o">()</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">print</span><span class="o">()</span> <span class="o">{</span>
     <span class="n">StringBuilder</span> <span class="n">temp</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">();</span>
     <span class="n">temp</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">""</span><span class="o">);</span>
 
@@ -242,7 +244,7 @@ root to another’s root.</p>
     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">strI</span><span class="o">);</span>
   <span class="o">}</span>
 
-  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="n">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
     <span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="n">StdIn</span><span class="o">.</span><span class="na">readInt</span><span class="o">();</span>
     <span class="n">QuickUnion</span> <span class="n">qu</span> <span class="o">=</span> <span class="k">new</span> <span class="n">QuickUnion</span><span class="o">(</span><span class="n">N</span><span class="o">);</span>
     <span class="k">while</span> <span class="o">(!</span><span class="n">StdIn</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">())</span> <span class="o">{</span>
@@ -258,7 +260,7 @@ root to another’s root.</p>
 <span class="o">}</span></code></pre></figure>
 
 <hr />
-<p>### Edited on Feb 11, 2014</p>
+<h3 id="edited-on-feb-11-2014">Edited on Feb 11, 2014</h3>
 
 <ul>
   <li>Code for <code class="highlighter-rouge">QuickUnion.java</code> and <code class="highlighter-rouge">QuickFind.java</code> were updated to fix some

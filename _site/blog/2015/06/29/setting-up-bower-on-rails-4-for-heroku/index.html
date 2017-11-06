@@ -10,8 +10,8 @@
   <meta name="description" content="We know Bower is great for managing frontend packages such as jQuery and Bootstrap.I noticed that it’s not obvious how I can use Bower with Rails and Heroku....">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://jasonkim.ca/blog/2015/06/29/setting-up-bower-on-rails-4-for-heroku/">
-  <link rel="alternate" type="application/rss+xml" title="Jason Kim" href="http://jasonkim.ca/feed.xml">
+  <link rel="canonical" href="http://localhost:4000/blog/2015/06/29/setting-up-bower-on-rails-4-for-heroku/">
+  <link rel="alternate" type="application/rss+xml" title="Jason Kim" href="http://localhost:4000/feed.xml">
 </head>
 
   <script>
@@ -55,6 +55,8 @@
         
           
         
+          
+        
       </div>
     </nav>
 
@@ -87,7 +89,7 @@ Here is how I set up Bower to work with Rails 4 app running on Heroku.</p>
   <li>Node v0.10.38</li>
 </ul>
 
-<h2 id="prerequisites">1. Prerequisites</h2>
+<h2 id="1-prerequisites">1. Prerequisites</h2>
 
 <p>I’m gonna assume that you have some basics down already.</p>
 
@@ -97,7 +99,7 @@ Here is how I set up Bower to work with Rails 4 app running on Heroku.</p>
   <li>Install Bower</li>
 </ul>
 
-<h2 id="configure-npm-package-and-bower-package">2. Configure npm package and bower package</h2>
+<h2 id="2-configure-npm-package-and-bower-package">2. Configure npm package and bower package</h2>
 
 <p>Run <code class="highlighter-rouge">npm init</code> to create <code class="highlighter-rouge">package.json</code> file with correct npm
 configuration for your app.</p>
@@ -116,14 +118,14 @@ configuration for your app.</p>
 <p>Again, whenever you install a bower package, add <code class="highlighter-rouge">--save</code> to automatically
 add the bower package as the dependency.</p>
 
-<h2 id="make-bower-work-with-rails">3. Make Bower work with Rails</h2>
+<h2 id="3-make-bower-work-with-rails">3. Make Bower work with Rails</h2>
 
 <p>Let’s specify where bower packages are installed on the Rails app.</p>
 
 <p>Create a file called <code class="highlighter-rouge">.bowerrc</code>, and add</p>
 
 <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
-  </span><span class="nt">"directory"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vendor/assets/bower_components"</span><span class="w">
+  </span><span class="s2">"directory"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vendor/assets/bower_components"</span><span class="w">
 </span><span class="p">}</span></code></pre></figure>
 
 <p><code class="highlighter-rouge">vendor/assets/bower_components</code> is where bower packages will be installed.</p>
@@ -152,7 +154,7 @@ you can add:</p>
 
 <p>Make sure restart the Rails app to see the bower packages working with Rails.</p>
 
-<h2 id="use-bower-on-heroku">4. Use Bower on Heroku</h2>
+<h2 id="4-use-bower-on-heroku">4. Use Bower on Heroku</h2>
 
 <p>At this point, Bower should be working well with Rails on your local environment.
 However, when you try to use it on Heroku, it’ll error out while it
@@ -177,8 +179,8 @@ This will allow you to access the Rails console when running heroku run console.
 <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="err">...</span><span class="w">
 
-  </span><span class="nt">"scripts"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"postinstall"</span><span class="p">:</span><span class="w"> </span><span class="s2">"./node_modules/bower/bin/bower install"</span><span class="w">
+  </span><span class="s2">"scripts"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"postinstall"</span><span class="p">:</span><span class="w"> </span><span class="s2">"./node_modules/bower/bin/bower install"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 
   </span><span class="err">...</span><span class="w">

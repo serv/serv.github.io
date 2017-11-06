@@ -10,8 +10,8 @@
   <meta name="description" content="tl;drTo use Twitter Typeahead.js with Backbone.js,you need to set up the typeahead function in a Backbone view’s render().And you need to style the typeahead...">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://jasonkim.ca/blog/2014/08/02/high-level-steps-to-setting-up-twitter-typeahead-dot-js/">
-  <link rel="alternate" type="application/rss+xml" title="Jason Kim" href="http://jasonkim.ca/feed.xml">
+  <link rel="canonical" href="http://localhost:4000/blog/2014/08/02/high-level-steps-to-setting-up-twitter-typeahead-dot-js/">
+  <link rel="alternate" type="application/rss+xml" title="Jason Kim" href="http://localhost:4000/feed.xml">
 </head>
 
   <script>
@@ -55,6 +55,8 @@
         
           
         
+          
+        
       </div>
     </nav>
 
@@ -88,18 +90,18 @@ Typeahead requires jQuery.</p>
 
 <h2 id="typeahead-with-backbone">Typeahead with Backbone</h2>
 
-<h3 id="section">1</h3>
+<h3 id="1">1</h3>
 <p>Check the <a href="https://twitter.github.io/typeahead.js/examples/">Typeahead examples</a>
 and find the example that is suitable for
 your app’s use case.</p>
 
-<h3 id="section-1">2</h3>
+<h3 id="2">2</h3>
 <p>Copy the example js code and create a function
 in the view which is responsible for generating the form.</p>
 
 <figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// ...</span>
 
-<span class="k">this</span><span class="p">.</span><span class="nx">twitterTypeahead</span><span class="err">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+<span class="k">this</span><span class="p">.</span><span class="nx">twitterTypeahead</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
   <span class="c1">// constructs the suggestion engine</span>
   <span class="kd">var</span> <span class="nx">states</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Bloodhound</span><span class="p">({</span>
     <span class="na">datumTokenizer</span><span class="p">:</span> <span class="nx">Bloodhound</span><span class="p">.</span><span class="nx">tokenizers</span><span class="p">.</span><span class="nx">obj</span><span class="p">.</span><span class="nx">whitespace</span><span class="p">(</span><span class="s1">'value'</span><span class="p">),</span>
@@ -127,26 +129,26 @@ in the view which is responsible for generating the form.</p>
 
 <span class="c1">// ...</span></code></pre></figure>
 
-<h3 id="section-2">3</h3>
+<h3 id="3">3</h3>
 
 <p>This function should run within the view’s <code class="highlighter-rouge">render()</code>
 function.</p>
 
 <figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// ...</span>
-<span class="k">this</span><span class="p">.</span><span class="nx">redner</span><span class="err">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+<span class="k">this</span><span class="p">.</span><span class="nx">redner</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
   <span class="c1">// ...</span>
   <span class="k">this</span><span class="p">.</span><span class="nx">twitterTypeahead</span><span class="p">();</span>
   <span class="c1">// ...</span>
 <span class="p">},</span>
 <span class="c1">// ...</span></code></pre></figure>
 
-<h3 id="section-3">4</h3>
+<h3 id="4">4</h3>
 
 <p>You need to style the typeahead drowpdown. See
 this <a href="http://stackoverflow.com/questions/20198247/twitters-typeahead-js-suggestions-are-not-styled-have-no-border-transparent-b">stackoverflow thread</a>
 for more info.</p>
 
-<h3 id="optional">5 Optional</h3>
+<h3 id="5-optional">5 Optional</h3>
 
 <p>If you happen to use a remote source for data,
 use the remote example in the Twitter Typeahead example

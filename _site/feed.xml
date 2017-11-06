@@ -4,11 +4,136 @@
     <title>Jason Kim</title>
     <description>Writings on software and other topics
 </description>
-    <link>http://jasonkim.ca/</link>
-    <atom:link href="http://jasonkim.ca/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 29 May 2017 19:48:02 -0700</pubDate>
-    <lastBuildDate>Mon, 29 May 2017 19:48:02 -0700</lastBuildDate>
-    <generator>Jekyll v3.0.2</generator>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sun, 05 Nov 2017 23:26:53 -0800</pubDate>
+    <lastBuildDate>Sun, 05 Nov 2017 23:26:53 -0800</lastBuildDate>
+    <generator>Jekyll v3.6.2</generator>
+    
+      <item>
+        <title>Setting up Typescript</title>
+        <description>&lt;p&gt;I have been using &lt;a href=&quot;https://babeljs.io/learn-es2015/&quot;&gt;ES2015 actively using Babe.js&lt;/a&gt;
+and I was already convinced that compiling more dev-friendly language to
+javascript is useful. One of the langauges that has been praised a lot in
+this domain is &lt;a href=&quot;https://www.typescriptlang.org/index.html&quot;&gt;Typescript&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;install-typescript&quot;&gt;Install Typescript&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;$ yarn global add typescript&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;If you get an error saying &lt;code class=&quot;highlighter-rouge&quot;&gt;tsc&lt;/code&gt; command is not found, check out this
+&lt;a href=&quot;https://stackoverflow.com/a/40333409/536890&quot;&gt;SO answer&lt;/a&gt; on this issue.&lt;/p&gt;
+
+&lt;h3 id=&quot;linked-list-in-typescript&quot;&gt;Linked list in Typescript&lt;/h3&gt;
+
+&lt;p&gt;Here is a linked list you can start to play with written in Typescript.&lt;/p&gt;
+
+&lt;div class=&quot;language-typescript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// index.ts&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Node&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'./node'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;List&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;tail&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+  &lt;span class=&quot;kd&quot;&gt;constructor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;nx&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;node&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;next&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;head&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;nx&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;node&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;node&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!==&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;undefined&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;node&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-typescript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// list.ts&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Node&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'./node'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;List&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;tail&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+  &lt;span class=&quot;kd&quot;&gt;constructor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;nx&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;node&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;next&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;head&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;nx&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;node&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;node&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!==&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;undefined&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;node&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-typescript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// node.ts&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Node&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+  &lt;span class=&quot;kd&quot;&gt;constructor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;val&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now compile typescript into javascript.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;$ tsc index.ts&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;This should generate &lt;code class=&quot;highlighter-rouge&quot;&gt;index.js&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;list.js&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;node.js&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Let’s run these javascript files.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;$ node index.js&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;This should print&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;3
+2
+1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;what-i-think-about-typescript-after-using-it-for-an-hour&quot;&gt;What I think about Typescript after using it for an hour&lt;/h3&gt;
+
+&lt;p&gt;Learning Typescript was intuitive and JS I was writing felt more precise
+and controlled. This allowed me write less error prone javascript in
+a short period time. I should learn more about tooling around Typescript
+so that it feels more integrated into the javascript development
+workflow.&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 05 Nov 2017 13:40:28 -0800</pubDate>
+        <link>http://localhost:4000/blog/2017/11/05/typescript/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2017/11/05/typescript/</guid>
+        
+        
+        <category>typescript</category>
+        
+      </item>
     
       <item>
         <title>What I learned upgrading a large Ember.js project from v2.3.0 to v2.12.1</title>
@@ -76,21 +201,21 @@ the latest version.&lt;/p&gt;
   &lt;span class=&quot;n&quot;&gt;half_way&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;destination_version&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start_version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
 
   &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;causes_error?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;half_way&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;next_non_erroring_version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start_version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;half_way&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;patch_version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;0.0.1&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;next_non_erroring_version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start_version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;half_way&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;patch_version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'0.0.1'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;next_non_erroring_version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;half_way&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;patch_version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;0.0.1&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;destination_version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;next_non_erroring_version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;half_way&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;patch_version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'0.0.1'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;destination_version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
 
-&lt;span class=&quot;n&quot;&gt;next_non_erroring_version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;2.3.0&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;2.12.1&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;patch_version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;0.0.1&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;span class=&quot;n&quot;&gt;next_non_erroring_version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'2.3.0'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'2.12.1'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;patch_version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'0.0.1'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;The method above tries to find the first version closest to the original
 version to causes error.&lt;/p&gt;
 
 </description>
         <pubDate>Sun, 28 May 2017 13:00:00 -0700</pubDate>
-        <link>http://jasonkim.ca/blog/2017/05/28/upgrading-ember/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2017/05/28/upgrading-ember/</guid>
+        <link>http://localhost:4000/blog/2017/05/28/upgrading-ember/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2017/05/28/upgrading-ember/</guid>
         
         
         <category>software development</category>
@@ -145,8 +270,8 @@ games at $616.97 was totally worth it.&lt;/p&gt;
 
 </description>
         <pubDate>Sun, 01 Jan 2017 13:56:59 -0800</pubDate>
-        <link>http://jasonkim.ca/blog/2017/01/01/my-macbook-pro-alternative/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2017/01/01/my-macbook-pro-alternative/</guid>
+        <link>http://localhost:4000/blog/2017/01/01/my-macbook-pro-alternative/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2017/01/01/my-macbook-pro-alternative/</guid>
         
         
         <category>software development</category>
@@ -164,7 +289,7 @@ with a bigger scope of new work to learn about. Here are some tips
 for someone who’s starting a new job or transitioning to a work
 that will help you to get use to the new tasks as a software engineer.&lt;/p&gt;
 
-&lt;h2 id=&quot;learn-the-directory-structure-of-the-codebase&quot;&gt;1. Learn the directory structure of the codebase&lt;/h2&gt;
+&lt;h2 id=&quot;1-learn-the-directory-structure-of-the-codebase&quot;&gt;1. Learn the directory structure of the codebase&lt;/h2&gt;
 
 &lt;p&gt;Learning 100% of the codebase in a short period of time is difficult.
 This can be made easier by having someone explain the directory
@@ -172,7 +297,7 @@ structure of the codebase for you. Once you understand the context
 of the directory sturcture, smaller parts of the codebase can be
 made more sense easier.&lt;/p&gt;
 
-&lt;h2 id=&quot;ask-questions-to-the-teammembers&quot;&gt;2. Ask questions to the teammembers&lt;/h2&gt;
+&lt;h2 id=&quot;2-ask-questions-to-the-teammembers&quot;&gt;2. Ask questions to the teammembers&lt;/h2&gt;
 
 &lt;p&gt;You have the experts of the codebase sitting around you. Ask them
 questions and get the answers you need.
@@ -183,7 +308,7 @@ Akamai cache is set up, how deployment works, how testing works,
 how oncall process works, etc can’t be figured out on your own.
 So for these things, you have ask questions.&lt;/p&gt;
 
-&lt;h2 id=&quot;have-a-vision&quot;&gt;3. Have a vision&lt;/h2&gt;
+&lt;h2 id=&quot;3-have-a-vision&quot;&gt;3. Have a vision&lt;/h2&gt;
 
 &lt;p&gt;You should have a vision for your own work aside from the day
 to day work at the team. This was a better advice I’ve received
@@ -195,8 +320,8 @@ is aligned with the product vision, team vision and the company
 vision.&lt;/p&gt;
 </description>
         <pubDate>Sun, 13 Nov 2016 08:45:58 -0800</pubDate>
-        <link>http://jasonkim.ca/blog/2016/11/13/starting-a-new-job-or-transitioning-to-a-new-team/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2016/11/13/starting-a-new-job-or-transitioning-to-a-new-team/</guid>
+        <link>http://localhost:4000/blog/2016/11/13/starting-a-new-job-or-transitioning-to-a-new-team/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2016/11/13/starting-a-new-job-or-transitioning-to-a-new-team/</guid>
         
         
         <category>career</category>
@@ -210,13 +335,13 @@ work on web client team at work. I wanted to share
 some things I wish I had known when I was deepdiving
 in developing REST API.&lt;/p&gt;
 
-&lt;h2 id=&quot;stability-uber-alles&quot;&gt;1. Stability uber alles&lt;/h2&gt;
+&lt;h2 id=&quot;1-stability-uber-alles&quot;&gt;1. Stability uber alles&lt;/h2&gt;
 
 &lt;p&gt;You can drop nearly everything on the ground and
 focus on restoring stability of the API. No one
 will mind.&lt;/p&gt;
 
-&lt;h2 id=&quot;versioned-api-from-the-start&quot;&gt;2. Versioned API from the start&lt;/h2&gt;
+&lt;h2 id=&quot;2-versioned-api-from-the-start&quot;&gt;2. Versioned API from the start&lt;/h2&gt;
 
 &lt;p&gt;APIs are suppose to return consistent data that’s
 been agreed by the server and the client. There
@@ -243,14 +368,14 @@ any more difficult.&lt;/li&gt;
 versioned APIs?&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;use-api-specs&quot;&gt;3. Use API specs&lt;/h2&gt;
+&lt;h2 id=&quot;3-use-api-specs&quot;&gt;3. Use API specs&lt;/h2&gt;
 
 &lt;p&gt;Make use of spec to come to an agreement between
 you and the clients before building the API.
 You will be able to serve their needs better and
 also possibly explain to the clients your limitations.&lt;/p&gt;
 
-&lt;h2 id=&quot;load-testing&quot;&gt;4. Load testing&lt;/h2&gt;
+&lt;h2 id=&quot;4-load-testing&quot;&gt;4. Load testing&lt;/h2&gt;
 
 &lt;p&gt;I didn’t realize how important this is until
 our production environment was adversely affected
@@ -260,15 +385,15 @@ strategy for your codebase and be ready to reject
 code changes that could affect production
 environment negatively.&lt;/p&gt;
 
-&lt;h2 id=&quot;leverage-your-teammates-and-clients-for-advice&quot;&gt;5. Leverage your teammates and clients for advice&lt;/h2&gt;
+&lt;h2 id=&quot;5-leverage-your-teammates-and-clients-for-advice&quot;&gt;5. Leverage your teammates and clients for advice&lt;/h2&gt;
 
 &lt;p&gt;Compared to other kind of products I used to work
 on developers usually have more correct opinions
 about building API.&lt;/p&gt;
 </description>
         <pubDate>Sun, 09 Oct 2016 09:45:58 -0700</pubDate>
-        <link>http://jasonkim.ca/blog/2016/10/09/easily-overlooked-parts-on-developing-rest-api/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2016/10/09/easily-overlooked-parts-on-developing-rest-api/</guid>
+        <link>http://localhost:4000/blog/2016/10/09/easily-overlooked-parts-on-developing-rest-api/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2016/10/09/easily-overlooked-parts-on-developing-rest-api/</guid>
         
         
         <category>api</category>
@@ -332,8 +457,8 @@ serve a large traffic.&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Thu, 21 Jul 2016 21:45:58 -0700</pubDate>
-        <link>http://jasonkim.ca/blog/2016/07/21/benchmarking-web-frameworks/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2016/07/21/benchmarking-web-frameworks/</guid>
+        <link>http://localhost:4000/blog/2016/07/21/benchmarking-web-frameworks/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2016/07/21/benchmarking-web-frameworks/</guid>
         
         
         <category>node.js</category>
@@ -495,8 +620,8 @@ of the memory leak. I also want to thank
 &lt;a href=&quot;http://bryce.is/writing/code/mdb_v8/vm/virtualbox/omnios/2016/02/06/mdbv8-getting-started.html&quot;&gt;Bryce Neal for writing a detailed tutorial on setting up Solaris to use MDB&lt;/a&gt;.&lt;/p&gt;
 </description>
         <pubDate>Thu, 02 Jun 2016 22:30:56 -0700</pubDate>
-        <link>http://jasonkim.ca/blog/2016/06/02/fixing-memory-leak-on-production-node-application/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2016/06/02/fixing-memory-leak-on-production-node-application/</guid>
+        <link>http://localhost:4000/blog/2016/06/02/fixing-memory-leak-on-production-node-application/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2016/06/02/fixing-memory-leak-on-production-node-application/</guid>
         
         
         <category>node</category>
@@ -530,8 +655,8 @@ Also any infrastructure change must be orchestrated through our TechOps team, an
 I will plan out more granular and incremental steps to determine how each development process will be carried out to meet the acceptance criteria of the feature story from now on.&lt;/p&gt;
 </description>
         <pubDate>Wed, 01 Jun 2016 22:30:56 -0700</pubDate>
-        <link>http://jasonkim.ca/blog/2016/06/01/battle-technical-assumptions/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2016/06/01/battle-technical-assumptions/</guid>
+        <link>http://localhost:4000/blog/2016/06/01/battle-technical-assumptions/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2016/06/01/battle-technical-assumptions/</guid>
         
         
         <category>software</category>
@@ -587,14 +712,14 @@ this, but let’s just look at the meatest part of
 the code.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;get_children&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;childrenTagList&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;nil?&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;childrenTagList&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;empty?&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;array&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;id&#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;id&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;genreIds&#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;genreIds&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'childrenTagList'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;nil?&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'childrenTagList'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;empty?&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;array&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'id'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'id'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'genreIds'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'genreIds'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
 
-  &lt;span class=&quot;n&quot;&gt;array&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;id&#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;id&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;genreIds&#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;genreIds&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;childrenTagList&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;array&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;get_children&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;CATALOG&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;id&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]),&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[])&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;array&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'id'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'id'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'genreIds'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'genreIds'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'childrenTagList'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;array&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;get_children&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;CATALOG&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'id'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]),&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[])&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
 
   &lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;
@@ -618,8 +743,8 @@ The response body in JSON format is parsed by
 &lt;a href=&quot;https://github.com/ohler55/oj&quot;&gt;Oj&lt;/a&gt;.&lt;/p&gt;
 </description>
         <pubDate>Sun, 29 May 2016 00:47:42 -0700</pubDate>
-        <link>http://jasonkim.ca/blog/2016/05/29/recursive-depth-first-traversal/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2016/05/29/recursive-depth-first-traversal/</guid>
+        <link>http://localhost:4000/blog/2016/05/29/recursive-depth-first-traversal/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2016/05/29/recursive-depth-first-traversal/</guid>
         
         
         <category>algorithms</category>
@@ -671,58 +796,11 @@ This code review should be contrasted with nitpicking. It’s not about trying
 to inject your preference for the code. It should be about writing good code.&lt;/p&gt;
 </description>
         <pubDate>Sat, 09 Apr 2016 17:47:42 -0700</pubDate>
-        <link>http://jasonkim.ca/blog/2016/04/09/software-development-time-saving/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2016/04/09/software-development-time-saving/</guid>
+        <link>http://localhost:4000/blog/2016/04/09/software-development-time-saving/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2016/04/09/software-development-time-saving/</guid>
         
         
         <category>software development</category>
-        
-      </item>
-    
-      <item>
-        <title>The Deployment Minefield</title>
-        <description>&lt;p&gt;I find deployments hard. But why? I conjectured a few reasons why.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;You don’t practice setting up deployments too often.&lt;/li&gt;
-  &lt;li&gt;When you do the setup, you usually mindlessly copypasta the command
-from internet.&lt;/li&gt;
-  &lt;li&gt;And you finally make it work without any deep understanding, well
-you never try to relearn what you’ve done.&lt;/li&gt;
-  &lt;li&gt;Deployment is actually a hard subject that touches on many different
-complex systems.&lt;/li&gt;
-  &lt;li&gt;When something goes wrong, it’s hard to fix or undo. And you might
-compound the problem by trying to fix it by copypasta-ing even more crap.&lt;/li&gt;
-  &lt;li&gt;You might not even be aware of the problem at all. You could’ve done
-something an hour that fucked up the deployment process, but you might
-be trying to undo something you did 10 minutes ago. Diagnosis of the
-problem is really hard for deployment.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;What is the remedy for these problem?&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;You have to practice deployment like everything else. In order to
-practice something you need a meticulous guideline on how to practice.
-There for document everything!&lt;/li&gt;
-  &lt;li&gt;Understand each steps you are performing. Never just copypasta
-something. Even better, understand the system you are using.&lt;/li&gt;
-  &lt;li&gt;Even after you make something work, go back and review what you’ve
-just done.&lt;/li&gt;
-  &lt;li&gt;Learn the system you are using. Again, don’t just copypasta.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;I find that 5 and 6 are rather hard problems. You need really good
-understanding of the system in order to debug some problem.
-Otherwise, you just end up googling same shit over and over again.
-Maybe I’ll come up with some solution for them later down the road.&lt;/p&gt;
-</description>
-        <pubDate>Tue, 22 Dec 2015 16:47:42 -0800</pubDate>
-        <link>http://jasonkim.ca/blog/2015/12/22/the-deployment-minefield/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2015/12/22/the-deployment-minefield/</guid>
-        
-        
-        <category>Dev Ops</category>
         
       </item>
     

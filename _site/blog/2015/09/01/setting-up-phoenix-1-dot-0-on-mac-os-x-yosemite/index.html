@@ -10,8 +10,8 @@
   <meta name="description" content="Phoenix is a promisingElixir web framework that is fast and productive.I heard about Phoenix through a coworker a couple of weeksago and started playing with...">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://jasonkim.ca/blog/2015/09/01/setting-up-phoenix-1-dot-0-on-mac-os-x-yosemite/">
-  <link rel="alternate" type="application/rss+xml" title="Jason Kim" href="http://jasonkim.ca/feed.xml">
+  <link rel="canonical" href="http://localhost:4000/blog/2015/09/01/setting-up-phoenix-1-dot-0-on-mac-os-x-yosemite/">
+  <link rel="alternate" type="application/rss+xml" title="Jason Kim" href="http://localhost:4000/feed.xml">
 </head>
 
   <script>
@@ -47,6 +47,8 @@
         
           
           <a class="page-link" href="/about/">About</a>
+          
+        
           
         
           
@@ -94,9 +96,8 @@ I solved some odd errors that appeared during installation process.</p>
 
     <p>In this step, you might see this error.</p>
 
-    <p><code class="highlighter-rouge">
- ** (Mix) Could not access url https://github.com/phoenixframework/phoenix/releases/download/v1.0.0/phoenix_new-1.0.0.ez, error: {:failed_connect, [{:to_address, {'github.com', 443}}, {:inet, [:inet], :nxdomain}]}
-</code></p>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> ** (Mix) Could not access url https://github.com/phoenixframework/phoenix/releases/download/v1.0.0/phoenix_new-1.0.0.ez, error: {:failed_connect, [{:to_address, {'github.com', 443}}, {:inet, [:inet], :nxdomain}]}
+</code></pre></div>    </div>
 
     <p>To solve this issue, you need to ensure that <code class="highlighter-rouge">~/.mix/archives directory</code> has write permission.</p>
 
@@ -117,10 +118,9 @@ I solved some odd errors that appeared during installation process.</p>
   <li>
     <p>Run <code class="highlighter-rouge">$ mix ecto.create</code></p>
 
-    <p>You might get this error.
- <code class="highlighter-rouge">
- ** (Mix) The database for HelloPhoenix.Repo couldn't be created, reason given: "psql: FATAL:  role \"postgres\" is not permitted to log in\n".
-</code></p>
+    <p>You might get this error.</p>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> ** (Mix) The database for HelloPhoenix.Repo couldn't be created, reason given: "psql: FATAL:  role \"postgres\" is not permitted to log in\n".
+</code></pre></div>    </div>
 
     <p>Run <code class="highlighter-rouge">$ psql postgres</code></p>
 
@@ -128,19 +128,17 @@ I solved some odd errors that appeared during installation process.</p>
 
     <p>Try running <code class="highlighter-rouge">$ mix ecto.create</code> again.</p>
 
-    <p>You might get this error.
- <code class="highlighter-rouge">
- ** (Mix) The database for HelloPhoenix.Repo couldn't be created, reason given: "psql: FATAL:  role \"postgres\" is not permitted to log in\n".
-</code></p>
+    <p>You might get this error.</p>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> ** (Mix) The database for HelloPhoenix.Repo couldn't be created, reason given: "psql: FATAL:  role \"postgres\" is not permitted to log in\n".
+</code></pre></div>    </div>
 
     <p>In the psql, run <code class="highlighter-rouge">ALTER ROLE postgres LOGIN;</code></p>
 
     <p>Try running <code class="highlighter-rouge">$ mix ecto.create</code> again.</p>
 
-    <p>You might get this error.
- <code class="highlighter-rouge">
- ** (Mix) The database for HelloPhoenix.Repo couldn't be created, reason given: "ERROR:  permission denied to create database\n".
-</code></p>
+    <p>You might get this error.</p>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> ** (Mix) The database for HelloPhoenix.Repo couldn't be created, reason given: "ERROR:  permission denied to create database\n".
+</code></pre></div>    </div>
 
     <p>In the psql, run <code class="highlighter-rouge">ALTER ROLE postgres CREATEDB;</code></p>
 

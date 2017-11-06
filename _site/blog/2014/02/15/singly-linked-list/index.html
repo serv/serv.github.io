@@ -10,8 +10,8 @@
   <meta name="description" content="tl;dr">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://jasonkim.ca/blog/2014/02/15/singly-linked-list/">
-  <link rel="alternate" type="application/rss+xml" title="Jason Kim" href="http://jasonkim.ca/feed.xml">
+  <link rel="canonical" href="http://localhost:4000/blog/2014/02/15/singly-linked-list/">
+  <link rel="alternate" type="application/rss+xml" title="Jason Kim" href="http://localhost:4000/feed.xml">
 </head>
 
   <script>
@@ -47,6 +47,8 @@
         
           
           <a class="page-link" href="/about/">About</a>
+          
+        
           
         
           
@@ -248,7 +250,7 @@ haven’t written <code class="highlighter-rouge">new</code> methods for the mod
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># lib/models/node.rb</span>
 <span class="k">class</span> <span class="nc">Node</span>
-  <span class="kp">attr_accessor</span> <span class="ss">:value</span><span class="p">,</span> <span class="ss">:point</span>
+  <span class="nb">attr_accessor</span> <span class="ss">:value</span><span class="p">,</span> <span class="ss">:point</span>
 
   <span class="k">def</span> <span class="nf">initialize</span>
     <span class="vi">@value</span> <span class="o">=</span> <span class="kp">nil</span>
@@ -258,7 +260,7 @@ haven’t written <code class="highlighter-rouge">new</code> methods for the mod
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># lib/models/list.rb</span>
 <span class="k">class</span> <span class="nc">List</span>
-  <span class="kp">attr_accessor</span> <span class="ss">:head</span><span class="p">,</span> <span class="ss">:tail</span><span class="p">,</span> <span class="ss">:count</span>
+  <span class="nb">attr_accessor</span> <span class="ss">:head</span><span class="p">,</span> <span class="ss">:tail</span><span class="p">,</span> <span class="ss">:count</span>
 
   <span class="k">def</span> <span class="nf">initialize</span>
     <span class="vi">@head</span> <span class="o">=</span> <span class="kp">nil</span>
@@ -504,7 +506,7 @@ haven’t written <code class="highlighter-rouge">new</code> methods for the mod
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># lib/models/list.rb</span>
 <span class="k">class</span> <span class="nc">List</span>
-  <span class="kp">attr_accessor</span> <span class="ss">:head</span><span class="p">,</span> <span class="ss">:tail</span><span class="p">,</span> <span class="ss">:count</span>
+  <span class="nb">attr_accessor</span> <span class="ss">:head</span><span class="p">,</span> <span class="ss">:tail</span><span class="p">,</span> <span class="ss">:count</span>
 
   <span class="k">def</span> <span class="nf">initialize</span>
     <span class="vi">@head</span> <span class="o">=</span> <span class="kp">nil</span>

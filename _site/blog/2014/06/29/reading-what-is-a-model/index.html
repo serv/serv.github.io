@@ -10,8 +10,8 @@
   <meta name="description" content="tl;dr">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://jasonkim.ca/blog/2014/06/29/reading-what-is-a-model/">
-  <link rel="alternate" type="application/rss+xml" title="Jason Kim" href="http://jasonkim.ca/feed.xml">
+  <link rel="canonical" href="http://localhost:4000/blog/2014/06/29/reading-what-is-a-model/">
+  <link rel="alternate" type="application/rss+xml" title="Jason Kim" href="http://localhost:4000/feed.xml">
 </head>
 
   <script>
@@ -47,6 +47,8 @@
         
           
           <a class="page-link" href="/about/">About</a>
+          
+        
           
         
           
@@ -115,7 +117,7 @@
 
 <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">({</span> <span class="na">name</span><span class="p">:</span> <span class="s2">"Thomas"</span><span class="p">,</span> <span class="na">age</span><span class="p">:</span> <span class="mi">67</span><span class="p">});</span>
 <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span>
-<span class="nx">person</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span> <span class="na">name</span><span class="p">:</span> <span class="s2">"Thomas"</span><span class="p">,</span> <span class="na">age</span><span class="p">:</span> <span class="mi">67</span><span class="p">});</span></code></pre></figure>
+<span class="nx">person</span><span class="p">.</span><span class="kd">set</span><span class="p">({</span> <span class="na">name</span><span class="p">:</span> <span class="s2">"Thomas"</span><span class="p">,</span> <span class="na">age</span><span class="p">:</span> <span class="mi">67</span><span class="p">});</span></code></pre></figure>
 
 <h2 id="getting-attributes">Getting attributes</h2>
 
@@ -126,9 +128,9 @@
 <span class="p">});</span>
 
 <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">({</span> <span class="na">name</span><span class="p">:</span> <span class="s2">"Thomas"</span><span class="p">,</span> <span class="na">age</span><span class="p">:</span> <span class="mi">67</span><span class="p">,</span> <span class="na">child</span><span class="p">:</span> <span class="s1">'Ryan'</span><span class="p">});</span>
-<span class="kd">var</span> <span class="nx">age</span> <span class="o">=</span> <span class="nx">person</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"age"</span><span class="p">);</span> <span class="c1">// 67</span>
-<span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">person</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"name"</span><span class="p">);</span> <span class="c1">// "Thomas"</span>
-<span class="kd">var</span> <span class="nx">child</span> <span class="o">=</span> <span class="nx">person</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"child"</span><span class="p">);</span> <span class="c1">// 'Ryan'</span></code></pre></figure>
+<span class="kd">var</span> <span class="nx">age</span> <span class="o">=</span> <span class="nx">person</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s2">"age"</span><span class="p">);</span> <span class="c1">// 67</span>
+<span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">person</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s2">"name"</span><span class="p">);</span> <span class="c1">// "Thomas"</span>
+<span class="kd">var</span> <span class="nx">child</span> <span class="o">=</span> <span class="nx">person</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s2">"child"</span><span class="p">);</span> <span class="c1">// 'Ryan'</span></code></pre></figure>
 
 <h2 id="model-defaults">Model defaults</h2>
 
@@ -145,9 +147,9 @@
 
 <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">({</span> <span class="na">name</span><span class="p">:</span> <span class="s2">"Thomas"</span><span class="p">,</span> <span class="na">age</span><span class="p">:</span> <span class="mi">67</span><span class="p">,</span> <span class="na">child</span><span class="p">:</span> <span class="s1">'Ryan'</span><span class="p">});</span>
 
-<span class="kd">var</span> <span class="nx">age</span> <span class="o">=</span> <span class="nx">person</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"age"</span><span class="p">);</span> <span class="c1">// 67</span>
-<span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">person</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"name"</span><span class="p">);</span> <span class="c1">// "Thomas"</span>
-<span class="kd">var</span> <span class="nx">child</span> <span class="o">=</span> <span class="nx">person</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"child"</span><span class="p">);</span> <span class="c1">// 'Ryan'</span></code></pre></figure>
+<span class="kd">var</span> <span class="nx">age</span> <span class="o">=</span> <span class="nx">person</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s2">"age"</span><span class="p">);</span> <span class="c1">// 67</span>
+<span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">person</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s2">"name"</span><span class="p">);</span> <span class="c1">// "Thomas"</span>
+<span class="kd">var</span> <span class="nx">child</span> <span class="o">=</span> <span class="nx">person</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s2">"child"</span><span class="p">);</span> <span class="c1">// 'Ryan'</span></code></pre></figure>
 
 <h2 id="manipulate-model-attributes">Manipulate model attributes</h2>
 
@@ -161,13 +163,13 @@
     <span class="nx">alert</span><span class="p">(</span><span class="s2">"Welcome to this world"</span><span class="p">);</span>
   <span class="p">},</span>
   <span class="na">adopt</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newChildName</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span><span class="na">child</span><span class="p">:</span> <span class="nx">newChildName</span><span class="p">});</span>
+    <span class="k">this</span><span class="p">.</span><span class="kd">set</span><span class="p">({</span><span class="na">child</span><span class="p">:</span> <span class="nx">newChildName</span><span class="p">});</span>
   <span class="p">}</span>
 <span class="p">});</span>
 
 <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">({</span> <span class="na">name</span><span class="p">:</span> <span class="s2">"Thomas"</span><span class="p">,</span> <span class="na">age</span><span class="p">:</span> <span class="mi">67</span><span class="p">,</span> <span class="na">child</span><span class="p">:</span> <span class="s1">'Ryan'</span><span class="p">});</span>
 <span class="nx">person</span><span class="p">.</span><span class="nx">adopt</span><span class="p">(</span><span class="s1">'John Resig'</span><span class="p">);</span>
-<span class="kd">var</span> <span class="nx">child</span> <span class="o">=</span> <span class="nx">person</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"child"</span><span class="p">);</span> <span class="c1">// 'John Resig'</span></code></pre></figure>
+<span class="kd">var</span> <span class="nx">child</span> <span class="o">=</span> <span class="nx">person</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s2">"child"</span><span class="p">);</span> <span class="c1">// 'John Resig'</span></code></pre></figure>
 
 <h2 id="listen-to-changes-of-an-attribute">Listen to changes of an attribute</h2>
 
@@ -179,17 +181,17 @@
   <span class="na">initialize</span><span class="p">:</span> <span class="kd">function</span><span class="p">(){</span>
     <span class="nx">alert</span><span class="p">(</span><span class="s2">"Welcome to this world"</span><span class="p">);</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">"change:name"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">model</span><span class="p">){</span>
-      <span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"name"</span><span class="p">);</span> <span class="c1">// 'Stewie Griffin'</span>
+      <span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">model</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s2">"name"</span><span class="p">);</span> <span class="c1">// 'Stewie Griffin'</span>
       <span class="nx">alert</span><span class="p">(</span><span class="s2">"Changed my name to "</span> <span class="o">+</span> <span class="nx">name</span> <span class="p">);</span>
     <span class="p">});</span>
   <span class="p">}</span>
 <span class="p">});</span>
 
 <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">({</span> <span class="na">name</span><span class="p">:</span> <span class="s2">"Thomas"</span><span class="p">,</span> <span class="na">age</span><span class="p">:</span> <span class="mi">67</span><span class="p">});</span>
-<span class="nx">person</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span><span class="na">name</span><span class="p">:</span> <span class="s1">'Stewie Griffin'</span><span class="p">});</span> <span class="c1">// This triggers a change and will alert()</span></code></pre></figure>
+<span class="nx">person</span><span class="p">.</span><span class="kd">set</span><span class="p">({</span><span class="na">name</span><span class="p">:</span> <span class="s1">'Stewie Griffin'</span><span class="p">});</span> <span class="c1">// This triggers a change and will alert()</span></code></pre></figure>
 
 <h2 id="interacting-with-the-server">Interacting with the server</h2>
-<p>### Set url</p>
+<h3 id="set-url">Set url</h3>
 
 <figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">UserModel</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
   <span class="na">urlRoot</span><span class="p">:</span> <span class="s1">'/user'</span><span class="p">,</span>

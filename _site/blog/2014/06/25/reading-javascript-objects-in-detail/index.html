@@ -10,8 +10,8 @@
   <meta name="description" content="tl;dr">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://jasonkim.ca/blog/2014/06/25/reading-javascript-objects-in-detail/">
-  <link rel="alternate" type="application/rss+xml" title="Jason Kim" href="http://jasonkim.ca/feed.xml">
+  <link rel="canonical" href="http://localhost:4000/blog/2014/06/25/reading-javascript-objects-in-detail/">
+  <link rel="alternate" type="application/rss+xml" title="Jason Kim" href="http://localhost:4000/feed.xml">
 </head>
 
   <script>
@@ -47,6 +47,8 @@
         
           
           <a class="page-link" href="/about/">About</a>
+          
+        
           
         
           
@@ -144,8 +146,10 @@
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">anotherPerson</span><span class="p">);</span> <span class="c1">// Kobe</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span> <span class="c1">// Bryant</span></code></pre></figure>
 
-<p><code class="highlighter-rouge">anotherPerson</code> was saved a value.
-- Saved-as-reference</p>
+<p><code class="highlighter-rouge">anotherPerson</code> was saved a value.</p>
+<ul>
+  <li>Saved-as-reference</li>
+</ul>
 
 <figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span><span class="na">name</span><span class="p">:</span> <span class="s2">"Kobe"</span><span class="p">};</span>
 <span class="kd">var</span> <span class="nx">anotherPerson</span> <span class="o">=</span> <span class="nx">person</span><span class="p">;</span>
