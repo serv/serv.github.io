@@ -6,9 +6,179 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 05 Nov 2017 23:26:53 -0800</pubDate>
-    <lastBuildDate>Sun, 05 Nov 2017 23:26:53 -0800</lastBuildDate>
+    <pubDate>Mon, 13 Nov 2017 23:42:32 -0800</pubDate>
+    <lastBuildDate>Mon, 13 Nov 2017 23:42:32 -0800</lastBuildDate>
     <generator>Jekyll v3.6.2</generator>
+    
+      <item>
+        <title>Using ActiveStorage Today (prior to Rails 5.2 release)</title>
+        <description>&lt;p&gt;&lt;a href=&quot;http://weblog.rubyonrails.org/2017/7/15/this-week-in-rails-active-storage-telling-secrets-and-time-travelling/&quot;&gt;DHH announced earlier in the year that Rails 5.2 will have a brand new component called ActiveStorage&lt;/a&gt;.
+ActiveStorage will manage user uploads such as photos directly.&lt;/p&gt;
+
+&lt;p&gt;Since then, a lot of progress has been made to integrate ActiveStorage to
+Rails, and you can actually use ActiveStorage today. This blog will explore
+the how you can update your Rails app to use ActiveStorage.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Warning!&lt;/strong&gt; You will be using the bleeding edge version of Rails and
+there may be unforseen problems caused by it.&lt;/p&gt;
+
+&lt;h2 id=&quot;setting-up-activestorage-for-rails&quot;&gt;Setting up ActiveStorage for Rails&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;If you are using Rails version before 5.1.14, update Rails to 5.1.14 by
+updating your Gemfile
+    &lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'rails'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'~&amp;gt; 5.1'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&amp;gt;= 5.1.4'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;$ bundle update rails&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;$ rails app:update&lt;/code&gt; and resolve any code differences.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Test that updating to &lt;code class=&quot;highlighter-rouge&quot;&gt;5.1.14&lt;/code&gt; went ok.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Now we want to update rails to the latest bleeding edge version. In the
+&lt;code class=&quot;highlighter-rouge&quot;&gt;Gemfile&lt;/code&gt;, add the following lines.
+    &lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;git_source&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:github&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;repo_name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;repo_name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;repo_name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;repo_name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;unless&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;repo_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;include?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&quot;https://github.com/&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;repo_name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;.git&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'rails'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;github: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'rails/rails'&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'arel'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;git: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'https://github.com/rails/arel.git'&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'bootsnap'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'~&amp;gt; 1.1'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&amp;gt;= 1.1.5'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;require: &lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;false&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;$ bundle update rails&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;$ bundle exec rails -v&lt;/code&gt; should display the bleeding edge version,
+&lt;code class=&quot;highlighter-rouge&quot;&gt;Rails 5.2.0.alpha&lt;/code&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Update the application configs. Run &lt;code class=&quot;highlighter-rouge&quot;&gt;$ bundle exec rails app:update&lt;/code&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;When you run, &lt;code class=&quot;highlighter-rouge&quot;&gt;$ ./bin/rails --tasks&lt;/code&gt;, you should see,
+&lt;code class=&quot;highlighter-rouge&quot;&gt;rails active_storage:install&lt;/code&gt; as an available task.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;$ ./bin/rails active_storage:install&lt;/code&gt;. This should generate a migration
+file.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;$ ./bin/rails db:migrate&lt;/code&gt;. Now our sqlite db should
+be ready to support ActiveStorage.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;a-simple-image-uploading-example-using-activestorage&quot;&gt;A simple image uploading example using ActiveStorage&lt;/h2&gt;
+
+&lt;p&gt;Up until now, we’ve been preparing Rails application to support ActiveStorage.
+Now that the application is equipped with ActiveStorage, let us build a
+simple post with images feature that uses ActiveStorage.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Generate post model. &lt;code class=&quot;highlighter-rouge&quot;&gt;$ ./bin/rails g model post&lt;/code&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Let’s add two columns to post table, &lt;code class=&quot;highlighter-rouge&quot;&gt;title&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;body&lt;/code&gt; in the migration file.
+    &lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# db/migrate/20171114063756_create_posts.rb&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;CreatePosts&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ActiveRecord&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Migration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;5.2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;change&lt;/span&gt;
+ &lt;span class=&quot;n&quot;&gt;create_table&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:posts&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+   &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:title&lt;/span&gt;
+   &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;text&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:body&lt;/span&gt;
+
+   &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;timestamps&lt;/span&gt;
+ &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Let’s create a controller for posts resource.
+&lt;code class=&quot;highlighter-rouge&quot;&gt;$ ./bin/rails g controller posts&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;And add posts resources routes in the &lt;code class=&quot;highlighter-rouge&quot;&gt;config/routes.rb&lt;/code&gt;.
+    &lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;application&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;routes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;draw&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;resources&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:posts&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;We need to associate post with images.
+    &lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Post&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ApplicationRecord&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;has_many_attached&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:images&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Let’s add code for index, show and create actions.
+    &lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# app/controllers/posts_controller.rb&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;PostsController&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ApplicationController&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# we will display post form here&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;index&lt;/span&gt;
+ &lt;span class=&quot;vi&quot;&gt;@post&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Post&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# we will create post here&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;create&lt;/span&gt;
+ &lt;span class=&quot;n&quot;&gt;post&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Post&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;create!&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;permit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:body&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+ &lt;span class=&quot;n&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;images&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;attach&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:images&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+ &lt;span class=&quot;n&quot;&gt;redirect_to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;post&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# we will display post with photo&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;show&lt;/span&gt;
+ &lt;span class=&quot;vi&quot;&gt;@post&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Post&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Add the index view for the post with the following code. This
+will display upload form on localhost:3000/posts page.
+    &lt;div class=&quot;language-erb highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# app/views/posts/index.html.erb
+&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;form_with&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;model: &lt;/span&gt;&lt;span class=&quot;vi&quot;&gt;@post&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;local: &lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;form&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;form&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;text_field&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;placeholder: &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Title&quot;&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;br&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;form&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;text_area&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:body&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;form&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;file_field&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:images&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;multiple: &lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;br&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;form&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;submit&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;&amp;lt;%&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Now let’s add a view for show post.
+    &lt;div class=&quot;language-erb highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# app/views/posts/show.html.erb
+&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;image_tag&lt;/span&gt; &lt;span class=&quot;vi&quot;&gt;@post&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;images&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;first&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Try submitting a photo and you will see the show view displays the
+image you just submitted. The image is currently stored locally in a
+directory called &lt;code class=&quot;highlighter-rouge&quot;&gt;storage&lt;/code&gt; in the app root level. But you can configure
+this to push the files to cloud file storage systems like AWS S3, Google Cloud
+and Azure.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;As you can see, ActiveStorage presents a simplied file management system
+that is well integrated into Rail’s ActiveRecord component. While there are
+other file management systems out there for Rails, we should see
+majority of use cases being covered by ActiveStorage. I suggest that
+if you are looking to implement anything related to photo uploading or
+attaching files, consider ActiveStorage before you explore other options.&lt;/p&gt;
+
+&lt;p&gt;Also check out &lt;a href=&quot;https://github.com/rails/rails/blob/master/activestorage/README.md&quot;&gt;the documentation on ActiveStorage&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;You can see the final working code on the &lt;a href=&quot;https://github.com/serv/rails-alpha-activestorage-example&quot;&gt;github repo&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;I wanna thank &lt;a href=&quot;https://twitter.com/jeffreyguenther&quot;&gt;@jeffreyguenther&lt;/a&gt; who
+shared his experience of using ActiveStorage on his projects with me.&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 13 Nov 2017 11:17:11 -0800</pubDate>
+        <link>http://localhost:4000/blog/2017/11/13/Using-ActiveStorage-Today/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2017/11/13/Using-ActiveStorage-Today/</guid>
+        
+        
+        <category>ruby on rails</category>
+        
+      </item>
     
       <item>
         <title>Setting up Typescript</title>
@@ -750,57 +920,6 @@ The response body in JSON format is parsed by
         <category>algorithms</category>
         
         <category>ruby</category>
-        
-      </item>
-    
-      <item>
-        <title>Time Saving Tips for Software Development for Developers</title>
-        <description>&lt;p&gt;I waste a lot of time not coding. Typical work involves many activities,
-that are process related chores, meetings and etc, so only a fraction of time
-can be spent on coding and working on a feature. I find it important that
-you should try to squeeze most out of this time as possible.&lt;/p&gt;
-
-&lt;p&gt;I try to understand the product feature and its use cases before I begin
-coding on a feature.
-In an ideal world, your product owner will write a perfect story that
-doesn’t require any edits whatsoever. This never happens. Product owners are
-humans and they will usually write an insufficient story
-when the stories are sufficiently large and complicated.
-Developers must be able to wear the product owner’s hat to come up with the
-rest of the acceptance requirements for a story.
-Try to come up with what makes sense and what doesn’t make sense about the
-story. While you are trying to come up with what makes sense,
-bring it up with your product owner to see if some additional acceptance
-criteria needs to be added. When things don’t make sense in the story, also
-bring it up with product owner sooner rather than later.&lt;/p&gt;
-
-&lt;p&gt;Here’s another thing I do before I begin coding.
-I spend a good length of time thinking about the software design of the feature.
-Explore how each acceptances in the story can be mapped to your software design.
-Your code builds on top of other code you wrote.
-Code you write has inertia. Early on during the coding phase, you can make
-small and large changes without much trouble. You are nimble when your code
-for the feature isn’t large yet. But when you have to change the software design
-later on down the road, changing your existing code that has grown larger
-is way more difficult. There are many more moving parts and each changes
-you have to make in your code will need to make multiplicative changes across
-your code base. Also engage your teammates in brainstorming session and
-pick their brains on how they think the code should look.&lt;/p&gt;
-
-&lt;p&gt;After you are completed with coding, have a rigorous code review with your
-coworker. I was wrong about this before. I have been doing more lenient
-code review that left quite a room for disagreement. Be respectful in your
-tone and watch out for strong language. Messages do not get understood
-best over the web, especially when that message is about criticizing your code.
-This code review should be contrasted with nitpicking. It’s not about trying
-to inject your preference for the code. It should be about writing good code.&lt;/p&gt;
-</description>
-        <pubDate>Sat, 09 Apr 2016 17:47:42 -0700</pubDate>
-        <link>http://localhost:4000/blog/2016/04/09/software-development-time-saving/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2016/04/09/software-development-time-saving/</guid>
-        
-        
-        <category>software development</category>
         
       </item>
     
