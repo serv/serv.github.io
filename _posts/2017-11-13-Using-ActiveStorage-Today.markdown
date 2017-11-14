@@ -9,7 +9,7 @@ categories: ['ruby on rails']
 [DHH announced earlier in the year that Rails 5.2 will have a brand new component called ActiveStorage](http://weblog.rubyonrails.org/2017/7/15/this-week-in-rails-active-storage-telling-secrets-and-time-travelling/).
 ActiveStorage will manage user uploads such as photos directly by Rails.
 
-Since then, a lot of progress has beenumade to integrate ActiveStorage to
+Since then, a lot of progress has been made to integrate ActiveStorage to
 Rails, and you can actually use ActiveStorage today. This blog will explore
 the how you can update your Rails app to use ActiveStorage.
 
