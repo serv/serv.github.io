@@ -6,16 +6,16 @@
 </description>
     <link>http://jasonkim.ca/</link>
     <atom:link href="http://jasonkim.ca/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 13 Nov 2017 23:43:28 -0800</pubDate>
-    <lastBuildDate>Mon, 13 Nov 2017 23:43:28 -0800</lastBuildDate>
+    <pubDate>Tue, 14 Nov 2017 09:34:28 -0800</pubDate>
+    <lastBuildDate>Tue, 14 Nov 2017 09:34:28 -0800</lastBuildDate>
     <generator>Jekyll v3.6.2</generator>
     
       <item>
         <title>Using ActiveStorage Today (prior to Rails 5.2 release)</title>
         <description>&lt;p&gt;&lt;a href=&quot;http://weblog.rubyonrails.org/2017/7/15/this-week-in-rails-active-storage-telling-secrets-and-time-travelling/&quot;&gt;DHH announced earlier in the year that Rails 5.2 will have a brand new component called ActiveStorage&lt;/a&gt;.
-ActiveStorage will manage user uploads such as photos directly.&lt;/p&gt;
+ActiveStorage will manage user uploads such as photos directly by Rails.&lt;/p&gt;
 
-&lt;p&gt;Since then, a lot of progress has been made to integrate ActiveStorage to
+&lt;p&gt;Since then, a lot of progress has beenumade to integrate ActiveStorage to
 Rails, and you can actually use ActiveStorage today. This blog will explore
 the how you can update your Rails app to use ActiveStorage.&lt;/p&gt;
 
@@ -77,7 +77,8 @@ be ready to support ActiveStorage.&lt;/li&gt;
 
 &lt;p&gt;Up until now, we’ve been preparing Rails application to support ActiveStorage.
 Now that the application is equipped with ActiveStorage, let us build a
-simple post with images feature that uses ActiveStorage.&lt;/p&gt;
+simple feature that allows us to create a post with images
+that uses ActiveStorage.&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;
@@ -157,11 +158,11 @@ and Azure.&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;p&gt;As you can see, ActiveStorage presents a simplied file management system
-that is well integrated into Rail’s ActiveRecord component. While there are
-other file management systems out there for Rails, we should see
-majority of use cases being covered by ActiveStorage. I suggest that
-if you are looking to implement anything related to photo uploading or
-attaching files, consider ActiveStorage before you explore other options.&lt;/p&gt;
+that is well integrated with Rail’s ActiveRecord component.
+As ActiveStorage matures, we should see majority of
+file management use cases being covered by it.
+While there are other file management systems out there for Rails, I suggest that
+you consider ActiveStorage before you explore other options.&lt;/p&gt;
 
 &lt;p&gt;Also check out &lt;a href=&quot;https://github.com/rails/rails/blob/master/activestorage/README.md&quot;&gt;the documentation on ActiveStorage&lt;/a&gt;.&lt;/p&gt;
 

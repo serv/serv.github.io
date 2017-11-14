@@ -76,9 +76,9 @@
 
   <div class="post-content" itemprop="articleBody">
     <p><a href="http://weblog.rubyonrails.org/2017/7/15/this-week-in-rails-active-storage-telling-secrets-and-time-travelling/">DHH announced earlier in the year that Rails 5.2 will have a brand new component called ActiveStorage</a>.
-ActiveStorage will manage user uploads such as photos directly.</p>
+ActiveStorage will manage user uploads such as photos directly by Rails.</p>
 
-<p>Since then, a lot of progress has been made to integrate ActiveStorage to
+<p>Since then, a lot of progress has beenumade to integrate ActiveStorage to
 Rails, and you can actually use ActiveStorage today. This blog will explore
 the how you can update your Rails app to use ActiveStorage.</p>
 
@@ -140,7 +140,8 @@ be ready to support ActiveStorage.</li>
 
 <p>Up until now, we’ve been preparing Rails application to support ActiveStorage.
 Now that the application is equipped with ActiveStorage, let us build a
-simple post with images feature that uses ActiveStorage.</p>
+simple feature that allows us to create a post with images
+that uses ActiveStorage.</p>
 
 <ol>
   <li>
@@ -220,11 +221,11 @@ and Azure.</li>
 </ol>
 
 <p>As you can see, ActiveStorage presents a simplied file management system
-that is well integrated into Rail’s ActiveRecord component. While there are
-other file management systems out there for Rails, we should see
-majority of use cases being covered by ActiveStorage. I suggest that
-if you are looking to implement anything related to photo uploading or
-attaching files, consider ActiveStorage before you explore other options.</p>
+that is well integrated with Rail’s ActiveRecord component.
+As ActiveStorage matures, we should see majority of
+file management use cases being covered by it.
+While there are other file management systems out there for Rails, I suggest that
+you consider ActiveStorage before you explore other options.</p>
 
 <p>Also check out <a href="https://github.com/rails/rails/blob/master/activestorage/README.md">the documentation on ActiveStorage</a>.</p>
 

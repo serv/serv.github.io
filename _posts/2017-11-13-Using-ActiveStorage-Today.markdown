@@ -7,9 +7,9 @@ categories: ['ruby on rails']
 ---
 
 [DHH announced earlier in the year that Rails 5.2 will have a brand new component called ActiveStorage](http://weblog.rubyonrails.org/2017/7/15/this-week-in-rails-active-storage-telling-secrets-and-time-travelling/).
-ActiveStorage will manage user uploads such as photos directly.
+ActiveStorage will manage user uploads such as photos directly by Rails.
 
-Since then, a lot of progress has been made to integrate ActiveStorage to
+Since then, a lot of progress has beenumade to integrate ActiveStorage to
 Rails, and you can actually use ActiveStorage today. This blog will explore
 the how you can update your Rails app to use ActiveStorage.
 
@@ -63,7 +63,8 @@ be ready to support ActiveStorage.
 
 Up until now, we've been preparing Rails application to support ActiveStorage.
 Now that the application is equipped with ActiveStorage, let us build a
-simple post with images feature that uses ActiveStorage.
+simple feature that allows us to create a post with images
+that uses ActiveStorage.
 
 1. Generate post model. `$ ./bin/rails g model post`.
 
@@ -145,11 +146,11 @@ this to push the files to cloud file storage systems like AWS S3, Google Cloud
 and Azure.
 
 As you can see, ActiveStorage presents a simplied file management system
-that is well integrated into Rail's ActiveRecord component. While there are
-other file management systems out there for Rails, we should see
-majority of use cases being covered by ActiveStorage. I suggest that
-if you are looking to implement anything related to photo uploading or
-attaching files, consider ActiveStorage before you explore other options.
+that is well integrated with Rail's ActiveRecord component.
+As ActiveStorage matures, we should see majority of
+file management use cases being covered by it.
+While there are other file management systems out there for Rails, I suggest that
+you consider ActiveStorage before you explore other options.
 
 Also check out [the documentation on ActiveStorage](https://github.com/rails/rails/blob/master/activestorage/README.md).
 
