@@ -4,10 +4,10 @@
     <title>Jason Kim</title>
     <description>Writings on software and other topics
 </description>
-    <link>http://localhost:4000/</link>
-    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 13 Nov 2017 23:42:32 -0800</pubDate>
-    <lastBuildDate>Mon, 13 Nov 2017 23:42:32 -0800</lastBuildDate>
+    <link>http://jasonkim.ca/</link>
+    <atom:link href="http://jasonkim.ca/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Mon, 13 Nov 2017 23:43:28 -0800</pubDate>
+    <lastBuildDate>Mon, 13 Nov 2017 23:43:28 -0800</lastBuildDate>
     <generator>Jekyll v3.6.2</generator>
     
       <item>
@@ -172,8 +172,8 @@ shared his experience of using ActiveStorage on his projects with me.&lt;/p&gt;
 
 </description>
         <pubDate>Mon, 13 Nov 2017 11:17:11 -0800</pubDate>
-        <link>http://localhost:4000/blog/2017/11/13/Using-ActiveStorage-Today/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2017/11/13/Using-ActiveStorage-Today/</guid>
+        <link>http://jasonkim.ca/blog/2017/11/13/Using-ActiveStorage-Today/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2017/11/13/Using-ActiveStorage-Today/</guid>
         
         
         <category>ruby on rails</category>
@@ -297,8 +297,8 @@ workflow.&lt;/p&gt;
 
 </description>
         <pubDate>Sun, 05 Nov 2017 13:40:28 -0800</pubDate>
-        <link>http://localhost:4000/blog/2017/11/05/typescript/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2017/11/05/typescript/</guid>
+        <link>http://jasonkim.ca/blog/2017/11/05/typescript/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2017/11/05/typescript/</guid>
         
         
         <category>typescript</category>
@@ -384,8 +384,8 @@ version to causes error.&lt;/p&gt;
 
 </description>
         <pubDate>Sun, 28 May 2017 13:00:00 -0700</pubDate>
-        <link>http://localhost:4000/blog/2017/05/28/upgrading-ember/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2017/05/28/upgrading-ember/</guid>
+        <link>http://jasonkim.ca/blog/2017/05/28/upgrading-ember/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2017/05/28/upgrading-ember/</guid>
         
         
         <category>software development</category>
@@ -440,8 +440,8 @@ games at $616.97 was totally worth it.&lt;/p&gt;
 
 </description>
         <pubDate>Sun, 01 Jan 2017 13:56:59 -0800</pubDate>
-        <link>http://localhost:4000/blog/2017/01/01/my-macbook-pro-alternative/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2017/01/01/my-macbook-pro-alternative/</guid>
+        <link>http://jasonkim.ca/blog/2017/01/01/my-macbook-pro-alternative/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2017/01/01/my-macbook-pro-alternative/</guid>
         
         
         <category>software development</category>
@@ -490,8 +490,8 @@ is aligned with the product vision, team vision and the company
 vision.&lt;/p&gt;
 </description>
         <pubDate>Sun, 13 Nov 2016 08:45:58 -0800</pubDate>
-        <link>http://localhost:4000/blog/2016/11/13/starting-a-new-job-or-transitioning-to-a-new-team/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2016/11/13/starting-a-new-job-or-transitioning-to-a-new-team/</guid>
+        <link>http://jasonkim.ca/blog/2016/11/13/starting-a-new-job-or-transitioning-to-a-new-team/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2016/11/13/starting-a-new-job-or-transitioning-to-a-new-team/</guid>
         
         
         <category>career</category>
@@ -562,8 +562,8 @@ on developers usually have more correct opinions
 about building API.&lt;/p&gt;
 </description>
         <pubDate>Sun, 09 Oct 2016 09:45:58 -0700</pubDate>
-        <link>http://localhost:4000/blog/2016/10/09/easily-overlooked-parts-on-developing-rest-api/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2016/10/09/easily-overlooked-parts-on-developing-rest-api/</guid>
+        <link>http://jasonkim.ca/blog/2016/10/09/easily-overlooked-parts-on-developing-rest-api/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2016/10/09/easily-overlooked-parts-on-developing-rest-api/</guid>
         
         
         <category>api</category>
@@ -627,8 +627,8 @@ serve a large traffic.&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Thu, 21 Jul 2016 21:45:58 -0700</pubDate>
-        <link>http://localhost:4000/blog/2016/07/21/benchmarking-web-frameworks/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2016/07/21/benchmarking-web-frameworks/</guid>
+        <link>http://jasonkim.ca/blog/2016/07/21/benchmarking-web-frameworks/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2016/07/21/benchmarking-web-frameworks/</guid>
         
         
         <category>node.js</category>
@@ -790,8 +790,8 @@ of the memory leak. I also want to thank
 &lt;a href=&quot;http://bryce.is/writing/code/mdb_v8/vm/virtualbox/omnios/2016/02/06/mdbv8-getting-started.html&quot;&gt;Bryce Neal for writing a detailed tutorial on setting up Solaris to use MDB&lt;/a&gt;.&lt;/p&gt;
 </description>
         <pubDate>Thu, 02 Jun 2016 22:30:56 -0700</pubDate>
-        <link>http://localhost:4000/blog/2016/06/02/fixing-memory-leak-on-production-node-application/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2016/06/02/fixing-memory-leak-on-production-node-application/</guid>
+        <link>http://jasonkim.ca/blog/2016/06/02/fixing-memory-leak-on-production-node-application/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2016/06/02/fixing-memory-leak-on-production-node-application/</guid>
         
         
         <category>node</category>
@@ -825,8 +825,8 @@ Also any infrastructure change must be orchestrated through our TechOps team, an
 I will plan out more granular and incremental steps to determine how each development process will be carried out to meet the acceptance criteria of the feature story from now on.&lt;/p&gt;
 </description>
         <pubDate>Wed, 01 Jun 2016 22:30:56 -0700</pubDate>
-        <link>http://localhost:4000/blog/2016/06/01/battle-technical-assumptions/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2016/06/01/battle-technical-assumptions/</guid>
+        <link>http://jasonkim.ca/blog/2016/06/01/battle-technical-assumptions/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2016/06/01/battle-technical-assumptions/</guid>
         
         
         <category>software</category>
@@ -913,8 +913,8 @@ The response body in JSON format is parsed by
 &lt;a href=&quot;https://github.com/ohler55/oj&quot;&gt;Oj&lt;/a&gt;.&lt;/p&gt;
 </description>
         <pubDate>Sun, 29 May 2016 00:47:42 -0700</pubDate>
-        <link>http://localhost:4000/blog/2016/05/29/recursive-depth-first-traversal/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2016/05/29/recursive-depth-first-traversal/</guid>
+        <link>http://jasonkim.ca/blog/2016/05/29/recursive-depth-first-traversal/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2016/05/29/recursive-depth-first-traversal/</guid>
         
         
         <category>algorithms</category>
