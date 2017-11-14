@@ -87,54 +87,41 @@ there may be unforseen problems caused by it.</p>
 
 <h2 id="setting-up-activestorage-for-rails">Setting up ActiveStorage for Rails</h2>
 
-<ol>
-  <li>If you are using Rails version before 5.1.14, update Rails to 5.1.14 by
-updating your Gemfile
-    <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gem</span> <span class="s1">'rails'</span><span class="p">,</span> <span class="s1">'~&gt; 5.1'</span><span class="p">,</span> <span class="s1">'&gt;= 5.1.4'</span>
-</code></pre></div>    </div>
-  </li>
-  <li>
-    <p>Run <code class="highlighter-rouge">$ bundle update rails</code></p>
-  </li>
-  <li>
-    <p>Run <code class="highlighter-rouge">$ rails app:update</code> and resolve any code differences.</p>
-  </li>
-  <li>
-    <p>Test that updating to <code class="highlighter-rouge">5.1.14</code> went ok.</p>
-  </li>
-  <li>Now we want to update rails to the latest bleeding edge version. In the
-<code class="highlighter-rouge">Gemfile</code>, add the following lines.
-    <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">git_source</span><span class="p">(</span><span class="ss">:github</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">repo_name</span><span class="o">|</span>
+<h4 id="1-if-you-are-using-rails-version-before-5114-update-rails-to-5114-by-updating-your-gemfile">1. If you are using Rails version before 5.1.14, update Rails to 5.1.14 by updating your Gemfile</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">gem</span> <span class="s1">'rails'</span><span class="p">,</span> <span class="s1">'~&gt; 5.1'</span><span class="p">,</span> <span class="s1">'&gt;= 5.1.4'</span></code></pre></figure>
+
+<h4 id="2-run--bundle-update-rails">2. Run <code class="highlighter-rouge">$ bundle update rails</code></h4>
+
+<h4 id="3-run--rails-appupdate-and-resolve-any-code-differences">3. Run <code class="highlighter-rouge">$ rails app:update</code> and resolve any code differences.</h4>
+
+<h4 id="4-test-that-updating-to-5114-went-ok">4. Test that updating to <code class="highlighter-rouge">5.1.14</code> went ok.</h4>
+
+<h4 id="5-now-we-want-to-update-rails-to-the-latest-bleeding-edge-version-in-the">5. Now we want to update rails to the latest bleeding edge version. In the</h4>
+<p><code class="highlighter-rouge">Gemfile</code>, add the following lines.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">git_source</span><span class="p">(</span><span class="ss">:github</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">repo_name</span><span class="o">|</span>
   <span class="n">repo_name</span> <span class="o">=</span> <span class="s2">"</span><span class="si">#{</span><span class="n">repo_name</span><span class="si">}</span><span class="s2">/</span><span class="si">#{</span><span class="n">repo_name</span><span class="si">}</span><span class="s2">"</span> <span class="k">unless</span> <span class="n">repo_name</span><span class="p">.</span><span class="nf">include?</span><span class="p">(</span><span class="s2">"/"</span><span class="p">)</span>
   <span class="s2">"https://github.com/</span><span class="si">#{</span><span class="n">repo_name</span><span class="si">}</span><span class="s2">.git"</span>
 <span class="k">end</span>
 <span class="o">...</span>
 <span class="n">gem</span> <span class="s1">'rails'</span><span class="p">,</span> <span class="ss">github: </span><span class="s1">'rails/rails'</span>
 <span class="n">gem</span> <span class="s1">'arel'</span><span class="p">,</span> <span class="ss">git: </span><span class="s1">'https://github.com/rails/arel.git'</span>
-<span class="n">gem</span> <span class="s1">'bootsnap'</span><span class="p">,</span> <span class="s1">'~&gt; 1.1'</span><span class="p">,</span> <span class="s1">'&gt;= 1.1.5'</span><span class="p">,</span> <span class="ss">require: </span><span class="kp">false</span>
-</code></pre></div>    </div>
-  </li>
-  <li>
-    <p>Run <code class="highlighter-rouge">$ bundle update rails</code></p>
-  </li>
-  <li>
-    <p><code class="highlighter-rouge">$ bundle exec rails -v</code> should display the bleeding edge version,
-<code class="highlighter-rouge">Rails 5.2.0.alpha</code>.</p>
-  </li>
-  <li>
-    <p>Update the application configs. Run <code class="highlighter-rouge">$ bundle exec rails app:update</code>.</p>
-  </li>
-  <li>
-    <p>When you run, <code class="highlighter-rouge">$ ./bin/rails --tasks</code>, you should see,
-<code class="highlighter-rouge">rails active_storage:install</code> as an available task.</p>
-  </li>
-  <li>
-    <p>Run <code class="highlighter-rouge">$ ./bin/rails active_storage:install</code>. This should generate a migration
-file.</p>
-  </li>
-  <li>Run <code class="highlighter-rouge">$ ./bin/rails db:migrate</code>. Now our sqlite db should
-be ready to support ActiveStorage.</li>
-</ol>
+<span class="n">gem</span> <span class="s1">'bootsnap'</span><span class="p">,</span> <span class="s1">'~&gt; 1.1'</span><span class="p">,</span> <span class="s1">'&gt;= 1.1.5'</span><span class="p">,</span> <span class="ss">require: </span><span class="kp">false</span></code></pre></figure>
+
+<h4 id="6-run--bundle-update-rails">6. Run <code class="highlighter-rouge">$ bundle update rails</code></h4>
+
+<h4 id="7--bundle-exec-rails--v-should-display-the-bleeding-edge-version">7. <code class="highlighter-rouge">$ bundle exec rails -v</code> should display the bleeding edge version,</h4>
+<p><code class="highlighter-rouge">Rails 5.2.0.alpha</code>.</p>
+
+<h4 id="8-update-the-application-configs-run--bundle-exec-rails-appupdate">8. Update the application configs. Run <code class="highlighter-rouge">$ bundle exec rails app:update</code>.</h4>
+
+<h4 id="9-when-you-run--binrails---tasks-you-should-see">9. When you run, <code class="highlighter-rouge">$ ./bin/rails --tasks</code>, you should see,</h4>
+<p><code class="highlighter-rouge">rails active_storage:install</code> as an available task.</p>
+
+<h4 id="10-run--binrails-active_storageinstall-this-should-generate-a-migration-file">10. Run <code class="highlighter-rouge">$ ./bin/rails active_storage:install</code>. This should generate a migration file.</h4>
+
+<h4 id="11-run--binrails-dbmigrate-now-our-sqlite-db-should-be-ready-to-support-activestorage">11. Run <code class="highlighter-rouge">$ ./bin/rails db:migrate</code>. Now our sqlite db should be ready to support ActiveStorage.</h4>
 
 <h2 id="a-simple-image-uploading-example-using-activestorage">A simple image uploading example using ActiveStorage</h2>
 
@@ -143,82 +130,77 @@ Now that the application is equipped with ActiveStorage, let us build a
 simple feature that allows us to create a post with images
 that uses ActiveStorage.</p>
 
-<ol>
-  <li>
-    <p>Generate post model. <code class="highlighter-rouge">$ ./bin/rails g model post</code>.</p>
-  </li>
-  <li>Let’s add two columns to post table, <code class="highlighter-rouge">title</code>, <code class="highlighter-rouge">body</code> in the migration file.
-    <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># db/migrate/20171114063756_create_posts.rb</span>
+<h4 id="1-generate-post-model--binrails-g-model-post">1. Generate post model. <code class="highlighter-rouge">$ ./bin/rails g model post</code>.</h4>
+
+<h4 id="2-lets-add-two-columns-to-post-table-title-body-in-the-migration-file">2. Let’s add two columns to post table, <code class="highlighter-rouge">title</code>, <code class="highlighter-rouge">body</code> in the migration file.</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># db/migrate/20171114063756_create_posts.rb</span>
 <span class="k">class</span> <span class="nc">CreatePosts</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span><span class="p">[</span><span class="mf">5.2</span><span class="p">]</span>
   <span class="k">def</span> <span class="nf">change</span>
- <span class="n">create_table</span> <span class="ss">:posts</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
-   <span class="n">t</span><span class="p">.</span><span class="nf">string</span> <span class="ss">:title</span>
-   <span class="n">t</span><span class="p">.</span><span class="nf">text</span> <span class="ss">:body</span>
+    <span class="n">create_table</span> <span class="ss">:posts</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
+      <span class="n">t</span><span class="p">.</span><span class="nf">string</span> <span class="ss">:title</span>
+      <span class="n">t</span><span class="p">.</span><span class="nf">text</span> <span class="ss">:body</span>
 
-   <span class="n">t</span><span class="p">.</span><span class="nf">timestamps</span>
- <span class="k">end</span>
+     <span class="n">t</span><span class="p">.</span><span class="nf">timestamps</span>
+    <span class="k">end</span>
   <span class="k">end</span>
-<span class="k">end</span>
-</code></pre></div>    </div>
-  </li>
-  <li>
-    <p>Let’s create a controller for posts resource.
-<code class="highlighter-rouge">$ ./bin/rails g controller posts</code></p>
-  </li>
-  <li>And add posts resources routes in the <code class="highlighter-rouge">config/routes.rb</code>.
-    <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">routes</span><span class="p">.</span><span class="nf">draw</span> <span class="k">do</span>
+<span class="k">end</span></code></pre></figure>
+
+<h4 id="3-lets-create-a-controller-for-posts-resource">3. Let’s create a controller for posts resource.</h4>
+<p><code class="highlighter-rouge">$ ./bin/rails g controller posts</code></p>
+
+<h4 id="4-and-add-posts-resources-routes-in-the-configroutesrb">4. And add posts resources routes in the <code class="highlighter-rouge">config/routes.rb</code>.</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">routes</span><span class="p">.</span><span class="nf">draw</span> <span class="k">do</span>
   <span class="n">resources</span> <span class="ss">:posts</span>
-<span class="k">end</span>
-</code></pre></div>    </div>
-  </li>
-  <li>We need to associate post with images.
-    <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Post</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
+<span class="k">end</span></code></pre></figure>
+
+<h4 id="5-we-need-to-associate-post-with-images">5. We need to associate post with images.</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Post</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
   <span class="n">has_many_attached</span> <span class="ss">:images</span>
-<span class="k">end</span>
-</code></pre></div>    </div>
-  </li>
-  <li>Let’s add code for index, show and create actions.
-    <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># app/controllers/posts_controller.rb</span>
+<span class="k">end</span></code></pre></figure>
+
+<h4 id="6-lets-add-code-for-index-show-and-create-actions">6. Let’s add code for index, show and create actions.</h4>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># app/controllers/posts_controller.rb</span>
 <span class="k">class</span> <span class="nc">PostsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
   <span class="c1"># we will display post form here</span>
   <span class="k">def</span> <span class="nf">index</span>
- <span class="vi">@post</span> <span class="o">=</span> <span class="no">Post</span><span class="p">.</span><span class="nf">new</span>
+    <span class="vi">@post</span> <span class="o">=</span> <span class="no">Post</span><span class="p">.</span><span class="nf">new</span>
   <span class="k">end</span>
   <span class="c1"># we will create post here</span>
   <span class="k">def</span> <span class="nf">create</span>
- <span class="n">post</span> <span class="o">=</span> <span class="no">Post</span><span class="p">.</span><span class="nf">create!</span> <span class="n">params</span><span class="p">.</span><span class="nf">require</span><span class="p">(</span><span class="ss">:message</span><span class="p">).</span><span class="nf">permit</span><span class="p">(</span><span class="ss">:title</span><span class="p">,</span> <span class="ss">:body</span><span class="p">)</span>
- <span class="n">post</span><span class="p">.</span><span class="nf">images</span><span class="p">.</span><span class="nf">attach</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:message</span><span class="p">][</span><span class="ss">:images</span><span class="p">])</span>
- <span class="n">redirect_to</span> <span class="n">post</span>
+    <span class="n">post</span> <span class="o">=</span> <span class="no">Post</span><span class="p">.</span><span class="nf">create!</span> <span class="n">params</span><span class="p">.</span><span class="nf">require</span><span class="p">(</span><span class="ss">:message</span><span class="p">).</span><span class="nf">permit</span><span class="p">(</span><span class="ss">:title</span><span class="p">,</span> <span class="ss">:body</span><span class="p">)</span>
+    <span class="n">post</span><span class="p">.</span><span class="nf">images</span><span class="p">.</span><span class="nf">attach</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:message</span><span class="p">][</span><span class="ss">:images</span><span class="p">])</span>
+    <span class="n">redirect_to</span> <span class="n">post</span>
   <span class="k">end</span>
   <span class="c1"># we will display post with photo</span>
   <span class="k">def</span> <span class="nf">show</span>
- <span class="vi">@post</span> <span class="o">=</span> <span class="no">Post</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:id</span><span class="p">])</span>
+    <span class="vi">@post</span> <span class="o">=</span> <span class="no">Post</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="ss">:id</span><span class="p">])</span>
   <span class="k">end</span>
-<span class="k">end</span>
-</code></pre></div>    </div>
-  </li>
-  <li>Add the index view for the post with the following code. This
-will display upload form on localhost:3000/posts page.
-    <div class="language-erb highlighter-rouge"><div class="highlight"><pre class="highlight"><code># app/views/posts/index.html.erb
+<span class="k">end</span></code></pre></figure>
+
+<h4 id="7-add-the-index-view-for-the-post-with-the-following-code-this-will-display-upload-form-on-localhost3000posts-page">7. Add the index view for the post with the following code. This will display upload form on localhost:3000/posts page.</h4>
+
+<figure class="highlight"><pre><code class="language-erb" data-lang="erb"># app/views/posts/index.html.erb
 <span class="cp">&lt;%=</span> <span class="n">form_with</span> <span class="ss">model: </span><span class="vi">@post</span><span class="p">,</span> <span class="ss">local: </span><span class="kp">true</span> <span class="k">do</span> <span class="o">|</span><span class="n">form</span><span class="o">|</span> <span class="cp">%&gt;</span>
   <span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">text_field</span> <span class="ss">:title</span><span class="p">,</span> <span class="ss">placeholder: </span><span class="s2">"Title"</span> <span class="cp">%&gt;</span><span class="nt">&lt;br&gt;</span>
   <span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">text_area</span> <span class="ss">:body</span> <span class="cp">%&gt;</span><span class="nt">&lt;br&gt;&lt;br&gt;</span>
   <span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">file_field</span> <span class="ss">:images</span><span class="p">,</span> <span class="ss">multiple: </span><span class="kp">true</span> <span class="cp">%&gt;</span><span class="nt">&lt;br&gt;</span>
   <span class="cp">&lt;%=</span> <span class="n">form</span><span class="p">.</span><span class="nf">submit</span> <span class="cp">%&gt;</span>
-<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
-</code></pre></div>    </div>
-  </li>
-  <li>Now let’s add a view for show post.
-    <div class="language-erb highlighter-rouge"><div class="highlight"><pre class="highlight"><code># app/views/posts/show.html.erb
-<span class="cp">&lt;%=</span> <span class="n">image_tag</span> <span class="vi">@post</span><span class="p">.</span><span class="nf">images</span><span class="p">.</span><span class="nf">first</span> <span class="cp">%&gt;</span>
-</code></pre></div>    </div>
-  </li>
-  <li>Try submitting a photo and you will see the show view displays the
-image you just submitted. The image is currently stored locally in a
+<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span></code></pre></figure>
+
+<h4 id="8-now-lets-add-a-view-for-show-post">8. Now let’s add a view for show post.</h4>
+
+<figure class="highlight"><pre><code class="language-erb" data-lang="erb"># app/views/posts/show.html.erb
+<span class="cp">&lt;%=</span> <span class="n">image_tag</span> <span class="vi">@post</span><span class="p">.</span><span class="nf">images</span><span class="p">.</span><span class="nf">first</span> <span class="cp">%&gt;</span></code></pre></figure>
+
+<h4 id="9-try-submitting-a-photo-and-you-will-see-the-show-view-displays-the-image-you-just-submitted">9. Try submitting a photo and you will see the show view displays the image you just submitted.</h4>
+<p>The image is currently stored locally in a
 directory called <code class="highlighter-rouge">storage</code> in the app root level. But you can configure
 this to push the files to cloud file storage systems like AWS S3, Google Cloud
-and Azure.</li>
-</ol>
+and Azure.</p>
 
 <p>As you can see, ActiveStorage presents a simplied file management system
 that is well integrated with Rail’s ActiveRecord component.
