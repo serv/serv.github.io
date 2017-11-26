@@ -107,8 +107,8 @@ class PostsController < ApplicationController
   end
   # we will create post here
   def create
-    post = Post.create! params.require(:message).permit(:title, :body)
-    post.images.attach(params[:message][:images])
+    post = Post.create! params.require(:post).permit(:title, :body)
+    post.images.attach(params[:post][:images])
     redirect_to post
   end
   # we will display post with photo
