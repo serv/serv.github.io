@@ -6,9 +6,141 @@
 </description>
     <link>http://jasonkim.ca/</link>
     <atom:link href="http://jasonkim.ca/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 15 Jun 2018 19:05:38 -0700</pubDate>
-    <lastBuildDate>Fri, 15 Jun 2018 19:05:38 -0700</lastBuildDate>
+    <pubDate>Sat, 27 Apr 2019 14:45:12 -0700</pubDate>
+    <lastBuildDate>Sat, 27 Apr 2019 14:45:12 -0700</lastBuildDate>
     <generator>Jekyll v3.6.2</generator>
+    
+      <item>
+        <title>&quot;Big Data&quot; Engineering with Node.js</title>
+        <description>&lt;p&gt;When you think about data engineering, people usually think about 
+using Java or Python as the primary languages to work with.
+The two languages both have a large community backing and many tools 
+for handling big data.
+While they are fine languages to work with, I want to throw Node.js
+into the mix as a serious contender to get the job done.
+Node.js is performant enough to do some heavy lifting and has great NPM packages
+that help you develop fast. I wanted to share my experience of building data-intensive systems using Node.js.&lt;/p&gt;
+
+&lt;p&gt;I’ve been working at &lt;a href=&quot;https://www.coupang.com/&quot;&gt;Coupang&lt;/a&gt; for just over a year now. I had the privilege of building the first 
+&lt;a href=&quot;https://en.wikipedia.org/wiki/Extract,_transform,_load&quot;&gt;ETL&lt;/a&gt; 
+system for Coupang’s advertising platform.
+The ETL system began with a modest goal to clean and ingest advertising 
+metadata and time series data on a daily basis.
+Since the original ETL jobs began every day in the morning, I named
+the ETL system, &lt;code class=&quot;highlighter-rouge&quot;&gt;Morning Star&lt;/code&gt;, referring to planet Venus that appears in 
+the east before sunrise.
+This is a bit of a misnomer now, given that the system is now running
+ETL jobs on a real-time basis. I still kept the name.
+Since its inception, Morning Star evolved into a much larger system
+that is handling 500 GB of data, 400 million events per day, and the data volume is still growing.&lt;/p&gt;
+
+&lt;p&gt;Morning Star needed to provide data to several kinds of users. Services
+needed to retrieve appropriate data reliably in a timely fashion.
+Analysts asked for a place where they can gather insights about our business. Also, Morning Star needed to provide reliable, normalized data for creating denormalized tables for specific use cases.&lt;/p&gt;
+
+&lt;p&gt;Let’s examine the basic data flow of Morning Star. Morning Star’s 
+infrastructure lives on AWS.
+The data flow starts with several Lambda functions that trigger
+different jobs for Morning Star by making an HTTP request to the 
+load balancer.
+The load balancer balances the load in a round robin fashion to 
+EC2 instances. Based on the CPU usages, the EC2 instances dynamically
+scale up or down to efficiently handle the load.
+The EC2 instance that is given the request to handle a job, downloads
+the raw files from S3 Data Lake. The raw files in S3 originate
+from several other
+services. Morning Star cleans, enriches and anonymizes the raw data depending on which job it has to perform. 
+The massaged data is then uploaded back to the data lake, where
+it is subsequently copied to Redshift.
+Redshift is where various other services and users can consume the
+data to their liking.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/BsZ1i9t.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Node.js has been an excellent tool for building the desired system.
+Node.js finally has the &lt;code class=&quot;highlighter-rouge&quot;&gt;async-await&lt;/code&gt; pattern to take advantage of
+parallelism without callbacks.
+Having worked with callbacks and chained promises, I think
+the async-await pattern solved major problems found in the previous
+asynchronous programming patterns.
+You can program your code spanning vertically rather than horizontally
+like the nested callbacks make you do. Your code is easier to read
+when it spans vertically.
+You can handle errors more precisely than the chained promises pattern where
+a single catch block is typically responsible for errors
+thrown anywhere during the execution of multiple chained
+promises.
+You can have a more nimble control flow of your code with &lt;code class=&quot;highlighter-rouge&quot;&gt;async-await&lt;/code&gt;
+because you can use &lt;code class=&quot;highlighter-rouge&quot;&gt;if-else&lt;/code&gt; statements easier.
+The ergonomics of coding was much improved with using async-await.&lt;/p&gt;
+
+&lt;p&gt;Speaking of great ergonomics, I should also point out the &lt;code class=&quot;highlighter-rouge&quot;&gt;stream&lt;/code&gt;
+module in Node.js to be a fantastic tool to process large files.
+When you work on web services, you typically read and write
+discrete chunks of data transactionally. 
+On the other hand, it is very common to use stream to move
+data from one place another in data engineering.
+You often deal with cases where you no longer can load
+the entire data onto the memory.
+Or you might deal with a source that is continuously generating data that 
+needs to be moved to another place in real time. 
+That’s when you have to stream the data.
+Node’s stream library helps you stream data reliably and manipulate
+the data with ease.
+The functions in the stream module are easy to understand and use.
+They are well documented with an ample amount of examples, so you can easily
+incorporate them into your code.
+The stream library plays nicely with the async-await pattern I use
+elsewhere as long as I wrap the stream code with a promise.&lt;/p&gt;
+
+&lt;p&gt;There are other standard modules in Node.js that makes it 
+suitable to do data engineering.
+The &lt;code class=&quot;highlighter-rouge&quot;&gt;child-process&lt;/code&gt; module is used to execute terminal commands,
+and it was useful in controlling 
+&lt;a href=&quot;https://stedolan.github.io/jq/&quot;&gt;jq&lt;/a&gt;, 
+&lt;a href=&quot;https://www.gnu.org/software/parallel/&quot;&gt;parallel&lt;/a&gt; and 
+&lt;a href=&quot;https://cwiki.apache.org/confluence/display/Hive/HiveServer2+Clients#HiveServer2Clients-Beeline%E2%80%93CommandLineShell&quot;&gt;Hive Beeline client&lt;/a&gt;.
+The &lt;code class=&quot;highlighter-rouge&quot;&gt;fs&lt;/code&gt; module had all the functions I needed to work with the file system,
+and &lt;code class=&quot;highlighter-rouge&quot;&gt;zlib&lt;/code&gt; handle gzipping and gunzipping with stream perfectly.
+And if I didn’t find an adequate module in the standard Node.js modules,
+I found almost all of them in the NPM repository.
+This assurance gave me the confidence to push development in Node.js,
+and help me iterate faster.&lt;/p&gt;
+
+&lt;p&gt;Node.js has some downsides when you try to use it to process data.
+I applauded Node.js’ async-await to be an excellent pattern to use.
+However, this means that you have to write a promise wrapper for
+callbacks and pipe functions in order to incorporate it with the
+async-await pattern. It’s not difficult, but it is tedious.&lt;/p&gt;
+
+&lt;p&gt;I also had trouble finding an up to date Hive client for Node.js.
+Hive is a widely used data warehousing tool for working with big data.
+I was surprised to learn that there’s no well maintained 
+Hive client available to use on NPM.
+For this reason, I had to use Hive’s Beeline command line client and
+write Node wrapper around it.
+I had to install JDK, Hadoop, and Hive as dependencies for Beeline
+to run.
+There were a lot of unpleasant programming I had to do to make this 
+work.&lt;/p&gt;
+
+&lt;p&gt;Despite some of the problems with Node.js, it is still a great tool
+for data engineering. It has many standard and third-party modules
+to help to finish work. Node.js is also fast enough to process large datasets
+in real-time. 
+I knew that Node.js is great at creating nice web apps and services.
+I am glad to know that it is also a fine tool for data engineering.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 26 Apr 2019 21:17:11 -0700</pubDate>
+        <link>http://jasonkim.ca/blog/2019/04/26/data-engineering-with-nodejs/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2019/04/26/data-engineering-with-nodejs/</guid>
+        
+        
+        <category>node</category>
+        
+        <category>javascript</category>
+        
+      </item>
     
       <item>
         <title>Resolving Bluebird Promises With Concurrency</title>
@@ -874,43 +1006,6 @@ of the memory leak. I also want to thank
         
         
         <category>node</category>
-        
-      </item>
-    
-      <item>
-        <title>Battle Technical Assumptions</title>
-        <description>&lt;p&gt;I was burned pretty bad yesterday. I’ve told myself many times to battle assumptions about feature and product requirements, and that product managers cannot give 100% oversight on what I am working on. Now I am going to add another kind of assumption I will question every time. The kind I am talking about is a technical assumption.&lt;/p&gt;
-
-&lt;p&gt;Just like assumptions you make about a feature or a product, as a developer, making wrong technical assumptions can cost you dearly. Making technical assumptions get you started with the development faster, but you are playing a Russian roulette with yourself if you don’t have adequate technical planning to accompany your development process.&lt;/p&gt;
-
-&lt;p&gt;Wrong technical assumptions can lead you to think that you are able to accomplish something when it is not technically feasible. I learned this the hard way yesterday at work.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/UtV84yu.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Currently we are having some nasty memory leak problem on the production environment coupled with unstable Redis storage and periodic slow down of upstream services.
-My team is working really hard to resolve the issue.
-After researching how to debug production Node systems, I decided that I would try getting some memory snapshots on a production server, and examine what is causing the memory increase.
-I chose to use &lt;a href=&quot;https://github.com/bnoordhuis/node-heapdump&quot;&gt;heapdump&lt;/a&gt; to get V8 heap snapshots, and use Chrome’s developer tools’ profiler to examine the data.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/tOL9Xir.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;In theory this was just perfect.
-In practice, I made some unsound technical assumptions which resulted in a full day wasted.
-Our local development environment are running Node 4.2.4 and the latest NPM 3.x. I was able to install Heapdump package no problem locally. But on the production environment, we are still running NPM 1.x!
-I couldn’t find a way to install Heapdump on production. This problem itself can be solved by updating NPM obviously, but we haven’t fully tested how NPM 3 would work with our deployment process to our beta, load, and production environment.
-Also any infrastructure change must be orchestrated through our TechOps team, and that typically takes several days to coordinate all efforts.&lt;/p&gt;
-
-&lt;p&gt;Wrong technical assumptions are just as deadly as feature/product assumptions.
-I will plan out more granular and incremental steps to determine how each development process will be carried out to meet the acceptance criteria of the feature story from now on.&lt;/p&gt;
-</description>
-        <pubDate>Wed, 01 Jun 2016 22:30:56 -0700</pubDate>
-        <link>http://jasonkim.ca/blog/2016/06/01/battle-technical-assumptions/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2016/06/01/battle-technical-assumptions/</guid>
-        
-        
-        <category>software</category>
-        
-        <category>development</category>
         
       </item>
     
