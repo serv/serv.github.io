@@ -4,11 +4,221 @@
     <title>Jason Kim</title>
     <description>Writings on software and other topics
 </description>
-    <link>http://jasonkim.ca/</link>
-    <atom:link href="http://jasonkim.ca/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 27 Apr 2019 14:45:12 -0700</pubDate>
-    <lastBuildDate>Sat, 27 Apr 2019 14:45:12 -0700</lastBuildDate>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Mon, 13 Jul 2020 23:47:18 -0700</pubDate>
+    <lastBuildDate>Mon, 13 Jul 2020 23:47:18 -0700</lastBuildDate>
     <generator>Jekyll v3.6.2</generator>
+    
+      <item>
+        <title>Investigating Memory Leak in a Node.js Application</title>
+        <description>&lt;p&gt;I was struck with a memory leak problem in Node.js application recently.
+It is not fun dealing with memory leak problems. Unlike other typical bugs you
+face caused by errors in syntax of your code or failures in upstream services,
+a memory leak problem defies conventional approaches to squashing the bug.
+You need to use unusual tools you don’t normally use and you typically will
+need more time to solve the problem.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/Skr597z.png&quot; alt=&quot;memory leak&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Let’s evaluate some some approaches and tools that you can use to resolve a
+memory leak issue in Node.js Applications.&lt;/p&gt;
+
+&lt;h2 id=&quot;heapdump-npm-package&quot;&gt;Heapdump NPM package&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/bnoordhuis/node-heapdump&quot;&gt;node-heapdump&lt;/a&gt; is an easy to use
+NPM package that generates a V8 heap dump of your Node.js application.
+You can examine the heap dump with the Developer Tool in the Chrome browser.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Pros
+    &lt;ul&gt;
+      &lt;li&gt;Simple setup&lt;/li&gt;
+      &lt;li&gt;Can integrate with your Node.js application and create &lt;a href=&quot;https://github.com/goldbergyoni/nodebestpractices/blob/master/sections/production/createmaintenanceendpoint.md&quot;&gt;a maintenance endpoint&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;Easily inspect the V8 heap dump using Chrome Developer Tool&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Cons
+    &lt;ul&gt;
+      &lt;li&gt;Only useable if the app is still responsive&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;My Node.js app was unresponsive because it was executing a blocking function.
+The blocking function was preventing the Node.js app from accepting any requests to create a heapdump.&lt;/p&gt;
+
+&lt;p&gt;As you can see, there’s no silver bullet to investigating and resolving a memory
+leak problem. The essence of solving memory leak problem can be described as
+simply as 1) get a heap dump 2) inspect the heap dump 3) identify the cause of the
+most memory exhausting object creation.
+However, there are many different tools and techniques you to solve the
+problem and no single way will present a simple solution. Let’s continue evaluating
+other tools.&lt;/p&gt;
+
+&lt;h2 id=&quot;gcore--mdb-on-solaris&quot;&gt;gcore + MDB on Solaris&lt;/h2&gt;
+
+&lt;p&gt;4 years ago, I solved &lt;a href=&quot;http://blog.jasonkim.ca/blog/2016/06/03/fixing-memory-leak-on-production-node-application/&quot;&gt;another memory leak problem&lt;/a&gt;
+in Node.js application. At that
+time, the tool that allows you to inspect memory heap dump of a process, llnode
+(I’ll present this tool last), wasn’t as mature as it is today. And at that time,
+I could not use it with the heap dump. I had to use a tool called &lt;a href=&quot;https://docs.oracle.com/cd/E18752_01/html/816-5041/intro-27.html&quot;&gt;MDB&lt;/a&gt; with &lt;a href=&quot;https://man7.org/linux/man-pages/man1/gcore.1.html&quot;&gt;gcore&lt;/a&gt;.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Pros
+    &lt;ul&gt;
+      &lt;li&gt;You can run gcore even when the Node.js app is unresponsive&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Cons
+    &lt;ul&gt;
+      &lt;li&gt;Difficult setup. You need Solaris to run MDB. To learn more, you can read
+this &lt;a href=&quot;http://blog.jasonkim.ca/blog/2016/06/03/fixing-memory-leak-on-production-node-application/&quot;&gt;previous blog post&lt;/a&gt; I wrote on this topic.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Because setting up Solaris is too cumbersome, I decided to explore using llnode
+to inspect the gcore heap dump.&lt;/p&gt;
+
+&lt;h2 id=&quot;gcore--llnode&quot;&gt;gcore + llnode&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/nodejs/llnode&quot;&gt;llnode&lt;/a&gt; is another tool for inspecting gcore heap dump.
+I decided to use llnode because I was able to install the tool inside a docker container,
+which hosts my Node.js app.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Pros
+    &lt;ul&gt;
+      &lt;li&gt;Moderately easy to setup.&lt;/li&gt;
+      &lt;li&gt;llnode is easy to use.&lt;/li&gt;
+      &lt;li&gt;You can run gcore even when the Node.js app is unresponsive.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I could not find notable reasons why I shouldn’t use gcore + llnode to investigate
+the memory issue.&lt;/p&gt;
+
+&lt;p&gt;Here are the steps needed to prepare the tools needed to perform your investigation.
+I am running Node.js application inside Ubuntu 18 Docker container.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Go inside the Docker container running the Node.js app.
+&lt;code class=&quot;highlighter-rouge&quot;&gt;docker exec -it app_name bash&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Update Ubuntu
+&lt;code class=&quot;highlighter-rouge&quot;&gt;apt-get update&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Install lldb
+&lt;code class=&quot;highlighter-rouge&quot;&gt;apt install lldb-4.0 liblldb-4.0-dev&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;You might see an warning message that reads&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mount: permission denied
+update-binfmts: warning: Couldn't mount the binfmt_misc filesystem on /proc/sys/fs/binfmt_misc.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://stackoverflow.com/questions/54951262/binfmt-misc-problems-in-ubuntu18-04-under-docker&quot;&gt;You can safely ignore it for our purpose.&lt;/a&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Install node-gyp
+&lt;code class=&quot;highlighter-rouge&quot;&gt;npm i node-gyp&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Install llnode
+&lt;code class=&quot;highlighter-rouge&quot;&gt;npm install llnode&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Install gcore
+&lt;code class=&quot;highlighter-rouge&quot;&gt;apt-get install gdb&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;top&lt;/code&gt; to identify the process number for your Node.js app.
+&lt;code class=&quot;highlighter-rouge&quot;&gt;36 root 20 0 5700608 4.482g 29724 R 99.7 29.7 100:45.02 node /usr/src/a&lt;/code&gt;
+In this case, the process number is 36.&lt;/li&gt;
+  &lt;li&gt;Run gcore on the process.
+&lt;code class=&quot;highlighter-rouge&quot;&gt;gcore 36&lt;/code&gt;
+You might see this error.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ptrace: Operation not permitted.
+You can't do that without a process to debug.
+The program is not being run.
+gcore: failed to create core.36
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;To solve the problem in 8, you need to add this to your docker-compose file.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cap_add:
+  - SYS_PTRACE
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This is &lt;a href=&quot;https://jvns.ca/blog/2020/04/29/why-strace-doesnt-work-in-docker/&quot;&gt;a good blog post&lt;/a&gt; on why you need if you are curious.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Try step 8 again. gcore should work now.&lt;/li&gt;
+  &lt;li&gt;Inspect the core dump with llnode
+&lt;code class=&quot;highlighter-rouge&quot;&gt;./node_modules/.bin/llnode node -c core.36&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The process of investigation goes something like this.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;v8 findjsobjects&lt;/code&gt; inside llnode to determine what object is causing the memory leak. You might be wondering how does one tell which object is causing the memory leak.
+There are mainly two ways to nail down the object causing the memory leak.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;When you have a rapidly growing memory leak, your heap dump presents an extreme version of &lt;a href=&quot;https://en.wikipedia.org/wiki/Pareto_principle&quot;&gt;Pareto principle&lt;/a&gt;. The object will present itself to be occupying a vast majority of memory will be where you will want to investigate. Here’s my result of &lt;code class=&quot;highlighter-rouge&quot;&gt;v8 findjsobjects&lt;/code&gt; demonstrating this effect.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;...
+Instances      Size    Name
+        109       3488 ContextifyScript
+        138       9936 I
+        187      13464 (ArrayBufferView)
+        213      11928 NodeError
+        220      17600 Layer
+        226      12656 Node
+        226      14456 Entry
+        231      11096 Source
+        273       6552 CallSite
+       3129     250240 Module
+      10930     961840 Tok
+      16150    1033480 Loc
+      30496     975872 (Array)
+     336951    8086824 RowDataPacket
+    8901702  286210248 Object
+   11881688    3728960 (String)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;When you have a much more slowly growing memory leak, you can’t easily tell what
+JS object is responsible for the memory leak. In this case, you have to take 2 heap
+dumps over a period time and see if you see any growth in some JS objects. The
+object growing in the number of instances will be the cause of your memory leak.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Generic JS primitives (String, Number, Array etc) and Objects are unactionable. Determine what is the JS
+object that is not JS primitives and Objects which appears to be cause
+of the memory leak? In my case, it is &lt;code class=&quot;highlighter-rouge&quot;&gt;RowDataPacket&lt;/code&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;By padding logs and metrics around suspicious code, determine where in your code
+causes the &lt;code class=&quot;highlighter-rouge&quot;&gt;RowDataPacket&lt;/code&gt; object to be created in such number.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;You’ve now found the cause of the memory leak. Unfortunately, finding the cause of the memory leak is not sufficient to resolving the actual memory leak issue.
+You still have to apply a remedy to mitigate the cause of the memory leak.
+And for that step, good luck.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 12 Jul 2020 21:17:11 -0700</pubDate>
+        <link>http://localhost:4000/blog/2020/07/12/investigating-memory-leak/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2020/07/12/investigating-memory-leak/</guid>
+        
+        
+        <category>node</category>
+        
+      </item>
     
       <item>
         <title>&quot;Big Data&quot; Engineering with Node.js</title>
@@ -132,8 +342,8 @@ I knew that Node.js is great at creating nice web apps and services.
 I am glad to know that it is also a fine tool for data engineering.&lt;/p&gt;
 </description>
         <pubDate>Fri, 26 Apr 2019 21:17:11 -0700</pubDate>
-        <link>http://jasonkim.ca/blog/2019/04/26/data-engineering-with-nodejs/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2019/04/26/data-engineering-with-nodejs/</guid>
+        <link>http://localhost:4000/blog/2019/04/26/data-engineering-with-nodejs/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2019/04/26/data-engineering-with-nodejs/</guid>
         
         
         <category>node</category>
@@ -226,8 +436,8 @@ of promises using concurrency looks something like this.&lt;/p&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 </description>
         <pubDate>Thu, 14 Jun 2018 21:17:11 -0700</pubDate>
-        <link>http://jasonkim.ca/blog/2018/06/14/resolving-bluebird-promises-with-concurrency/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2018/06/14/resolving-bluebird-promises-with-concurrency/</guid>
+        <link>http://localhost:4000/blog/2018/06/14/resolving-bluebird-promises-with-concurrency/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2018/06/14/resolving-bluebird-promises-with-concurrency/</guid>
         
         
         <category>node</category>
@@ -383,8 +593,8 @@ shared his experience of using ActiveStorage on his projects with me.&lt;/p&gt;
 
 </description>
         <pubDate>Mon, 13 Nov 2017 11:17:11 -0800</pubDate>
-        <link>http://jasonkim.ca/blog/2017/11/13/Using-ActiveStorage-Today/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2017/11/13/Using-ActiveStorage-Today/</guid>
+        <link>http://localhost:4000/blog/2017/11/13/Using-ActiveStorage-Today/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2017/11/13/Using-ActiveStorage-Today/</guid>
         
         
         <category>ruby on rails</category>
@@ -508,8 +718,8 @@ workflow.&lt;/p&gt;
 
 </description>
         <pubDate>Sun, 05 Nov 2017 13:40:28 -0800</pubDate>
-        <link>http://jasonkim.ca/blog/2017/11/05/typescript/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2017/11/05/typescript/</guid>
+        <link>http://localhost:4000/blog/2017/11/05/typescript/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2017/11/05/typescript/</guid>
         
         
         <category>typescript</category>
@@ -595,8 +805,8 @@ version to causes error.&lt;/p&gt;
 
 </description>
         <pubDate>Sun, 28 May 2017 13:00:00 -0700</pubDate>
-        <link>http://jasonkim.ca/blog/2017/05/28/upgrading-ember/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2017/05/28/upgrading-ember/</guid>
+        <link>http://localhost:4000/blog/2017/05/28/upgrading-ember/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2017/05/28/upgrading-ember/</guid>
         
         
         <category>software development</category>
@@ -651,8 +861,8 @@ games at $616.97 was totally worth it.&lt;/p&gt;
 
 </description>
         <pubDate>Sun, 01 Jan 2017 13:56:59 -0800</pubDate>
-        <link>http://jasonkim.ca/blog/2017/01/01/my-macbook-pro-alternative/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2017/01/01/my-macbook-pro-alternative/</guid>
+        <link>http://localhost:4000/blog/2017/01/01/my-macbook-pro-alternative/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2017/01/01/my-macbook-pro-alternative/</guid>
         
         
         <category>software development</category>
@@ -701,8 +911,8 @@ is aligned with the product vision, team vision and the company
 vision.&lt;/p&gt;
 </description>
         <pubDate>Sun, 13 Nov 2016 08:45:58 -0800</pubDate>
-        <link>http://jasonkim.ca/blog/2016/11/13/starting-a-new-job-or-transitioning-to-a-new-team/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2016/11/13/starting-a-new-job-or-transitioning-to-a-new-team/</guid>
+        <link>http://localhost:4000/blog/2016/11/13/starting-a-new-job-or-transitioning-to-a-new-team/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2016/11/13/starting-a-new-job-or-transitioning-to-a-new-team/</guid>
         
         
         <category>career</category>
@@ -773,8 +983,8 @@ on developers usually have more correct opinions
 about building API.&lt;/p&gt;
 </description>
         <pubDate>Sun, 09 Oct 2016 09:45:58 -0700</pubDate>
-        <link>http://jasonkim.ca/blog/2016/10/09/easily-overlooked-parts-on-developing-rest-api/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2016/10/09/easily-overlooked-parts-on-developing-rest-api/</guid>
+        <link>http://localhost:4000/blog/2016/10/09/easily-overlooked-parts-on-developing-rest-api/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2016/10/09/easily-overlooked-parts-on-developing-rest-api/</guid>
         
         
         <category>api</category>
@@ -838,8 +1048,8 @@ serve a large traffic.&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Thu, 21 Jul 2016 21:45:58 -0700</pubDate>
-        <link>http://jasonkim.ca/blog/2016/07/21/benchmarking-web-frameworks/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2016/07/21/benchmarking-web-frameworks/</guid>
+        <link>http://localhost:4000/blog/2016/07/21/benchmarking-web-frameworks/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2016/07/21/benchmarking-web-frameworks/</guid>
         
         
         <category>node.js</category>
@@ -853,159 +1063,6 @@ serve a large traffic.&lt;/li&gt;
         <category>spark</category>
         
         <category>ruby on rails</category>
-        
-      </item>
-    
-      <item>
-        <title>Fixing Memory Leak on Production Node.js Application</title>
-        <description>&lt;p&gt;The last few days at work were rough.
-My team was intensely focused on
-preparing the production environment to be stable.
-We’ve been having some
-serious issues on the production environment.
-One of the most serious production issues was a
-nasty memory leak.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/lEnDrWZ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;The graph above displays the memory usage of
-12 node applications on our production
-environment. The y-axis shows the memory usage
-in percentage and the x-axis shows the time
-span of 7 days. This narrow sawtooth
-pattern on memory usage is extremely bad.
-As you can see, all 12 servers
-are accumulating usage in memory rapidly.
-As a remedy for the memory leak, we had to
-periodically restart our servers. This was less
-than ideal, but because we had so many other
-really high priority items last few weeks, we
-just had to bite our tongue and suck it up.
-However, the frequency at which we had to
-restart our server started to increase.
-We had to restart our servers every few days,
-then every day, then it came to a point where we
-were restarting our servers every 4 to 5 hours.
-Thank god we have a globally distributed team
-(Croatia, and Argentina), it could’ve been a
-lot tougher without having team members in other
-timezones. I can’t
-emphasize this point enough, and I will take
-another opportunity to praise having globally
-distributed software development team in another
-post in the future.&lt;/p&gt;
-
-&lt;p&gt;After some &lt;a href=&quot;http://blog.jasonkim.ca/blog/2016/06/02/battle-technical-assumptions/&quot;&gt;pitfalls&lt;/a&gt;, we fixed the
-memory leak. As you can see below, the overall
-memory usage stays flat after 13:30 PM after our
-memory leak fix was applied.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/JnCgcoi.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;We came up with several different strategies to
-fix the memory issue, but the working solution
-came down to comparing two memory dumps at
-different times and comparing their content.
-I used &lt;a href=&quot;http://man7.org/linux/man-pages/man1/gcore.1.html&quot;&gt;gcore&lt;/a&gt; on a production server to gather a
-memory dump soon after the server restart when
-the memory usage is around 30%. After around
-3 hours when the memory usage for the server
-starts to hover around 60%, I took another memory
-dump. I used &lt;a href=&quot;https://docs.oracle.com/cd/E18752_01/html/816-5041/chapter-8.html&quot;&gt;mdb&lt;/a&gt; on a local VM running
-Solaris 11 to analyze the two memory dumps.&lt;/p&gt;
-
-&lt;p&gt;Here is the memory dump of the production server
-at around 30% memory usage.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;73ce2207ea9     4643        2 Arguments: 0, length
-101b5ab4f71     5519        4 Object: albumId, albumNames, ...
- 9719767799     6070        2 Object: localeCode, value
- 971977c371     6966        1 Object: entry
-1102bfc1dc31     8775        2 Object: id, genreIds
- 971977b021     9086        2 Object: ids, href
- 971973e051     9430        3 Array
-    3015e01    16203        0 Object
- 971974c9c9    19854        1 Object: nr_exclusive_duration_millis
- 9719710199    19917       13 TraceSegment: name, transaction, ...
- 971971cb11    20186        7 Timer: state, touched, duration, ...
-    342d8d9    49769        0 Array
- 971971cbb9    59489        1 Array
- 971970f1c9    71743        2 Array
-     OBJECT #OBJECTS   #PROPS CONSTRUCTOR: PROPS&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;And here is the memory dump of the production
-server at around 80% around 4 hours after
-the server restart.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;1102bfc1dc31   8775        2 Object: id, genreIds
-
-...
-
-110879a2c9    14099        6 ExponentialBackoffStrategy: ...
-1108779561    15593        3 Array
-45357fdf31    17059        2 Object: ids, href
-   3015db1    34680        0 Object
-110875b221    35287        4 Object: albumId, albumNames, ...
-110875b2c9    38401        1 Object: entry
-110875aff1    38481        2 Object: localeCode, value
-1108708d51   198161        0 Array
-1108706ae1   202984        1 Array
-1108706a81   206039        1 Object: nr_exclusive_duration_millis
-11087046d9   209896       13 TraceSegment: name, transaction, ...
-1108704801   223481        7 Timer: state, touched, duration, ...
-1108706aa1   507224        2 Array
-    OBJECT #OBJECTS   #PROPS CONSTRUCTOR: PROPS&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;The most notable cause of the memory increase is
-&lt;code class=&quot;highlighter-rouge&quot;&gt;TraceSegment: name, transaction, ...&lt;/code&gt;.
-You can see that the number of &lt;code class=&quot;highlighter-rouge&quot;&gt;TraceSegment&lt;/code&gt;
-object count increased by 10 folds going
-from 19917 to 209896. You can also see some
-other object such as &lt;code class=&quot;highlighter-rouge&quot;&gt;Timer&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;Array&lt;/code&gt;
-increasing. This is because those are properties
-of the &lt;code class=&quot;highlighter-rouge&quot;&gt;TraceSegment&lt;/code&gt; object.
-Contrast this number with the genre-tags object
-that stayed exactly the same
-&lt;code class=&quot;highlighter-rouge&quot;&gt;2 Object: id, genreIds&lt;/code&gt; at 8775. That object
-is a json file parsed into memory at startup
-of the app and it does not increase. This
-suggests to me that the memory dump is indeed
-accurate, and Node retains memory steady on
-correctly coded objects.&lt;/p&gt;
-
-&lt;p&gt;It turns out &lt;code class=&quot;highlighter-rouge&quot;&gt;TraceSegment&lt;/code&gt; objects are created
-by &lt;a href=&quot;https://github.com/newrelic/node-newrelic/blob/1e7bbbaf34a15f0bb35aca63b0d8a3cfa2669d27/lib/transaction/trace/segment.js&quot;&gt;NewRelic&lt;/a&gt;. The fact that
-I wasn’t able to recreate the severity of
-memory leak convincingly on the development
-environment from previous attempts also tells
-me that the memory leak was caused by something
-happening on the production environment.&lt;/p&gt;
-
-&lt;p&gt;We get some benefits of having NewRelic monitoring, but disabling NewRelic on
-production was no-brainer at this point.
-We had to do it. We all acknowledged that
-NewRelic is not the initial cause of the memory leak.
-There is still something in our code that is
-behaving naughtily with NewRelic, but we
-got to put our the damn fire on production
-first. So we did it. We disabled NewRelic
-on production and the memory usage stopped
-climbing and it remains very steady for now.&lt;/p&gt;
-
-&lt;p&gt;I want to thank &lt;a href=&quot;https://yunong.io/2015/11/13/debugging-node-js-in-production/&quot;&gt;Yunong Xiao for sharing
-Netflix’s experience on debugging Node.js in
-production&lt;/a&gt;. It informed me about
-useful tools in the wild and taught me how
-I can use those tools to find the cause
-of the memory leak. I also want to thank
-&lt;a href=&quot;http://bryce.is/writing/code/mdb_v8/vm/virtualbox/omnios/2016/02/06/mdbv8-getting-started.html&quot;&gt;Bryce Neal for writing a detailed tutorial on setting up Solaris to use MDB&lt;/a&gt;.&lt;/p&gt;
-</description>
-        <pubDate>Thu, 02 Jun 2016 22:30:56 -0700</pubDate>
-        <link>http://jasonkim.ca/blog/2016/06/02/fixing-memory-leak-on-production-node-application/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2016/06/02/fixing-memory-leak-on-production-node-application/</guid>
-        
-        
-        <category>node</category>
         
       </item>
     
