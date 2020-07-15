@@ -4,10 +4,10 @@
     <title>Jason Kim</title>
     <description>Writings on software and other topics
 </description>
-    <link>http://jasonkim.ca/</link>
-    <atom:link href="http://jasonkim.ca/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 14 Jul 2020 22:19:38 -0700</pubDate>
-    <lastBuildDate>Tue, 14 Jul 2020 22:19:38 -0700</lastBuildDate>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Tue, 14 Jul 2020 22:20:42 -0700</pubDate>
+    <lastBuildDate>Tue, 14 Jul 2020 22:20:42 -0700</lastBuildDate>
     <generator>Jekyll v3.6.2</generator>
     
       <item>
@@ -207,8 +207,8 @@ You still have to apply a remedy to mitigate the cause of the memory leak.
 And for that step, good luck.&lt;/p&gt;
 </description>
         <pubDate>Sun, 12 Jul 2020 21:17:11 -0700</pubDate>
-        <link>http://jasonkim.ca/blog/2020/07/12/investigating-memory-leak/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2020/07/12/investigating-memory-leak/</guid>
+        <link>http://localhost:4000/blog/2020/07/12/investigating-memory-leak/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2020/07/12/investigating-memory-leak/</guid>
         
         
         <category>node</category>
@@ -337,8 +337,8 @@ I knew that Node.js is great at creating nice web apps and services.
 I am glad to know that it is also a fine tool for data engineering.&lt;/p&gt;
 </description>
         <pubDate>Fri, 26 Apr 2019 21:17:11 -0700</pubDate>
-        <link>http://jasonkim.ca/blog/2019/04/26/data-engineering-with-nodejs/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2019/04/26/data-engineering-with-nodejs/</guid>
+        <link>http://localhost:4000/blog/2019/04/26/data-engineering-with-nodejs/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2019/04/26/data-engineering-with-nodejs/</guid>
         
         
         <category>node</category>
@@ -431,8 +431,8 @@ of promises using concurrency looks something like this.&lt;/p&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 </description>
         <pubDate>Thu, 14 Jun 2018 21:17:11 -0700</pubDate>
-        <link>http://jasonkim.ca/blog/2018/06/14/resolving-bluebird-promises-with-concurrency/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2018/06/14/resolving-bluebird-promises-with-concurrency/</guid>
+        <link>http://localhost:4000/blog/2018/06/14/resolving-bluebird-promises-with-concurrency/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2018/06/14/resolving-bluebird-promises-with-concurrency/</guid>
         
         
         <category>node</category>
@@ -588,8 +588,8 @@ shared his experience of using ActiveStorage on his projects with me.&lt;/p&gt;
 
 </description>
         <pubDate>Mon, 13 Nov 2017 11:17:11 -0800</pubDate>
-        <link>http://jasonkim.ca/blog/2017/11/13/Using-ActiveStorage-Today/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2017/11/13/Using-ActiveStorage-Today/</guid>
+        <link>http://localhost:4000/blog/2017/11/13/Using-ActiveStorage-Today/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2017/11/13/Using-ActiveStorage-Today/</guid>
         
         
         <category>ruby on rails</category>
@@ -713,8 +713,8 @@ workflow.&lt;/p&gt;
 
 </description>
         <pubDate>Sun, 05 Nov 2017 13:40:28 -0800</pubDate>
-        <link>http://jasonkim.ca/blog/2017/11/05/typescript/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2017/11/05/typescript/</guid>
+        <link>http://localhost:4000/blog/2017/11/05/typescript/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2017/11/05/typescript/</guid>
         
         
         <category>typescript</category>
@@ -800,8 +800,8 @@ version to causes error.&lt;/p&gt;
 
 </description>
         <pubDate>Sun, 28 May 2017 13:00:00 -0700</pubDate>
-        <link>http://jasonkim.ca/blog/2017/05/28/upgrading-ember/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2017/05/28/upgrading-ember/</guid>
+        <link>http://localhost:4000/blog/2017/05/28/upgrading-ember/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2017/05/28/upgrading-ember/</guid>
         
         
         <category>software development</category>
@@ -856,8 +856,8 @@ games at $616.97 was totally worth it.&lt;/p&gt;
 
 </description>
         <pubDate>Sun, 01 Jan 2017 13:56:59 -0800</pubDate>
-        <link>http://jasonkim.ca/blog/2017/01/01/my-macbook-pro-alternative/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2017/01/01/my-macbook-pro-alternative/</guid>
+        <link>http://localhost:4000/blog/2017/01/01/my-macbook-pro-alternative/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2017/01/01/my-macbook-pro-alternative/</guid>
         
         
         <category>software development</category>
@@ -906,8 +906,8 @@ is aligned with the product vision, team vision and the company
 vision.&lt;/p&gt;
 </description>
         <pubDate>Sun, 13 Nov 2016 08:45:58 -0800</pubDate>
-        <link>http://jasonkim.ca/blog/2016/11/13/starting-a-new-job-or-transitioning-to-a-new-team/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2016/11/13/starting-a-new-job-or-transitioning-to-a-new-team/</guid>
+        <link>http://localhost:4000/blog/2016/11/13/starting-a-new-job-or-transitioning-to-a-new-team/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2016/11/13/starting-a-new-job-or-transitioning-to-a-new-team/</guid>
         
         
         <category>career</category>
@@ -978,8 +978,8 @@ on developers usually have more correct opinions
 about building API.&lt;/p&gt;
 </description>
         <pubDate>Sun, 09 Oct 2016 09:45:58 -0700</pubDate>
-        <link>http://jasonkim.ca/blog/2016/10/09/easily-overlooked-parts-on-developing-rest-api/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2016/10/09/easily-overlooked-parts-on-developing-rest-api/</guid>
+        <link>http://localhost:4000/blog/2016/10/09/easily-overlooked-parts-on-developing-rest-api/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2016/10/09/easily-overlooked-parts-on-developing-rest-api/</guid>
         
         
         <category>api</category>
@@ -1043,8 +1043,8 @@ serve a large traffic.&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Thu, 21 Jul 2016 21:45:58 -0700</pubDate>
-        <link>http://jasonkim.ca/blog/2016/07/21/benchmarking-web-frameworks/</link>
-        <guid isPermaLink="true">http://jasonkim.ca/blog/2016/07/21/benchmarking-web-frameworks/</guid>
+        <link>http://localhost:4000/blog/2016/07/21/benchmarking-web-frameworks/</link>
+        <guid isPermaLink="true">http://localhost:4000/blog/2016/07/21/benchmarking-web-frameworks/</guid>
         
         
         <category>node.js</category>
