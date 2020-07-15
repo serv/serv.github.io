@@ -76,94 +76,94 @@ the memory issue.
 Here are the steps needed to prepare the tools needed to perform your investigation.
 I am running Node.js application inside Ubuntu 18 Docker container.
 
-1. Go inside the Docker container running the Node.js app.
-   `docker exec -it app_name bash`
-2. Update Ubuntu
-   `apt-get update`
-3. Install lldb
-   `apt install lldb-4.0 liblldb-4.0-dev`
+- Go inside the Docker container running the Node.js app.
+  `docker exec -it app_name bash`
+- Update Ubuntu
+  `apt-get update`
+- Install lldb
+  `apt install lldb-4.0 liblldb-4.0-dev`
 
-You might see an warning message that reads
+  You might see an warning message that reads
 
-```
-mount: permission denied
-update-binfmts: warning: Couldn't mount the binfmt_misc filesystem on /proc/sys/fs/binfmt_misc.
-```
+  ```
+  mount: permission denied
+  update-binfmts: warning: Couldn't mount the binfmt_misc filesystem on /proc/sys/fs/binfmt_misc.
+  ```
 
-[You can safely ignore it for our purpose.](https://stackoverflow.com/questions/54951262/binfmt-misc-problems-in-ubuntu18-04-under-docker)
+  [You can safely ignore it for our purpose.](https://stackoverflow.com/questions/54951262/binfmt-misc-problems-in-ubuntu18-04-under-docker)
 
-4. Install node-gyp
-   `npm i node-gyp`
-5. Install llnode
-   `npm install llnode`
-6. Install gcore
-   `apt-get install gdb`
-7. Run `top` to identify the process number for your Node.js app.
-   `36 root 20 0 5700608 4.482g 29724 R 99.7 29.7 100:45.02 node /usr/src/a`
-   In this case, the process number is 36.
-8. Run gcore on the process.
-   `gcore 36`
-   You might see this error.
+- Install node-gyp
+  `npm i node-gyp`
+- Install llnode
+  `npm install llnode`
+- Install gcore
+  `apt-get install gdb`
+- Run `top` to identify the process number for your Node.js app.
+  `36 root 20 0 5700608 4.482g 29724 R 99.7 29.7 100:45.02 node /usr/src/a`
+  In this case, the process number is 36.
+- Run gcore on the process.
+  `gcore 36`
+  You might see this error.
 
-```
-ptrace: Operation not permitted.
-You can't do that without a process to debug.
-The program is not being run.
-gcore: failed to create core.36
-```
+  ```
+  ptrace: Operation not permitted.
+  You can't do that without a process to debug.
+  The program is not being run.
+  gcore: failed to create core.36
+  ```
 
-9. To solve the problem in 8, you need to add this to your docker-compose file.
+- To solve the problem in 8, you need to add this to your docker-compose file.
 
-```
-cap_add:
+  ```
+  cap_add:
   - SYS_PTRACE
-```
+  ```
 
-This is [a good blog post](https://jvns.ca/blog/2020/04/29/why-strace-doesnt-work-in-docker/) on why you need if you are curious.
+  This is [a good blog post](https://jvns.ca/blog/2020/04/29/why-strace-doesnt-work-in-docker/) on why you need if you are curious.
 
-10. Try step 8 again. gcore should work now.
-11. Inspect the core dump with llnode
-    `./node_modules/.bin/llnode node -c core.36`
+- Try step 8 again. gcore should work now.
+- Inspect the core dump with llnode
+  `./node_modules/.bin/llnode node -c core.36`
 
 The process of investigation goes something like this.
 
-1. Run `v8 findjsobjects` inside llnode to determine what object is causing the memory leak. You might be wondering how does one tell which object is causing the memory leak.
-   There are mainly two ways to nail down the object causing the memory leak.
+- Run `v8 findjsobjects` inside llnode to determine what object is causing the memory leak. You might be wondering how does one tell which object is causing the memory leak.
+  There are mainly two ways to nail down the object causing the memory leak.
 
-- When you have a rapidly growing memory leak, your heap dump presents an extreme version of [Pareto principle](https://en.wikipedia.org/wiki/Pareto_principle). The object will present itself to be occupying a vast majority of memory will be where you will want to investigate. Here's my result of `v8 findjsobjects` demonstrating this effect.
+  - When you have a rapidly growing memory leak, your heap dump presents an extreme version of [Pareto principle](https://en.wikipedia.org/wiki/Pareto_principle). The object will present itself to be occupying a vast majority of memory will be where you will want to investigate. Here's my result of `v8 findjsobjects` demonstrating this effect.
 
-```
-...
-Instances      Size    Name
-        109       3488 ContextifyScript
-        138       9936 I
-        187      13464 (ArrayBufferView)
-        213      11928 NodeError
-        220      17600 Layer
-        226      12656 Node
-        226      14456 Entry
-        231      11096 Source
-        273       6552 CallSite
-       3129     250240 Module
-      10930     961840 Tok
-      16150    1033480 Loc
-      30496     975872 (Array)
-     336951    8086824 RowDataPacket
-    8901702  286210248 Object
-   11881688    3728960 (String)
-```
+  ```
+  ...
+  Instances      Size    Name
+          109       3488 ContextifyScript
+          138       9936 I
+          187      13464 (ArrayBufferView)
+          213      11928 NodeError
+          220      17600 Layer
+          226      12656 Node
+          226      14456 Entry
+          231      11096 Source
+          273       6552 CallSite
+         3129     250240 Module
+        10930     961840 Tok
+        16150    1033480 Loc
+        30496     975872 (Array)
+       336951    8086824 RowDataPacket
+      8901702  286210248 Object
+     11881688    3728960 (String)
+  ```
 
 - When you have a much more slowly growing memory leak, you can't easily tell what
   JS object is responsible for the memory leak. In this case, you have to take 2 heap
   dumps over a period time and see if you see any growth in some JS objects. The
   object growing in the number of instances will be the cause of your memory leak.
 
-2. Generic JS primitives (String, Number, Array etc) and Objects are unactionable. Determine what is the JS
-   object that is not JS primitives and Objects which appears to be cause
-   of the memory leak? In my case, it is `RowDataPacket`.
+- Generic JS primitives (String, Number, Array etc) and Objects are unactionable. Determine what is the JS
+  object that is not JS primitives and Objects which appears to be cause
+  of the memory leak? In my case, it is `RowDataPacket`.
 
-3. By padding logs and metrics around suspicious code, determine where in your code
-   causes the `RowDataPacket` object to be created in such number.
+- By padding logs and metrics around suspicious code, determine where in your code
+  causes the `RowDataPacket` object to be created in such number.
 
 You've now found the cause of the memory leak. Unfortunately, finding the cause of the memory leak is not sufficient to resolving the actual memory leak issue.
 You still have to apply a remedy to mitigate the cause of the memory leak.

@@ -10,8 +10,8 @@
   <meta name="description" content="I was struck with a memory leak problem in Node.js application recently.It is not fun dealing with memory leak problems. Unlike other typical bugs youface ca...">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://localhost:4000/blog/2020/07/12/investigating-memory-leak/">
-  <link rel="alternate" type="application/rss+xml" title="Jason Kim" href="http://localhost:4000/feed.xml">
+  <link rel="canonical" href="http://jasonkim.ca/blog/2020/07/12/investigating-memory-leak/">
+  <link rel="alternate" type="application/rss+xml" title="Jason Kim" href="http://jasonkim.ca/feed.xml">
 </head>
 
   <script>
@@ -166,24 +166,23 @@ the memory issue.</p>
 <p>Here are the steps needed to prepare the tools needed to perform your investigation.
 I am running Node.js application inside Ubuntu 18 Docker container.</p>
 
-<ol>
+<ul>
   <li>Go inside the Docker container running the Node.js app.
 <code class="highlighter-rouge">docker exec -it app_name bash</code></li>
   <li>Update Ubuntu
 <code class="highlighter-rouge">apt-get update</code></li>
-  <li>Install lldb
-<code class="highlighter-rouge">apt install lldb-4.0 liblldb-4.0-dev</code></li>
-</ol>
+  <li>
+    <p>Install lldb
+<code class="highlighter-rouge">apt install lldb-4.0 liblldb-4.0-dev</code></p>
 
-<p>You might see an warning message that reads</p>
+    <p>You might see an warning message that reads</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mount: permission denied
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mount: permission denied
 update-binfmts: warning: Couldn't mount the binfmt_misc filesystem on /proc/sys/fs/binfmt_misc.
-</code></pre></div></div>
+</code></pre></div>    </div>
 
-<p><a href="https://stackoverflow.com/questions/54951262/binfmt-misc-problems-in-ubuntu18-04-under-docker">You can safely ignore it for our purpose.</a></p>
-
-<ol>
+    <p><a href="https://stackoverflow.com/questions/54951262/binfmt-misc-problems-in-ubuntu18-04-under-docker">You can safely ignore it for our purpose.</a></p>
+  </li>
   <li>Install node-gyp
 <code class="highlighter-rouge">npm i node-gyp</code></li>
   <li>Install llnode
@@ -193,45 +192,43 @@ update-binfmts: warning: Couldn't mount the binfmt_misc filesystem on /proc/sys/
   <li>Run <code class="highlighter-rouge">top</code> to identify the process number for your Node.js app.
 <code class="highlighter-rouge">36 root 20 0 5700608 4.482g 29724 R 99.7 29.7 100:45.02 node /usr/src/a</code>
 In this case, the process number is 36.</li>
-  <li>Run gcore on the process.
+  <li>
+    <p>Run gcore on the process.
 <code class="highlighter-rouge">gcore 36</code>
-You might see this error.</li>
-</ol>
+You might see this error.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ptrace: Operation not permitted.
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ptrace: Operation not permitted.
 You can't do that without a process to debug.
 The program is not being run.
 gcore: failed to create core.36
-</code></pre></div></div>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>To solve the problem in 8, you need to add this to your docker-compose file.</p>
 
-<ol>
-  <li>To solve the problem in 8, you need to add this to your docker-compose file.</li>
-</ol>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cap_add:
+- SYS_PTRACE
+</code></pre></div>    </div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cap_add:
-  - SYS_PTRACE
-</code></pre></div></div>
-
-<p>This is <a href="https://jvns.ca/blog/2020/04/29/why-strace-doesnt-work-in-docker/">a good blog post</a> on why you need if you are curious.</p>
-
-<ol>
+    <p>This is <a href="https://jvns.ca/blog/2020/04/29/why-strace-doesnt-work-in-docker/">a good blog post</a> on why you need if you are curious.</p>
+  </li>
   <li>Try step 8 again. gcore should work now.</li>
   <li>Inspect the core dump with llnode
 <code class="highlighter-rouge">./node_modules/.bin/llnode node -c core.36</code></li>
-</ol>
+</ul>
 
 <p>The process of investigation goes something like this.</p>
 
-<ol>
-  <li>Run <code class="highlighter-rouge">v8 findjsobjects</code> inside llnode to determine what object is causing the memory leak. You might be wondering how does one tell which object is causing the memory leak.
-There are mainly two ways to nail down the object causing the memory leak.</li>
-</ol>
-
 <ul>
-  <li>When you have a rapidly growing memory leak, your heap dump presents an extreme version of <a href="https://en.wikipedia.org/wiki/Pareto_principle">Pareto principle</a>. The object will present itself to be occupying a vast majority of memory will be where you will want to investigate. Here’s my result of <code class="highlighter-rouge">v8 findjsobjects</code> demonstrating this effect.</li>
-</ul>
+  <li>
+    <p>Run <code class="highlighter-rouge">v8 findjsobjects</code> inside llnode to determine what object is causing the memory leak. You might be wondering how does one tell which object is causing the memory leak.
+There are mainly two ways to nail down the object causing the memory leak.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>...
+    <ul>
+      <li>When you have a rapidly growing memory leak, your heap dump presents an extreme version of <a href="https://en.wikipedia.org/wiki/Pareto_principle">Pareto principle</a>. The object will present itself to be occupying a vast majority of memory will be where you will want to investigate. Here’s my result of <code class="highlighter-rouge">v8 findjsobjects</code> demonstrating this effect.</li>
+    </ul>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>...
 Instances      Size    Name
         109       3488 ContextifyScript
         138       9936 I
@@ -249,16 +246,14 @@ Instances      Size    Name
      336951    8086824 RowDataPacket
     8901702  286210248 Object
    11881688    3728960 (String)
-</code></pre></div></div>
-
-<ul>
-  <li>When you have a much more slowly growing memory leak, you can’t easily tell what
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>When you have a much more slowly growing memory leak, you can’t easily tell what
 JS object is responsible for the memory leak. In this case, you have to take 2 heap
 dumps over a period time and see if you see any growth in some JS objects. The
-object growing in the number of instances will be the cause of your memory leak.</li>
-</ul>
-
-<ol>
+object growing in the number of instances will be the cause of your memory leak.</p>
+  </li>
   <li>
     <p>Generic JS primitives (String, Number, Array etc) and Objects are unactionable. Determine what is the JS
 object that is not JS primitives and Objects which appears to be cause
@@ -268,7 +263,7 @@ of the memory leak? In my case, it is <code class="highlighter-rouge">RowDataPac
     <p>By padding logs and metrics around suspicious code, determine where in your code
 causes the <code class="highlighter-rouge">RowDataPacket</code> object to be created in such number.</p>
   </li>
-</ol>
+</ul>
 
 <p>You’ve now found the cause of the memory leak. Unfortunately, finding the cause of the memory leak is not sufficient to resolving the actual memory leak issue.
 You still have to apply a remedy to mitigate the cause of the memory leak.

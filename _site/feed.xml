@@ -4,10 +4,10 @@
     <title>Jason Kim</title>
     <description>Writings on software and other topics
 </description>
-    <link>http://localhost:4000/</link>
-    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 13 Jul 2020 23:47:18 -0700</pubDate>
-    <lastBuildDate>Mon, 13 Jul 2020 23:47:18 -0700</lastBuildDate>
+    <link>http://jasonkim.ca/</link>
+    <atom:link href="http://jasonkim.ca/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Tue, 14 Jul 2020 22:19:38 -0700</pubDate>
+    <lastBuildDate>Tue, 14 Jul 2020 22:19:38 -0700</lastBuildDate>
     <generator>Jekyll v3.6.2</generator>
     
       <item>
@@ -103,24 +103,23 @@ the memory issue.&lt;/p&gt;
 &lt;p&gt;Here are the steps needed to prepare the tools needed to perform your investigation.
 I am running Node.js application inside Ubuntu 18 Docker container.&lt;/p&gt;
 
-&lt;ol&gt;
+&lt;ul&gt;
   &lt;li&gt;Go inside the Docker container running the Node.js app.
 &lt;code class=&quot;highlighter-rouge&quot;&gt;docker exec -it app_name bash&lt;/code&gt;&lt;/li&gt;
   &lt;li&gt;Update Ubuntu
 &lt;code class=&quot;highlighter-rouge&quot;&gt;apt-get update&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;Install lldb
-&lt;code class=&quot;highlighter-rouge&quot;&gt;apt install lldb-4.0 liblldb-4.0-dev&lt;/code&gt;&lt;/li&gt;
-&lt;/ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Install lldb
+&lt;code class=&quot;highlighter-rouge&quot;&gt;apt install lldb-4.0 liblldb-4.0-dev&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;You might see an warning message that reads&lt;/p&gt;
+    &lt;p&gt;You might see an warning message that reads&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mount: permission denied
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mount: permission denied
 update-binfmts: warning: Couldn't mount the binfmt_misc filesystem on /proc/sys/fs/binfmt_misc.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://stackoverflow.com/questions/54951262/binfmt-misc-problems-in-ubuntu18-04-under-docker&quot;&gt;You can safely ignore it for our purpose.&lt;/a&gt;&lt;/p&gt;
-
-&lt;ol&gt;
+    &lt;p&gt;&lt;a href=&quot;https://stackoverflow.com/questions/54951262/binfmt-misc-problems-in-ubuntu18-04-under-docker&quot;&gt;You can safely ignore it for our purpose.&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
   &lt;li&gt;Install node-gyp
 &lt;code class=&quot;highlighter-rouge&quot;&gt;npm i node-gyp&lt;/code&gt;&lt;/li&gt;
   &lt;li&gt;Install llnode
@@ -130,45 +129,43 @@ update-binfmts: warning: Couldn't mount the binfmt_misc filesystem on /proc/sys/
   &lt;li&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;top&lt;/code&gt; to identify the process number for your Node.js app.
 &lt;code class=&quot;highlighter-rouge&quot;&gt;36 root 20 0 5700608 4.482g 29724 R 99.7 29.7 100:45.02 node /usr/src/a&lt;/code&gt;
 In this case, the process number is 36.&lt;/li&gt;
-  &lt;li&gt;Run gcore on the process.
+  &lt;li&gt;
+    &lt;p&gt;Run gcore on the process.
 &lt;code class=&quot;highlighter-rouge&quot;&gt;gcore 36&lt;/code&gt;
-You might see this error.&lt;/li&gt;
-&lt;/ol&gt;
+You might see this error.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ptrace: Operation not permitted.
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ptrace: Operation not permitted.
 You can't do that without a process to debug.
 The program is not being run.
 gcore: failed to create core.36
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;To solve the problem in 8, you need to add this to your docker-compose file.&lt;/p&gt;
 
-&lt;ol&gt;
-  &lt;li&gt;To solve the problem in 8, you need to add this to your docker-compose file.&lt;/li&gt;
-&lt;/ol&gt;
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cap_add:
+- SYS_PTRACE
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cap_add:
-  - SYS_PTRACE
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;This is &lt;a href=&quot;https://jvns.ca/blog/2020/04/29/why-strace-doesnt-work-in-docker/&quot;&gt;a good blog post&lt;/a&gt; on why you need if you are curious.&lt;/p&gt;
-
-&lt;ol&gt;
+    &lt;p&gt;This is &lt;a href=&quot;https://jvns.ca/blog/2020/04/29/why-strace-doesnt-work-in-docker/&quot;&gt;a good blog post&lt;/a&gt; on why you need if you are curious.&lt;/p&gt;
+  &lt;/li&gt;
   &lt;li&gt;Try step 8 again. gcore should work now.&lt;/li&gt;
   &lt;li&gt;Inspect the core dump with llnode
 &lt;code class=&quot;highlighter-rouge&quot;&gt;./node_modules/.bin/llnode node -c core.36&lt;/code&gt;&lt;/li&gt;
-&lt;/ol&gt;
+&lt;/ul&gt;
 
 &lt;p&gt;The process of investigation goes something like this.&lt;/p&gt;
 
-&lt;ol&gt;
-  &lt;li&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;v8 findjsobjects&lt;/code&gt; inside llnode to determine what object is causing the memory leak. You might be wondering how does one tell which object is causing the memory leak.
-There are mainly two ways to nail down the object causing the memory leak.&lt;/li&gt;
-&lt;/ol&gt;
-
 &lt;ul&gt;
-  &lt;li&gt;When you have a rapidly growing memory leak, your heap dump presents an extreme version of &lt;a href=&quot;https://en.wikipedia.org/wiki/Pareto_principle&quot;&gt;Pareto principle&lt;/a&gt;. The object will present itself to be occupying a vast majority of memory will be where you will want to investigate. Here’s my result of &lt;code class=&quot;highlighter-rouge&quot;&gt;v8 findjsobjects&lt;/code&gt; demonstrating this effect.&lt;/li&gt;
-&lt;/ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;v8 findjsobjects&lt;/code&gt; inside llnode to determine what object is causing the memory leak. You might be wondering how does one tell which object is causing the memory leak.
+There are mainly two ways to nail down the object causing the memory leak.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;...
+    &lt;ul&gt;
+      &lt;li&gt;When you have a rapidly growing memory leak, your heap dump presents an extreme version of &lt;a href=&quot;https://en.wikipedia.org/wiki/Pareto_principle&quot;&gt;Pareto principle&lt;/a&gt;. The object will present itself to be occupying a vast majority of memory will be where you will want to investigate. Here’s my result of &lt;code class=&quot;highlighter-rouge&quot;&gt;v8 findjsobjects&lt;/code&gt; demonstrating this effect.&lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;...
 Instances      Size    Name
         109       3488 ContextifyScript
         138       9936 I
@@ -186,16 +183,14 @@ Instances      Size    Name
      336951    8086824 RowDataPacket
     8901702  286210248 Object
    11881688    3728960 (String)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;When you have a much more slowly growing memory leak, you can’t easily tell what
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;When you have a much more slowly growing memory leak, you can’t easily tell what
 JS object is responsible for the memory leak. In this case, you have to take 2 heap
 dumps over a period time and see if you see any growth in some JS objects. The
-object growing in the number of instances will be the cause of your memory leak.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;ol&gt;
+object growing in the number of instances will be the cause of your memory leak.&lt;/p&gt;
+  &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;Generic JS primitives (String, Number, Array etc) and Objects are unactionable. Determine what is the JS
 object that is not JS primitives and Objects which appears to be cause
@@ -205,15 +200,15 @@ of the memory leak? In my case, it is &lt;code class=&quot;highlighter-rouge&quo
     &lt;p&gt;By padding logs and metrics around suspicious code, determine where in your code
 causes the &lt;code class=&quot;highlighter-rouge&quot;&gt;RowDataPacket&lt;/code&gt; object to be created in such number.&lt;/p&gt;
   &lt;/li&gt;
-&lt;/ol&gt;
+&lt;/ul&gt;
 
 &lt;p&gt;You’ve now found the cause of the memory leak. Unfortunately, finding the cause of the memory leak is not sufficient to resolving the actual memory leak issue.
 You still have to apply a remedy to mitigate the cause of the memory leak.
 And for that step, good luck.&lt;/p&gt;
 </description>
         <pubDate>Sun, 12 Jul 2020 21:17:11 -0700</pubDate>
-        <link>http://localhost:4000/blog/2020/07/12/investigating-memory-leak/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2020/07/12/investigating-memory-leak/</guid>
+        <link>http://jasonkim.ca/blog/2020/07/12/investigating-memory-leak/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2020/07/12/investigating-memory-leak/</guid>
         
         
         <category>node</category>
@@ -342,8 +337,8 @@ I knew that Node.js is great at creating nice web apps and services.
 I am glad to know that it is also a fine tool for data engineering.&lt;/p&gt;
 </description>
         <pubDate>Fri, 26 Apr 2019 21:17:11 -0700</pubDate>
-        <link>http://localhost:4000/blog/2019/04/26/data-engineering-with-nodejs/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2019/04/26/data-engineering-with-nodejs/</guid>
+        <link>http://jasonkim.ca/blog/2019/04/26/data-engineering-with-nodejs/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2019/04/26/data-engineering-with-nodejs/</guid>
         
         
         <category>node</category>
@@ -436,8 +431,8 @@ of promises using concurrency looks something like this.&lt;/p&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 </description>
         <pubDate>Thu, 14 Jun 2018 21:17:11 -0700</pubDate>
-        <link>http://localhost:4000/blog/2018/06/14/resolving-bluebird-promises-with-concurrency/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2018/06/14/resolving-bluebird-promises-with-concurrency/</guid>
+        <link>http://jasonkim.ca/blog/2018/06/14/resolving-bluebird-promises-with-concurrency/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2018/06/14/resolving-bluebird-promises-with-concurrency/</guid>
         
         
         <category>node</category>
@@ -593,8 +588,8 @@ shared his experience of using ActiveStorage on his projects with me.&lt;/p&gt;
 
 </description>
         <pubDate>Mon, 13 Nov 2017 11:17:11 -0800</pubDate>
-        <link>http://localhost:4000/blog/2017/11/13/Using-ActiveStorage-Today/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2017/11/13/Using-ActiveStorage-Today/</guid>
+        <link>http://jasonkim.ca/blog/2017/11/13/Using-ActiveStorage-Today/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2017/11/13/Using-ActiveStorage-Today/</guid>
         
         
         <category>ruby on rails</category>
@@ -718,8 +713,8 @@ workflow.&lt;/p&gt;
 
 </description>
         <pubDate>Sun, 05 Nov 2017 13:40:28 -0800</pubDate>
-        <link>http://localhost:4000/blog/2017/11/05/typescript/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2017/11/05/typescript/</guid>
+        <link>http://jasonkim.ca/blog/2017/11/05/typescript/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2017/11/05/typescript/</guid>
         
         
         <category>typescript</category>
@@ -805,8 +800,8 @@ version to causes error.&lt;/p&gt;
 
 </description>
         <pubDate>Sun, 28 May 2017 13:00:00 -0700</pubDate>
-        <link>http://localhost:4000/blog/2017/05/28/upgrading-ember/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2017/05/28/upgrading-ember/</guid>
+        <link>http://jasonkim.ca/blog/2017/05/28/upgrading-ember/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2017/05/28/upgrading-ember/</guid>
         
         
         <category>software development</category>
@@ -861,8 +856,8 @@ games at $616.97 was totally worth it.&lt;/p&gt;
 
 </description>
         <pubDate>Sun, 01 Jan 2017 13:56:59 -0800</pubDate>
-        <link>http://localhost:4000/blog/2017/01/01/my-macbook-pro-alternative/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2017/01/01/my-macbook-pro-alternative/</guid>
+        <link>http://jasonkim.ca/blog/2017/01/01/my-macbook-pro-alternative/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2017/01/01/my-macbook-pro-alternative/</guid>
         
         
         <category>software development</category>
@@ -911,8 +906,8 @@ is aligned with the product vision, team vision and the company
 vision.&lt;/p&gt;
 </description>
         <pubDate>Sun, 13 Nov 2016 08:45:58 -0800</pubDate>
-        <link>http://localhost:4000/blog/2016/11/13/starting-a-new-job-or-transitioning-to-a-new-team/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2016/11/13/starting-a-new-job-or-transitioning-to-a-new-team/</guid>
+        <link>http://jasonkim.ca/blog/2016/11/13/starting-a-new-job-or-transitioning-to-a-new-team/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2016/11/13/starting-a-new-job-or-transitioning-to-a-new-team/</guid>
         
         
         <category>career</category>
@@ -983,8 +978,8 @@ on developers usually have more correct opinions
 about building API.&lt;/p&gt;
 </description>
         <pubDate>Sun, 09 Oct 2016 09:45:58 -0700</pubDate>
-        <link>http://localhost:4000/blog/2016/10/09/easily-overlooked-parts-on-developing-rest-api/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2016/10/09/easily-overlooked-parts-on-developing-rest-api/</guid>
+        <link>http://jasonkim.ca/blog/2016/10/09/easily-overlooked-parts-on-developing-rest-api/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2016/10/09/easily-overlooked-parts-on-developing-rest-api/</guid>
         
         
         <category>api</category>
@@ -1048,8 +1043,8 @@ serve a large traffic.&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Thu, 21 Jul 2016 21:45:58 -0700</pubDate>
-        <link>http://localhost:4000/blog/2016/07/21/benchmarking-web-frameworks/</link>
-        <guid isPermaLink="true">http://localhost:4000/blog/2016/07/21/benchmarking-web-frameworks/</guid>
+        <link>http://jasonkim.ca/blog/2016/07/21/benchmarking-web-frameworks/</link>
+        <guid isPermaLink="true">http://jasonkim.ca/blog/2016/07/21/benchmarking-web-frameworks/</guid>
         
         
         <category>node.js</category>
