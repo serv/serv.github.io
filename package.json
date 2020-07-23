@@ -13,6 +13,8 @@
     "react-dom": "16.13.1"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^8.0.1",
     "postcss-preset-env": "^6.7.0",
     "tailwindcss": "^1.5.2"
   }
