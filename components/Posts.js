@@ -1,5 +1,6 @@
 import React from "react";
 import moment from "moment";
+import Link from "next/link";
 
 export default function Posts({ posts }) {
   const result = [];
@@ -11,7 +12,11 @@ export default function Posts({ posts }) {
     result.push(
       <div key={i} className="flex pb-2">
         <div className="flex-initial text-gray-600 pr-4">{createdAt}</div>
-        <div className="flex-initial">{post.title}</div>
+        <div className="flex-initial">
+          <Link as={`/posts/${post.slug}`} href="/posts/[slug]">
+            <a className="hover:underline">{post.title}</a>
+          </Link>
+        </div>
       </div>
     );
   }
