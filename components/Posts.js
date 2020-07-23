@@ -1,15 +1,17 @@
 import React from "react";
+import moment from "moment";
 
 export default function Posts({ posts }) {
   const result = [];
 
   for (let i = 0; i < posts.length; i++) {
     const post = posts[i];
+    const createdAt = moment(post.createdAt, "YYYY-MM-DD").format("YYYY-MM-DD");
 
     result.push(
-      <div key={i}>
-        <div className="post-created-at">{post.createdAt}</div>
-        <div className="post-title">{post.title}</div>
+      <div key={i} className="flex pb-2">
+        <div className="flex-initial text-gray-600 pr-4">{createdAt}</div>
+        <div className="flex-initial">{post.title}</div>
       </div>
     );
   }

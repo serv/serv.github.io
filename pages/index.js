@@ -10,7 +10,7 @@ export default function Home({ posts }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <header>
+      <header className="py-8">
         <h1>Jason Kim's Blog</h1>
       </header>
 
