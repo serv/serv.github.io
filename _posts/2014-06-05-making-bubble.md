@@ -3,7 +3,7 @@ layout: post
 title: "Making Bubble"
 date: 2014-06-05 01:21:06 -0700
 comments: true
-categories: mobile app
+categories: ["mobile app"]
 ---
 
 ##tl;dr
@@ -18,7 +18,7 @@ HCDE Capstone & Research Showcase].
 ---
 
 I worked with 4 masters students from UW's HCD program to build a photo sharing
-chat app with a *shocking* twist. The twist is that the app does not need
+chat app with a _shocking_ twist. The twist is that the app does not need
 internet connection to work. The app is called [Bubble](http://hcdeevee.tumblr.com/).
 
 We started working together in January 2014. We began

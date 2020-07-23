@@ -3,7 +3,7 @@ layout: post
 title: "Metaprogramming in Ruby should be avoided if possible"
 date: 2015-06-06 10:36:48 -0700
 comments: true
-categories: ruby
+categories: ["ruby"]
 ---
 
 This isn't the first time [someone has considered metaprogramming in ruby to be harmful](https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=metaprogramming%20harmful),

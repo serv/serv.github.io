@@ -3,7 +3,7 @@ layout: post
 title: "Battle Technical Assumptions"
 date: 2016-06-01 22:30:56 -0700
 comments: true
-categories: 'software development'
+categories: ["software development"]
 ---
 
 I was burned pretty bad yesterday. I’ve told myself many times to battle assumptions about feature and product requirements, and that product managers cannot give 100% oversight on what I am working on. Now I am going to add another kind of assumption I will question every time. The kind I am talking about is a technical assumption.

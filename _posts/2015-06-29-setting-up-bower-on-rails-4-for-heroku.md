@@ -3,7 +3,7 @@ layout: post
 title: "Setting up Bower on Rails 4 for Heroku"
 date: 2015-06-29 10:51:56 -0700
 comments: true
-categories: rails
+categories: ["rails"]
 ---
 
 We know Bower is great for managing frontend packages such as jQuery and Bootstrap.
@@ -53,7 +53,7 @@ Create a file called `.bowerrc`, and add
 
 {% highlight json %}
 {
-  "directory": "vendor/assets/bower_components"
+"directory": "vendor/assets/bower_components"
 }
 {% endhighlight %}
 
@@ -80,7 +80,7 @@ If you wanna start using Bootstrap for example, in the `app/assets/stylesheets/a
 you can add:
 
 {% highlight js %}
-*= require bootstrap/dist/css/bootstrap
+\*= require bootstrap/dist/css/bootstrap
 {% endhighlight %}
 
 And in `app/assets/javascript/application.js`,
@@ -117,13 +117,13 @@ In the `package.json`, add a postinstall script. It should look like this.
 
 {% highlight json %}
 {
-  ...
+...
 
-  "scripts": {
-    "postinstall": "./node_modules/bower/bin/bower install"
-  }
+"scripts": {
+"postinstall": "./node_modules/bower/bin/bower install"
+}
 
-  ...
+...
 }
 {% endhighlight %}
 

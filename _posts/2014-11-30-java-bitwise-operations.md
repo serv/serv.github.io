@@ -3,7 +3,7 @@ layout: post
 title: "Java Bitwise Operations"
 date: 2014-11-30 11:43:47 -0800
 comments: true
-categories: 'java'
+categories: ["java"]
 ---
 
 ## Bitwise operators
@@ -40,8 +40,8 @@ From [Java: A Beginner's Guide](http://www.amazon.com/Java-Beginners-Guide-Herbe
 
 {% highlight java %}
 public class UpCase {
-  public static void main(String args[]) {
-    char ch;
+public static void main(String args[]) {
+char ch;
 
     for(int i=0; i < 10; i++) {
       ch = (char) ('a' + i);
@@ -51,7 +51,8 @@ public class UpCase {
 
       System.out.print(ch + " ");
     }
-  }
+
+}
 }
 {% endhighlight %}
 
@@ -61,7 +62,7 @@ The value 65,503 used in the AND statement is the decimal representation of 1111
 
 {% highlight java %}
 for(int t = 128; t > 0; t = t/2) {
-  // ...
+// ...
 }
 {% endhighlight %}
 
@@ -69,8 +70,8 @@ for(int t = 128; t > 0; t = t/2) {
 
 {% highlight java %}
 public class LowCase {
-  public static void main(String args[]) {
-    char ch;
+public static void main(String args[]) {
+char ch;
 
     for(int i = 0; i < 10; i++) {
       ch = (char) ('A' + i);
@@ -80,7 +81,8 @@ public class LowCase {
 
       System.out.print(ch + " ");
     }
-  }
+
+}
 }
 {% endhighlight %}
 
