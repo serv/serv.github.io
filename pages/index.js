@@ -14,11 +14,18 @@ export default function Home({ posts }) {
         <h1>Jason Kim's Blog</h1>
       </header>
 
-      <main className="main">
+      <main className="main pb-8">
         <Posts posts={posts} />
       </main>
 
-      <footer></footer>
+      <footer className="pb-10">
+        <div className="flex">
+          <div className="flex-initial pr-4">Personal Site</div>
+          <div className="flex-initial pr-4">Github</div>
+          <div className="flex-initial pr-4">Twitter</div>
+          <div className="flex-initial pr-4">LinkedIn</div>
+        </div>
+      </footer>
     </div>
   );
 }
