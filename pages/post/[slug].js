@@ -1,10 +1,13 @@
 import Head from "next/head";
+import moment from "moment";
 import Post from "../../lib/post";
 import markdownToHtml from "../../lib/markdownToHtml";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 
 export default function PostPage({ post }) {
+  const createdAt = moment(post.createdAt, "YYYY-MM-DD").format("YYYY-MM-DD");
+
   return (
     <div className="container mx-auto">
       <Head>
@@ -15,8 +18,8 @@ export default function PostPage({ post }) {
       <Header />
 
       <main className="main pb-8">
-        <div>{post.title}</div>
-        <div>{post.createdAt}</div>
+        <div className="pb-2 text-3xl font-bold">{post.title}</div>
+        <div className="pb-8 text-sm text-gray-600">{createdAt}</div>
         <div
           className="markdown"
           dangerouslySetInnerHTML={{ __html: post.content }}
