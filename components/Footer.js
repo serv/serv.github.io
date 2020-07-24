@@ -16,8 +16,7 @@ export default function Footer() {
       href: "https://www.linkedin.com/in/jason-kim-a2b97b6/",
       text: "Linkedin"
     },
-    { href: "https://twitter.com/jasoki", text: "Twitter" },
-    { href: "https://google.com", text: "RSS" }
+    { href: "https://twitter.com/jasoki", text: "Twitter" }
   ];
 
   const linksComponents = [];
