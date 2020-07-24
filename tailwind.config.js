@@ -9,9 +9,9 @@ module.exports = {
         xl: "5rem"
       }
     },
-    fontFamily: {},
     extend: {}
   },
   variants: {},
-  plugins: []
+  // plugins: [require("postcss-import"), require("tailwindcss-markdown")]
+  plugins: [require("postcss-import")]
 };

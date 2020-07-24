@@ -17,7 +17,10 @@ export default function PostPage({ post }) {
       <main className="main pb-8">
         <div>{post.title}</div>
         <div>{post.createdAt}</div>
-        <div dangerouslySetInnerHTML={{ __html: post.content }} />
+        <div
+          className="markdown"
+          dangerouslySetInnerHTML={{ __html: post.content }}
+        />
       </main>
 
       <footer className="pb-10">
