@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Posts from "../components/Posts";
 import Post from "../lib/post.js";
+import Header from "../components/Header";
 
 export default function Home({ posts }) {
   return (
@@ -10,9 +11,7 @@ export default function Home({ posts }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <header className="py-8">
-        <h1>Jason Kim's Blog</h1>
-      </header>
+      <Header />
 
       <main className="main pb-8">
         <Posts posts={posts} />

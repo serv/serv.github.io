@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Post from "../../lib/post";
 import markdownToHtml from "../../lib/markdownToHtml";
+import Header from "../../components/Header";
 
 export default function PostPage({ post }) {
   return (
@@ -10,9 +11,7 @@ export default function PostPage({ post }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <header className="py-8">
-        <h1>Jason Kim's Blog</h1>
-      </header>
+      <Header />
 
       <main className="main pb-8">
         <div>{post.title}</div>
