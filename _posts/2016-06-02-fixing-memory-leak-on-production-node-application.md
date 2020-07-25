@@ -3,7 +3,7 @@ layout: post
 title: "Fixing Memory Leak on Production Node.js Application"
 date: 2016-06-02 22:30:56 -0700
 comments: true
-categories: "node"
+categories: ["node"]
 ---
 
 The last few days at work were rough.
@@ -66,21 +66,21 @@ Here is the memory dump of the production server
 at around 30% memory usage.
 
 {% highlight text %}
-73ce2207ea9     4643        2 Arguments: 0, length
-101b5ab4f71     5519        4 Object: albumId, albumNames, ...
- 9719767799     6070        2 Object: localeCode, value
- 971977c371     6966        1 Object: entry
-1102bfc1dc31     8775        2 Object: id, genreIds
- 971977b021     9086        2 Object: ids, href
- 971973e051     9430        3 Array
-    3015e01    16203        0 Object
- 971974c9c9    19854        1 Object: nr_exclusive_duration_millis
- 9719710199    19917       13 TraceSegment: name, transaction, ...
- 971971cb11    20186        7 Timer: state, touched, duration, ...
-    342d8d9    49769        0 Array
- 971971cbb9    59489        1 Array
- 971970f1c9    71743        2 Array
-     OBJECT #OBJECTS   #PROPS CONSTRUCTOR: PROPS
+73ce2207ea9 4643 2 Arguments: 0, length
+101b5ab4f71 5519 4 Object: albumId, albumNames, ...
+9719767799 6070 2 Object: localeCode, value
+971977c371 6966 1 Object: entry
+1102bfc1dc31 8775 2 Object: id, genreIds
+971977b021 9086 2 Object: ids, href
+971973e051 9430 3 Array
+3015e01 16203 0 Object
+971974c9c9 19854 1 Object: nr_exclusive_duration_millis
+9719710199 19917 13 TraceSegment: name, transaction, ...
+971971cb11 20186 7 Timer: state, touched, duration, ...
+342d8d9 49769 0 Array
+971971cbb9 59489 1 Array
+971970f1c9 71743 2 Array
+OBJECT #OBJECTS #PROPS CONSTRUCTOR: PROPS
 {% endhighlight %}
 
 And here is the memory dump of the production
@@ -88,24 +88,24 @@ server at around 80% around 4 hours after
 the server restart.
 
 {% highlight text %}
-1102bfc1dc31   8775        2 Object: id, genreIds
+1102bfc1dc31 8775 2 Object: id, genreIds
 
 ...
 
-110879a2c9    14099        6 ExponentialBackoffStrategy: ...
-1108779561    15593        3 Array
-45357fdf31    17059        2 Object: ids, href
-   3015db1    34680        0 Object
-110875b221    35287        4 Object: albumId, albumNames, ...
-110875b2c9    38401        1 Object: entry
-110875aff1    38481        2 Object: localeCode, value
-1108708d51   198161        0 Array
-1108706ae1   202984        1 Array
-1108706a81   206039        1 Object: nr_exclusive_duration_millis
-11087046d9   209896       13 TraceSegment: name, transaction, ...
-1108704801   223481        7 Timer: state, touched, duration, ...
-1108706aa1   507224        2 Array
-    OBJECT #OBJECTS   #PROPS CONSTRUCTOR: PROPS
+110879a2c9 14099 6 ExponentialBackoffStrategy: ...
+1108779561 15593 3 Array
+45357fdf31 17059 2 Object: ids, href
+3015db1 34680 0 Object
+110875b221 35287 4 Object: albumId, albumNames, ...
+110875b2c9 38401 1 Object: entry
+110875aff1 38481 2 Object: localeCode, value
+1108708d51 198161 0 Array
+1108706ae1 202984 1 Array
+1108706a81 206039 1 Object: nr_exclusive_duration_millis
+11087046d9 209896 13 TraceSegment: name, transaction, ...
+1108704801 223481 7 Timer: state, touched, duration, ...
+1108706aa1 507224 2 Array
+OBJECT #OBJECTS #PROPS CONSTRUCTOR: PROPS
 {% endhighlight %}
 
 The most notable cause of the memory increase is
