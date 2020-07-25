@@ -1,0 +1,131 @@
+<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width"/><meta charSet="utf-8"/><title>Jason Kim&#x27;s Blog</title><link rel="icon" href="/favicon.ico"/><meta name="next-head-count" content="4"/><link rel="preload" href="/_next/static/css/7f16bb2b95cec477ee80.css" as="style"/><link rel="stylesheet" href="/_next/static/css/7f16bb2b95cec477ee80.css"/><link rel="preload" href="/_next/static/css/72a9312d0849376bb975.css" as="style"/><link rel="stylesheet" href="/_next/static/css/72a9312d0849376bb975.css"/><link rel="preload" href="/_next/static/mRk8qBlWrX48XHyMm3dSY/pages/_app.js" as="script"/><link rel="preload" href="/_next/static/mRk8qBlWrX48XHyMm3dSY/pages/post/%5Bslug%5D.js" as="script"/><link rel="preload" href="/_next/static/runtime/webpack-c212667a5f965e81e004.js" as="script"/><link rel="preload" href="/_next/static/chunks/framework.e84fa698c7ee940652bd.js" as="script"/><link rel="preload" href="/_next/static/chunks/bb84c97a.4c419f4b16a96bca7647.js" as="script"/><link rel="preload" href="/_next/static/chunks/commons.212dae668aecc379ad96.js" as="script"/><link rel="preload" href="/_next/static/runtime/main-c20c68f2e453b0454f3a.js" as="script"/><link rel="preload" href="/_next/static/chunks/75fc9c18.cbe862d05f67479ee6e5.js" as="script"/><link rel="preload" href="/_next/static/chunks/61530eeebf5e62f5b791e0d71d557519d747ffcd.87881b87466783f8447d.js" as="script"/></head><body><div id="__next"><div class="container mx-auto"><header class="py-8"><a class="hover:underline" href="/"><h1>Jason Kim&#x27;s Blog</h1></a></header><main class="main pb-8"><div class="pb-2 text-3xl font-bold">Fixing Memory Leak on Production Node.js Application</div><div class="pb-8 text-sm text-gray-600">2016-06-02</div><div class="markdown"><p>The last few days at work were rough.
+My team was intensely focused on
+preparing the production environment to be stable.
+We've been having some
+serious issues on the production environment.
+One of the most serious production issues was a
+nasty memory leak.</p>
+<p><img src="http://i.imgur.com/lEnDrWZ.png"></p>
+<p>The graph above displays the memory usage of
+12 node applications on our production
+environment. The y-axis shows the memory usage
+in percentage and the x-axis shows the time
+span of 7 days. This narrow sawtooth
+pattern on memory usage is extremely bad.
+As you can see, all 12 servers
+are accumulating usage in memory rapidly.
+As a remedy for the memory leak, we had to
+periodically restart our servers. This was less
+than ideal, but because we had so many other
+really high priority items last few weeks, we
+just had to bite our tongue and suck it up.
+However, the frequency at which we had to
+restart our server started to increase.
+We had to restart our servers every few days,
+then every day, then it came to a point where we
+were restarting our servers every 4 to 5 hours.
+Thank god we have a globally distributed team
+(Croatia, and Argentina), it could've been a
+lot tougher without having team members in other
+timezones. I can't
+emphasize this point enough, and I will take
+another opportunity to praise having globally
+distributed software development team in another
+post in the future.</p>
+<p>After some <a href="http://blog.jasonkim.ca/blog/2016/06/02/battle-technical-assumptions/">pitfalls</a>, we fixed the
+memory leak. As you can see below, the overall
+memory usage stays flat after 13:30 PM after our
+memory leak fix was applied.</p>
+<p><img src="http://i.imgur.com/JnCgcoi.png"></p>
+<p>We came up with several different strategies to
+fix the memory issue, but the working solution
+came down to comparing two memory dumps at
+different times and comparing their content.
+I used <a href="http://man7.org/linux/man-pages/man1/gcore.1.html">gcore</a> on a production server to gather a
+memory dump soon after the server restart when
+the memory usage is around 30%. After around
+3 hours when the memory usage for the server
+starts to hover around 60%, I took another memory
+dump. I used <a href="https://docs.oracle.com/cd/E18752_01/html/816-5041/chapter-8.html">mdb</a> on a local VM running
+Solaris 11 to analyze the two memory dumps.</p>
+<p>Here is the memory dump of the production server
+at around 30% memory usage.</p>
+<p>{% highlight text %}
+73ce2207ea9 4643 2 Arguments: 0, length
+101b5ab4f71 5519 4 Object: albumId, albumNames, ...
+9719767799 6070 2 Object: localeCode, value
+971977c371 6966 1 Object: entry
+1102bfc1dc31 8775 2 Object: id, genreIds
+971977b021 9086 2 Object: ids, href
+971973e051 9430 3 Array
+3015e01 16203 0 Object
+971974c9c9 19854 1 Object: nr_exclusive_duration_millis
+9719710199 19917 13 TraceSegment: name, transaction, ...
+971971cb11 20186 7 Timer: state, touched, duration, ...
+342d8d9 49769 0 Array
+971971cbb9 59489 1 Array
+971970f1c9 71743 2 Array
+OBJECT #OBJECTS #PROPS CONSTRUCTOR: PROPS
+{% endhighlight %}</p>
+<p>And here is the memory dump of the production
+server at around 80% around 4 hours after
+the server restart.</p>
+<p>{% highlight text %}
+1102bfc1dc31 8775 2 Object: id, genreIds</p>
+<p>...</p>
+<p>110879a2c9 14099 6 ExponentialBackoffStrategy: ...
+1108779561 15593 3 Array
+45357fdf31 17059 2 Object: ids, href
+3015db1 34680 0 Object
+110875b221 35287 4 Object: albumId, albumNames, ...
+110875b2c9 38401 1 Object: entry
+110875aff1 38481 2 Object: localeCode, value
+1108708d51 198161 0 Array
+1108706ae1 202984 1 Array
+1108706a81 206039 1 Object: nr_exclusive_duration_millis
+11087046d9 209896 13 TraceSegment: name, transaction, ...
+1108704801 223481 7 Timer: state, touched, duration, ...
+1108706aa1 507224 2 Array
+OBJECT #OBJECTS #PROPS CONSTRUCTOR: PROPS
+{% endhighlight %}</p>
+<p>The most notable cause of the memory increase is
+<code>TraceSegment: name, transaction, ...</code>.
+You can see that the number of <code>TraceSegment</code>
+object count increased by 10 folds going
+from 19917 to 209896. You can also see some
+other object such as <code>Timer</code> and <code>Array</code>
+increasing. This is because those are properties
+of the <code>TraceSegment</code> object.
+Contrast this number with the genre-tags object
+that stayed exactly the same
+<code>2 Object: id, genreIds</code> at 8775. That object
+is a json file parsed into memory at startup
+of the app and it does not increase. This
+suggests to me that the memory dump is indeed
+accurate, and Node retains memory steady on
+correctly coded objects.</p>
+<p>It turns out <code>TraceSegment</code> objects are created
+by <a href="https://github.com/newrelic/node-newrelic/blob/1e7bbbaf34a15f0bb35aca63b0d8a3cfa2669d27/lib/transaction/trace/segment.js">NewRelic</a>. The fact that
+I wasn't able to recreate the severity of
+memory leak convincingly on the development
+environment from previous attempts also tells
+me that the memory leak was caused by something
+happening on the production environment.</p>
+<p>We get some benefits of having NewRelic monitoring, but disabling NewRelic on
+production was no-brainer at this point.
+We had to do it. We all acknowledged that
+NewRelic is not the initial cause of the memory leak.
+There is still something in our code that is
+behaving naughtily with NewRelic, but we
+got to put our the damn fire on production
+first. So we did it. We disabled NewRelic
+on production and the memory usage stopped
+climbing and it remains very steady for now.</p>
+<p>I want to thank <a href="https://yunong.io/2015/11/13/debugging-node-js-in-production/">Yunong Xiao for sharing
+Netflix's experience on debugging Node.js in
+production</a>. It informed me about
+useful tools in the wild and taught me how
+I can use those tools to find the cause
+of the memory leak. I also want to thank
+<a href="http://bryce.is/writing/code/mdb_v8/vm/virtualbox/omnios/2016/02/06/mdbv8-getting-started.html">Bryce Neal for writing a detailed tutorial on setting up Solaris to use MDB</a>.</p>
+</div></main><footer class="pb-10"><div class="flex"><a class="flex-initial pr-4 hover:underline" href="http://jasonkim.ca/">Personal Site</a><a class="flex-initial pr-4 hover:underline" href="https://github.com/serv">Github</a><a class="flex-initial pr-4 hover:underline" href="https://www.linkedin.com/in/jason-kim-a2b97b6/">Linkedin</a><a class="flex-initial pr-4 hover:underline" href="https://twitter.com/jasoki">Twitter</a></div></footer></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"post":{"title":"Fixing Memory Leak on Production Node.js Application","createdAt":"2016-06-02T00:00:00-07:00","categories":["node"],"slug":"fixing-memory-leak-on-production-nodejs-application","fullPath":"/home/jason/projects/websites/serv.github.io/_posts/2016-06-02-fixing-memory-leak-on-production-node-application.md","content":"\u003cp\u003eThe last few days at work were rough.\nMy team was intensely focused on\npreparing the production environment to be stable.\nWe've been having some\nserious issues on the production environment.\nOne of the most serious production issues was a\nnasty memory leak.\u003c/p\u003e\n\u003cp\u003e\u003cimg src=\"http://i.imgur.com/lEnDrWZ.png\"\u003e\u003c/p\u003e\n\u003cp\u003eThe graph above displays the memory usage of\n12 node applications on our production\nenvironment. The y-axis shows the memory usage\nin percentage and the x-axis shows the time\nspan of 7 days. This narrow sawtooth\npattern on memory usage is extremely bad.\nAs you can see, all 12 servers\nare accumulating usage in memory rapidly.\nAs a remedy for the memory leak, we had to\nperiodically restart our servers. This was less\nthan ideal, but because we had so many other\nreally high priority items last few weeks, we\njust had to bite our tongue and suck it up.\nHowever, the frequency at which we had to\nrestart our server started to increase.\nWe had to restart our servers every few days,\nthen every day, then it came to a point where we\nwere restarting our servers every 4 to 5 hours.\nThank god we have a globally distributed team\n(Croatia, and Argentina), it could've been a\nlot tougher without having team members in other\ntimezones. I can't\nemphasize this point enough, and I will take\nanother opportunity to praise having globally\ndistributed software development team in another\npost in the future.\u003c/p\u003e\n\u003cp\u003eAfter some \u003ca href=\"http://blog.jasonkim.ca/blog/2016/06/02/battle-technical-assumptions/\"\u003epitfalls\u003c/a\u003e, we fixed the\nmemory leak. As you can see below, the overall\nmemory usage stays flat after 13:30 PM after our\nmemory leak fix was applied.\u003c/p\u003e\n\u003cp\u003e\u003cimg src=\"http://i.imgur.com/JnCgcoi.png\"\u003e\u003c/p\u003e\n\u003cp\u003eWe came up with several different strategies to\nfix the memory issue, but the working solution\ncame down to comparing two memory dumps at\ndifferent times and comparing their content.\nI used \u003ca href=\"http://man7.org/linux/man-pages/man1/gcore.1.html\"\u003egcore\u003c/a\u003e on a production server to gather a\nmemory dump soon after the server restart when\nthe memory usage is around 30%. After around\n3 hours when the memory usage for the server\nstarts to hover around 60%, I took another memory\ndump. I used \u003ca href=\"https://docs.oracle.com/cd/E18752_01/html/816-5041/chapter-8.html\"\u003emdb\u003c/a\u003e on a local VM running\nSolaris 11 to analyze the two memory dumps.\u003c/p\u003e\n\u003cp\u003eHere is the memory dump of the production server\nat around 30% memory usage.\u003c/p\u003e\n\u003cp\u003e{% highlight text %}\n73ce2207ea9 4643 2 Arguments: 0, length\n101b5ab4f71 5519 4 Object: albumId, albumNames, ...\n9719767799 6070 2 Object: localeCode, value\n971977c371 6966 1 Object: entry\n1102bfc1dc31 8775 2 Object: id, genreIds\n971977b021 9086 2 Object: ids, href\n971973e051 9430 3 Array\n3015e01 16203 0 Object\n971974c9c9 19854 1 Object: nr_exclusive_duration_millis\n9719710199 19917 13 TraceSegment: name, transaction, ...\n971971cb11 20186 7 Timer: state, touched, duration, ...\n342d8d9 49769 0 Array\n971971cbb9 59489 1 Array\n971970f1c9 71743 2 Array\nOBJECT #OBJECTS #PROPS CONSTRUCTOR: PROPS\n{% endhighlight %}\u003c/p\u003e\n\u003cp\u003eAnd here is the memory dump of the production\nserver at around 80% around 4 hours after\nthe server restart.\u003c/p\u003e\n\u003cp\u003e{% highlight text %}\n1102bfc1dc31 8775 2 Object: id, genreIds\u003c/p\u003e\n\u003cp\u003e...\u003c/p\u003e\n\u003cp\u003e110879a2c9 14099 6 ExponentialBackoffStrategy: ...\n1108779561 15593 3 Array\n45357fdf31 17059 2 Object: ids, href\n3015db1 34680 0 Object\n110875b221 35287 4 Object: albumId, albumNames, ...\n110875b2c9 38401 1 Object: entry\n110875aff1 38481 2 Object: localeCode, value\n1108708d51 198161 0 Array\n1108706ae1 202984 1 Array\n1108706a81 206039 1 Object: nr_exclusive_duration_millis\n11087046d9 209896 13 TraceSegment: name, transaction, ...\n1108704801 223481 7 Timer: state, touched, duration, ...\n1108706aa1 507224 2 Array\nOBJECT #OBJECTS #PROPS CONSTRUCTOR: PROPS\n{% endhighlight %}\u003c/p\u003e\n\u003cp\u003eThe most notable cause of the memory increase is\n\u003ccode\u003eTraceSegment: name, transaction, ...\u003c/code\u003e.\nYou can see that the number of \u003ccode\u003eTraceSegment\u003c/code\u003e\nobject count increased by 10 folds going\nfrom 19917 to 209896. You can also see some\nother object such as \u003ccode\u003eTimer\u003c/code\u003e and \u003ccode\u003eArray\u003c/code\u003e\nincreasing. This is because those are properties\nof the \u003ccode\u003eTraceSegment\u003c/code\u003e object.\nContrast this number with the genre-tags object\nthat stayed exactly the same\n\u003ccode\u003e2 Object: id, genreIds\u003c/code\u003e at 8775. That object\nis a json file parsed into memory at startup\nof the app and it does not increase. This\nsuggests to me that the memory dump is indeed\naccurate, and Node retains memory steady on\ncorrectly coded objects.\u003c/p\u003e\n\u003cp\u003eIt turns out \u003ccode\u003eTraceSegment\u003c/code\u003e objects are created\nby \u003ca href=\"https://github.com/newrelic/node-newrelic/blob/1e7bbbaf34a15f0bb35aca63b0d8a3cfa2669d27/lib/transaction/trace/segment.js\"\u003eNewRelic\u003c/a\u003e. The fact that\nI wasn't able to recreate the severity of\nmemory leak convincingly on the development\nenvironment from previous attempts also tells\nme that the memory leak was caused by something\nhappening on the production environment.\u003c/p\u003e\n\u003cp\u003eWe get some benefits of having NewRelic monitoring, but disabling NewRelic on\nproduction was no-brainer at this point.\nWe had to do it. We all acknowledged that\nNewRelic is not the initial cause of the memory leak.\nThere is still something in our code that is\nbehaving naughtily with NewRelic, but we\ngot to put our the damn fire on production\nfirst. So we did it. We disabled NewRelic\non production and the memory usage stopped\nclimbing and it remains very steady for now.\u003c/p\u003e\n\u003cp\u003eI want to thank \u003ca href=\"https://yunong.io/2015/11/13/debugging-node-js-in-production/\"\u003eYunong Xiao for sharing\nNetflix's experience on debugging Node.js in\nproduction\u003c/a\u003e. It informed me about\nuseful tools in the wild and taught me how\nI can use those tools to find the cause\nof the memory leak. I also want to thank\n\u003ca href=\"http://bryce.is/writing/code/mdb_v8/vm/virtualbox/omnios/2016/02/06/mdbv8-getting-started.html\"\u003eBryce Neal for writing a detailed tutorial on setting up Solaris to use MDB\u003c/a\u003e.\u003c/p\u003e\n"}},"__N_SSG":true},"page":"/post/[slug]","query":{"slug":"fixing-memory-leak-on-production-nodejs-application"},"buildId":"mRk8qBlWrX48XHyMm3dSY","nextExport":false,"isFallback":false,"gsp":true}</script><script nomodule="" src="/_next/static/runtime/polyfills-788a592a52ba46c11fcc.js"></script><script async="" data-next-page="/_app" src="/_next/static/mRk8qBlWrX48XHyMm3dSY/pages/_app.js"></script><script async="" data-next-page="/post/[slug]" src="/_next/static/mRk8qBlWrX48XHyMm3dSY/pages/post/%5Bslug%5D.js"></script><script src="/_next/static/runtime/webpack-c212667a5f965e81e004.js" async=""></script><script src="/_next/static/chunks/framework.e84fa698c7ee940652bd.js" async=""></script><script src="/_next/static/chunks/bb84c97a.4c419f4b16a96bca7647.js" async=""></script><script src="/_next/static/chunks/commons.212dae668aecc379ad96.js" async=""></script><script src="/_next/static/runtime/main-c20c68f2e453b0454f3a.js" async=""></script><script src="/_next/static/chunks/75fc9c18.cbe862d05f67479ee6e5.js" async=""></script><script src="/_next/static/chunks/61530eeebf5e62f5b791e0d71d557519d747ffcd.87881b87466783f8447d.js" async=""></script><script src="/_next/static/mRk8qBlWrX48XHyMm3dSY/_buildManifest.js" async=""></script><script src="/_next/static/mRk8qBlWrX48XHyMm3dSY/_ssgManifest.js" async=""></script></body></html>
