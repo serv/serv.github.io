@@ -1,0 +1,59 @@
+<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width"/><meta charSet="utf-8"/><title>Jason Kim&#x27;s Blog</title><link rel="icon" href="/favicon.ico"/><meta name="next-head-count" content="4"/><link rel="preload" href="/_next/static/css/7f16bb2b95cec477ee80.css" as="style"/><link rel="stylesheet" href="/_next/static/css/7f16bb2b95cec477ee80.css"/><link rel="preload" href="/_next/static/css/72a9312d0849376bb975.css" as="style"/><link rel="stylesheet" href="/_next/static/css/72a9312d0849376bb975.css"/><link rel="preload" href="/_next/static/b9tUhVOY0dvKPskxRRBQA/pages/_app.js" as="script"/><link rel="preload" href="/_next/static/b9tUhVOY0dvKPskxRRBQA/pages/post/%5Bslug%5D.js" as="script"/><link rel="preload" href="/_next/static/runtime/webpack-c212667a5f965e81e004.js" as="script"/><link rel="preload" href="/_next/static/chunks/framework.e84fa698c7ee940652bd.js" as="script"/><link rel="preload" href="/_next/static/chunks/bb84c97a.4c419f4b16a96bca7647.js" as="script"/><link rel="preload" href="/_next/static/chunks/commons.212dae668aecc379ad96.js" as="script"/><link rel="preload" href="/_next/static/runtime/main-c20c68f2e453b0454f3a.js" as="script"/><link rel="preload" href="/_next/static/chunks/75fc9c18.7a8030f6600daa7431ae.js" as="script"/><link rel="preload" href="/_next/static/chunks/f9e6d0b3169136d65980355838eb79c508fd8486.75f73e4fb618efae7834.js" as="script"/></head><body><div id="__next"><div class="container mx-auto"><header class="py-8"><a class="hover:underline" href="/"><h1>Jason Kim&#x27;s Blog</h1></a></header><main class="main pb-8"><div class="pb-2 text-3xl font-bold">Random Thoughts On Using Backbone.js For 3 Months</div><div class="pb-8 text-sm text-gray-600">2014-10-11</div><div class="markdown"><h2>tl;dr</h2>
+<ul>
+<li>Backbone.js is amazing</li>
+<li>Event driven development was a paradigmatic shift.</li>
+<li>Backbone won't stop you from writing bad code.</li>
+<li>Overwhelmed with other tools</li>
+<li>Creating global variables and methods are not straight forward in Backbone.</li>
+</ul>
+<p>Let me preface the entire post by saying, Backbone.js is awesome.
+I've been using Backbone.js for last 3 months at work and doing a side project.
+I can't imagine pulling them off in pure jQuery alone.
+Backbone.js was instrumental in my work.
+In this post, I am writing briefly about how I felt about using Backone.js and
+some observations I made about the library.</p>
+<p>Coming from Rails world with some jQuery flavour in the front end, events
+were not a huge deal for me. I never really worried about events in the Rails
+side. Even on the front end, I used events in jQuery very limitedly.</p>
+<p>On the other hand in Backbone, events are extremely important and useful.
+It helps you to write simpler and modular code. Less if-else spaghettis and
+chained up functions calling some other functions and so on. With events, even
+if one thing falls down, the other part that depends on the event still won't
+fall apart.</p>
+<p>At the same time though, you can still create a mess when events are chain up
+together. I find the debugging sometimes is harder with event driven code
+because the links between different parts of the code are not explicit anymore.
+A new coder diving into the pre-existing backbone.js codebase will have
+some trouble understanding how different parts of the code are working together.
+This is because there's less if-else, and explicit chains of functions to
+indicate how different codes are working together.</p>
+<p>Backbone.js does help you to writing cleaner code. Having more structured js code
+with models, views and routes definitely make the code more understandable.
+But it seems as though, there's no perfect guard against shitty code.
+I still saw myself writing junk and memory hogging code. Rendering a page
+multiple times needlessly and making unnecessary ajax calls to server slowing
+the page down. So you still to me mind the performance can be hit using
+backbone.js.</p>
+<p>Backbone.js often comes with many other tools to learn about.</p>
+<ul>
+<li>require.js for loading modules</li>
+<li>marionette.js for giving more structure and proving commonly used functions in backbone</li>
+<li>handlebars.js for templating</li>
+<li>underscore.js for useful functions on arrays, collections, and misc. js objects</li>
+<li>jquery for dom manipulation and ajax</li>
+</ul>
+<p>I also started using:</p>
+<ul>
+<li>yeoman for setting up app dev environment</li>
+<li>grunt.js for automating repetitive tasks</li>
+<li>npm and bower for managing js packages</li>
+</ul>
+<p>I noticed that doing something I would consider to be really easy to do in
+Rails were more complicated and not straight forward. Stuff like global
+variables, view helpers, partial views etc were all doable in backbone, but
+there's always more than one way to do things in backbone. That makes things hard for
+newcomers.</p>
+<p>Overall, my adventure in backbone.js is turning out to be a very fruitful one.
+I am learning a lot fast and I can't wait to dig deeper into backone and maybe
+try out other frameworks like Angular and Ember more seriously.</p>
+</div></main><footer class="pb-10"><div class="flex"><a class="flex-initial pr-4 hover:underline" href="http://jasonkim.ca/">Personal Site</a><a class="flex-initial pr-4 hover:underline" href="https://github.com/serv">Github</a><a class="flex-initial pr-4 hover:underline" href="https://www.linkedin.com/in/jason-kim-a2b97b6/">Linkedin</a><a class="flex-initial pr-4 hover:underline" href="https://twitter.com/jasoki">Twitter</a></div></footer></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"post":{"title":"Random Thoughts On Using Backbone.js For 3 Months","createdAt":"2014-10-11T00:00:00-07:00","categories":["javascript","backbone"],"slug":"random-thoughts-on-using-backbonejs-for-3-months","fullPath":"/home/jason/projects/websites/serv.github.io/_posts/2014-10-11-random-thoughts-on-using-backbone-dot-js-for-3-months.md","content":"\u003ch2\u003etl;dr\u003c/h2\u003e\n\u003cul\u003e\n\u003cli\u003eBackbone.js is amazing\u003c/li\u003e\n\u003cli\u003eEvent driven development was a paradigmatic shift.\u003c/li\u003e\n\u003cli\u003eBackbone won't stop you from writing bad code.\u003c/li\u003e\n\u003cli\u003eOverwhelmed with other tools\u003c/li\u003e\n\u003cli\u003eCreating global variables and methods are not straight forward in Backbone.\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003eLet me preface the entire post by saying, Backbone.js is awesome.\nI've been using Backbone.js for last 3 months at work and doing a side project.\nI can't imagine pulling them off in pure jQuery alone.\nBackbone.js was instrumental in my work.\nIn this post, I am writing briefly about how I felt about using Backone.js and\nsome observations I made about the library.\u003c/p\u003e\n\u003cp\u003eComing from Rails world with some jQuery flavour in the front end, events\nwere not a huge deal for me. I never really worried about events in the Rails\nside. Even on the front end, I used events in jQuery very limitedly.\u003c/p\u003e\n\u003cp\u003eOn the other hand in Backbone, events are extremely important and useful.\nIt helps you to write simpler and modular code. Less if-else spaghettis and\nchained up functions calling some other functions and so on. With events, even\nif one thing falls down, the other part that depends on the event still won't\nfall apart.\u003c/p\u003e\n\u003cp\u003eAt the same time though, you can still create a mess when events are chain up\ntogether. I find the debugging sometimes is harder with event driven code\nbecause the links between different parts of the code are not explicit anymore.\nA new coder diving into the pre-existing backbone.js codebase will have\nsome trouble understanding how different parts of the code are working together.\nThis is because there's less if-else, and explicit chains of functions to\nindicate how different codes are working together.\u003c/p\u003e\n\u003cp\u003eBackbone.js does help you to writing cleaner code. Having more structured js code\nwith models, views and routes definitely make the code more understandable.\nBut it seems as though, there's no perfect guard against shitty code.\nI still saw myself writing junk and memory hogging code. Rendering a page\nmultiple times needlessly and making unnecessary ajax calls to server slowing\nthe page down. So you still to me mind the performance can be hit using\nbackbone.js.\u003c/p\u003e\n\u003cp\u003eBackbone.js often comes with many other tools to learn about.\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003erequire.js for loading modules\u003c/li\u003e\n\u003cli\u003emarionette.js for giving more structure and proving commonly used functions in backbone\u003c/li\u003e\n\u003cli\u003ehandlebars.js for templating\u003c/li\u003e\n\u003cli\u003eunderscore.js for useful functions on arrays, collections, and misc. js objects\u003c/li\u003e\n\u003cli\u003ejquery for dom manipulation and ajax\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003eI also started using:\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003eyeoman for setting up app dev environment\u003c/li\u003e\n\u003cli\u003egrunt.js for automating repetitive tasks\u003c/li\u003e\n\u003cli\u003enpm and bower for managing js packages\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003eI noticed that doing something I would consider to be really easy to do in\nRails were more complicated and not straight forward. Stuff like global\nvariables, view helpers, partial views etc were all doable in backbone, but\nthere's always more than one way to do things in backbone. That makes things hard for\nnewcomers.\u003c/p\u003e\n\u003cp\u003eOverall, my adventure in backbone.js is turning out to be a very fruitful one.\nI am learning a lot fast and I can't wait to dig deeper into backone and maybe\ntry out other frameworks like Angular and Ember more seriously.\u003c/p\u003e\n"}},"__N_SSG":true},"page":"/post/[slug]","query":{"slug":"random-thoughts-on-using-backbonejs-for-3-months"},"buildId":"b9tUhVOY0dvKPskxRRBQA","nextExport":false,"isFallback":false,"gsp":true}</script><script nomodule="" src="/_next/static/runtime/polyfills-788a592a52ba46c11fcc.js"></script><script async="" data-next-page="/_app" src="/_next/static/b9tUhVOY0dvKPskxRRBQA/pages/_app.js"></script><script async="" data-next-page="/post/[slug]" src="/_next/static/b9tUhVOY0dvKPskxRRBQA/pages/post/%5Bslug%5D.js"></script><script src="/_next/static/runtime/webpack-c212667a5f965e81e004.js" async=""></script><script src="/_next/static/chunks/framework.e84fa698c7ee940652bd.js" async=""></script><script src="/_next/static/chunks/bb84c97a.4c419f4b16a96bca7647.js" async=""></script><script src="/_next/static/chunks/commons.212dae668aecc379ad96.js" async=""></script><script src="/_next/static/runtime/main-c20c68f2e453b0454f3a.js" async=""></script><script src="/_next/static/chunks/75fc9c18.7a8030f6600daa7431ae.js" async=""></script><script src="/_next/static/chunks/f9e6d0b3169136d65980355838eb79c508fd8486.75f73e4fb618efae7834.js" async=""></script><script src="/_next/static/b9tUhVOY0dvKPskxRRBQA/_buildManifest.js" async=""></script><script src="/_next/static/b9tUhVOY0dvKPskxRRBQA/_ssgManifest.js" async=""></script></body></html>
