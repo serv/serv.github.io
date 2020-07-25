@@ -10,6 +10,22 @@ export default function Home({ posts }) {
       <Head>
         <title>Jason Kim's Blog</title>
         <link rel="icon" href="/favicon.ico" />
+
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=UA-28018879-10"
+        />
+
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'UA-28018879-10');
+        `
+          }}
+        />
       </Head>
 
       <Header />
