@@ -26,7 +26,7 @@ export default function Footer() {
   }
 
   return (
-    <footer className="pb-10">
+    <footer className="pb-12">
       <div className="flex">{linksComponents}</div>
     </footer>
   );

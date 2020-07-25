@@ -10,9 +10,9 @@ export default function Posts({ posts }) {
     const createdAt = moment(post.createdAt, "YYYY-MM-DD").format("YYYY-MM-DD");
 
     result.push(
-      <div key={i} className="flex pb-2">
-        <div className="flex-initial text-gray-600 pr-4">{createdAt}</div>
-        <div className="flex-initial">
+      <div key={i} className="flex pb-4">
+        <div className="whitespace-no-wrap text-gray-600 pr-4">{createdAt}</div>
+        <div className="">
           <Link as={`/post/${post.slug}`} href="/post/[slug]">
             <a className="hover:underline">{post.title}</a>
           </Link>
