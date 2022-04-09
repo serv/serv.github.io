@@ -33,3 +33,58 @@ from working here.
 
 ## Rhapsody / Napster (July 2012 - March 2018)
 
+After I finished school around May 2012, I was busy applying to different entry level jobs all over US and Canada.
+After failing many different interviews with different companies, I landed a job with Rhapsody, Seattle-based music streaming
+company.
+
+I worked on many different projects here. When I first joined the company, I built a FAQ / support page for the company.
+Unfortuatenly, it didn't go to production. I then started working on the web streaming application built on Ruby on Rails, jQuery and Flash.
+This was early example of a single page web app. When I think back, it's actually amazing that
+such complex single page web app could be built with jQuery alone.
+
+After this, I had a chance to work on a brand new project of my own. Napster was preparing international launch in several countries
+in Europe and South America. I was asked to create a content managemeng system that can handle multiple regions and languages. 
+I built the solution in Ruby on Rails and MySQL on the backend.
+
+I worked on Sountracking application and the webclient to enable social sign in featrues.
+
+I worked on the API Gateway which was built as the service our web and mobile clients was using.
+This was the first Node.js application I worked on.
+
+Then I lead the development of the web application for Napster. I didn't realize it as much at the time
+but now when I think back, it was another lucky opportunity for me. I was leading the web application for
+an app used by 2 million users at the time. It's unbelievable.
+
+The most important thing I did was creating the new audio playback engine for Napster's webclient.
+I deprecated the decade old Flash audio playback engine, and replacing it
+with the HTML5 Audio player that is DRM compliant with all modern web browsers.
+
+I created the new audio player using [Video.js](https://github.com/videojs/video.js).
+The player was bundled with an newly emerging (at the time) builder called 
+[Webpack](https://webpack.js.org/).
+The hard problem was supporting [EME](https://web.dev/media-eme/) from all the major browsers.
+Everything from development, testing and validating was an extreme undertaking and
+whenever issues happened, reproducing the issues were challenging.
+To make matters even more complicated, the browsers support different streaming protocols (DASH, HLS)
+and DRMs (Widevine, Playready, Apple Fairplay).
+This accomplishment means a lot to me because when I first joined Napster in 2012, 
+the engineers in the web team were discussing ways to deprecate Flash player and move over to HTML5 
+player. And in the end, I was able to do that.
+
+At Napster, I learned to become independant and solve difficult technical challenges on my own.
+
+## Coupang (March 2018 - Present)
+
+I joined Coupang's advertising team as the number 2 engineer. The first thing I needed to do
+was working on a data pipeline that provided the data foundation for other ad services
+to be built. I described my experience building the data pipeline here as a [blog post](https://blog.jasonkim.ca/post/big-data-engineering-with-nodejs). I also gave a 
+[talk about it in Seattle.js meetup](https://www.youtube.com/watch?v=HBHStmv4Y8g).
+
+After this I worked on the Reporting UI for advertisers. This was built using Next.js, MySQL and Redis.
+The Reporting UI is the window which the advertisers judge the entire Coupang ads offering, so it is important that the app works well.
+
+I am now working on Settlements app. The Settlements app determines how much advertisers need to be 
+charged monthly. The app is originally created by another engineer, but I took it over as a tech lead
+later. The app is written in Java. I am currently rewriting the app using Spark instead of Sprign Batch.
+
+At Coupang, I learned to prioritize work based on business importance.
