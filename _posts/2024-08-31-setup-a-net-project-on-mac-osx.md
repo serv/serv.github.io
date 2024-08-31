@@ -76,7 +76,45 @@ There's a chance that you had prepped .NET development environment years ago. In
 12. Run the tests!
   - `$ dotnet test`
 
+# Adding more source files and tests
 
+1. Go into the source project directory.
+  - `$ cd SuperMassive`
+2. Add a new class.
+  - `$ dotnet new class -n Adder`
+3. Update the class
+  ```csharp
+  namespace SuperMassive;
 
+  public class Adder
+  {
+    public int add(int i, int j) {
+      return i + j;
+    }
+  }
+  ```
+4. Go into the test project directory.
+5. Add a new test.
+  - `$ dotnet new class -n AdderTests`
+6. Update the test class
+  ```csharp
+  namespace SuperMassive.Tests;
 
+  public class AdderTests
+  {
+    [Fact]
+    public void AddTest()
+    {
+      var adder = new SuperMassive.Adder();
+      int result = adder.add(1, 1);
+      Assert.Equal(2, result);
+    }
+  }
+  ```
+  - Make sure to add `[Fact]`
+    - Attribute that is applied to a method to indicate that it is a fact that should be run by the test runner.
+7. Run tests
+  - `$ dotnet test`
+  - Now you should see 2 tests running
+    - `Passed!  - Failed:     0, Passed:     2, Skipped:     0, Total:     2, Duration: 1 ms - SuperMassive.Tests.dll (net8.0)`
 
