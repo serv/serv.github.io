@@ -77,6 +77,8 @@ There's a chance that you had prepped .NET development environment years ago. In
       ```
 12. Run the tests!
     - `$ dotnet test`
+    - If you want to run tests with logging
+      - `$ dotnet test --logger "console;verbosity=detailed"`
 
 # Adding more source files and tests
 
