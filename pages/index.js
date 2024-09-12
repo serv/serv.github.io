@@ -11,7 +11,7 @@ export default function Home({ posts }) {
         <title>Jason Kim's Blog</title>
         <link rel="icon" href="/favicon.ico" />
 
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-8H0ES6XL5K"></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-HJB52TFBP5"></script>
 
         <script
           dangerouslySetInnerHTML={{
@@ -19,7 +19,7 @@ export default function Home({ posts }) {
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-8H0ES6XL5K');
+            gtag('config', 'G-HJB52TFBP5');
             `,
           }}
         />
