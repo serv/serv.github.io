@@ -1,8 +1,8 @@
-import Head from "next/head";
-import Posts from "../components/Posts";
-import Post from "../lib/post.js";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import Head from 'next/head';
+import Posts from '../components/Posts';
+import Post from '../lib/post.js';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 export default function Home({ posts }) {
   return (
@@ -11,10 +11,7 @@ export default function Home({ posts }) {
         <title>Jason Kim's Blog</title>
         <link rel="icon" href="/favicon.ico" />
 
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=UA-28018879-10"
-        />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-8H0ES6XL5K"></script>
 
         <script
           dangerouslySetInnerHTML={{
@@ -22,8 +19,8 @@ export default function Home({ posts }) {
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'UA-28018879-10');
-        `
+            gtag('config', 'G-8H0ES6XL5K');
+            `,
           }}
         />
       </Head>
@@ -43,6 +40,6 @@ export async function getStaticProps() {
   const posts = await Post.all();
 
   return {
-    props: { posts }
+    props: { posts },
   };
 }
