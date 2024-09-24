@@ -1,0 +1,218 @@
+<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width"/><meta charSet="utf-8"/><title>Jason Kim&#x27;s Blog</title><link rel="icon" href="/favicon.ico"/><meta name="next-head-count" content="4"/><link rel="preload" href="/_next/static/css/5398d8c2c6eb5e22e315.css" as="style"/><link rel="stylesheet" href="/_next/static/css/5398d8c2c6eb5e22e315.css"/><link rel="preload" href="/_next/static/css/3c6bf924f0424cd47cc5.css" as="style"/><link rel="stylesheet" href="/_next/static/css/3c6bf924f0424cd47cc5.css"/><link rel="preload" href="/_next/static/8b_X0_BafxK45UBW9Skcv/pages/_app.js" as="script"/><link rel="preload" href="/_next/static/8b_X0_BafxK45UBW9Skcv/pages/post/%5Bslug%5D.js" as="script"/><link rel="preload" href="/_next/static/runtime/webpack-c212667a5f965e81e004.js" as="script"/><link rel="preload" href="/_next/static/chunks/framework.e84fa698c7ee940652bd.js" as="script"/><link rel="preload" href="/_next/static/chunks/5a4765bf.4c419f4b16a96bca7647.js" as="script"/><link rel="preload" href="/_next/static/chunks/commons.212dae668aecc379ad96.js" as="script"/><link rel="preload" href="/_next/static/runtime/main-c20c68f2e453b0454f3a.js" as="script"/><link rel="preload" href="/_next/static/chunks/75fc9c18.7a8030f6600daa7431ae.js" as="script"/><link rel="preload" href="/_next/static/chunks/f11c7ca474d158c47adaba6da65bb95bf062c85c.109621aeddcc04cf25c6.js" as="script"/></head><body><div id="__next"><div class="container mx-auto"><header class="pt-16 pb-12"><a class="hover:underline" href="/"><h1>Jason Kim&#x27;s Blog</h1></a></header><main class="main pb-8"><div class="pb-2 text-3xl font-bold">Deploy Rails 7.2.1 + Sqlite3 App to Azure Using Kamal</div><div class="pb-8 text-sm text-gray-600">2024-09-23</div><div class="markdown"><p><a href="https://kamal-deploy.org/">Kamal</a> is a deployment tool for
+deploying Rails apps to cloud environments.
+And Azure is a fantastic cloud service provider (I work for Microsoft) to
+deploy Rails apps.</p>
+<p>Let's try to deploy a test Rails app with a Sqlite3 DB to Azure.</p>
+<p>Although this guide will go into details about setting up various systems in
+Azure, the guide assumes that you have Azure account and billing setup already.
+The guide also assumes some preliminary understanding of Rails.</p>
+<p>Here are the exact versions of tools I am using as of April 7, 2024.</p>
+<ul>
+<li>Ruby: 3.3.0</li>
+<li>Rails: 7.2.1</li>
+<li>Kamal: 1.3.1</li>
+<li>Sqlite: 3.43.2</li>
+</ul>
+<h1>1. Settings up Rails App</h1>
+<h2>1.1 Create a new Rails app</h2>
+<p><code>$ rails new rails-kamal-deployed-to-azure --minimal</code></p>
+<h2>1.2 Add a scaffold</h2>
+<ul>
+<li><code>$ cd rails-kamal-deployed-to-azure</code></li>
+<li><code>$ rails g scaffold post title:string content:text</code></li>
+</ul>
+<h2>1.3 Run migration</h2>
+<ul>
+<li>You can omit <code>rails db:create</code> because database will be created by starting docker-compose</li>
+<li>Run <code>$ rails db:migrate</code> </li>
+</ul>
+<h2>1.4 Update routes</h2>
+<p>In <code>routes.rb</code>,</p>
+<pre><code class="language-ruby">root "posts#index"
+</code></pre>
+<h2>1.5 Start the server to test locally</h2>
+<ul>
+<li><code>$ ./bin/rails s</code></li>
+<li>Check that the server is locally running.</li>
+<li>Go to <a href="http://localhost:3000">localhost:3000</a></li>
+<li>You should see something like this.<ul>
+<li><img src="/images/2024/9/16/16-local-rails.png"></li>
+</ul></li>
+</ul>
+<h1>2. Azure</h1>
+<p>You should have a subscription and a resource group for Azure before you proceed.</p>
+<h2>2.1 Create virtual machines</h2>
+<ul>
+<li>Go to <a href="https://portal.azure.com/#create/Microsoft.VirtualMachine-ARM">https://portal.azure.com/#create/Microsoft.VirtualMachine-ARM</a></li>
+<li>Select a subscription and a resource group.</li>
+<li>Use a name like <code>rails-kamal-deployed-to-azure-1</code></li>
+<li>Choose <code>SSH public key</code> for <code>Authentication type > Administrator account</code>.</li>
+<li>Add <code>Key pair name</code>. Use a name like <code>rails-kamal-deployed-to-azure-1_key</code>. <ul>
+<li><img src="/images/2024/9/16/16-ssh.png"></li>
+</ul></li>
+<li>Enable ports 22, 80, 443<ul>
+<li><img src="/images/2024/9/16/16-inbound-ports.png"></li>
+</ul></li>
+<li>Click "Review + create"</li>
+<li>Download the key when prompted and keep it handy.<ul>
+<li><img src="/images/2024/9/16/16-download-key.png"></li>
+</ul></li>
+</ul>
+<h3>2.1.1. Update SSH config</h3>
+<ul>
+<li>Inside <code>~/.ssh/config</code></li>
+<li>Add<pre><code>Host 74.235.199.96
+  IdentityFile ./rails-kamal-deployed-to-azure-1_key.pem
+  User azureuser
+</code></pre></li>
+<li><code>$ ssh-add ~/.ssh/rails-kamal-deployed-to-azure-1_key.pem</code><ul>
+<li>You may get <pre><code>$ ssh-add ~/.ssh/rails-kamal-deployed-to-azure-1_key.pem
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@         WARNING: UNPROTECTED PRIVATE KEY FILE!          @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Permissions 0644 for '/Users/jasonkim/.ssh/rails-kamal-deployed-to-azure-1_key.pem' are too open.
+It is required that your private key files are NOT accessible by others.
+This private key will be ignored.
+</code></pre><ul>
+<li><code>$ chmod 600 ~/.ssh/rails-kamal-deployed-to-azure-1_key.pem</code></li>
+<li>Now you can add it.<pre><code>$ ssh-add ~/.ssh/rails-kamal-deployed-to-azure-1_key.pem
+Identity added: /Users/jasonkim/.ssh/rails-kamal-deployed-to-azure-1_key.pem (/Users/jasonkim/.ssh/rails-kamal-deployed-to-azure-1_key.pem)
+</code></pre></li>
+<li>check that ssh-ing into the VM works</li>
+<li>Make sure the VM is turned on.</li>
+</ul></li>
+</ul></li>
+</ul>
+<h2>2.2 Create Container Registry</h2>
+<ul>
+<li>Go to <a href="https://portal.azure.com/#browse/Microsoft.ContainerRegistry%2Fregistries">https://portal.azure.com/#browse/Microsoft.ContainerRegistry%2Fregistries</a></li>
+<li>Create a Container Registry<ul>
+<li><img src="/images/2024/9/16/16-registry.png"></li>
+</ul></li>
+<li>Once the registry is created, go to the registry resource</li>
+<li>Go to Settings > Access Keys section</li>
+<li>Check "Admin user"</li>
+<li>Copy the passwords</li>
+</ul>
+<h2>2.3 Create a load balancer</h2>
+<ul>
+<li>Go to <a href="https://portal.azure.com/#create/Microsoft.LoadBalancer-ARM">https://portal.azure.com/#create/Microsoft.LoadBalancer-ARM</a></li>
+<li>Under Basics, setup the load balancer like this<ul>
+<li><img src="/images/2024/9/16/lb.png"></li>
+</ul></li>
+<li>Click Next: Frontend</li>
+<li>Click "Add a fronted IP Configuration"</li>
+<li>You'll need to create a public IP Address.</li>
+<li>Click "Create New" under Public IP Address</li>
+<li>Create one like this<ul>
+<li><img src="/images/2024/9/16/public-ip.png"></li>
+</ul></li>
+<li>Click "save" to add frontend IP configuration</li>
+<li>Click "Review + create"</li>
+<li>Click "create"</li>
+</ul>
+<h2>2.4 Setup VM to use the LB</h2>
+<ul>
+<li>Go to the VM page</li>
+<li>Click on the VM that should be behind the load balancer</li>
+<li>Click Network > Load balancing </li>
+<li>Click Add load balancing</li>
+<li>Click Add existing</li>
+<li>Setup load balancing like the following<ul>
+<li><img src="/images/2024/9/16/lb-setup-vm.png"></li>
+</ul></li>
+<li>Click Save</li>
+<li>This should take upto a minute</li>
+</ul>
+<h2>2.5 Add NAT rule</h2>
+<ul>
+<li>Go select the load balancer</li>
+<li>Go to Settings > Inbound NAT Rules</li>
+<li>Add</li>
+<li>Setup the rule like below<ul>
+<li><img src="/images/2024/9/16/natrule.png"></li>
+</ul></li>
+</ul>
+<h1>3. Kamal Setup</h1>
+<p>Before you begin, make sure <strong>Docker is locally running</strong> from the machine that you are deploying from.</p>
+<p>Follow the instructions found <a href="https://kamal-deploy.org/docs/installation/">here</a>.</p>
+<ul>
+<li><code>$ gem install kamal</code></li>
+<li>inside your app directory, run <code>$ kamal init</code></li>
+</ul>
+<h2>3.1 Rails Secret</h2>
+<ul>
+<li>Run <code>$ bin/rails credentials:edit</code></li>
+<li>Copy the value</li>
+<li>Paste to <code>.env</code> file for <code>RAILS_MASTER_KEY</code> environment variable.</li>
+</ul>
+<p>If you skip this, you will likely face an error like below:</p>
+<pre><code> ERROR bin/rails aborted!
+ArgumentError: key must be 16 bytes (ArgumentError)
+
+        cipher.key = @secret
+                     ^^^^^^^
+/rails/config/environment.rb:5:in `&#x3C;main>'
+Tasks: TOP => db:prepare => db:load_config => environment
+(See full trace by running task with --trace)
+bin/rails aborted!
+ArgumentError: key must be 16 bytes (ArgumentError)
+
+        cipher.key = @secret
+                     ^^^^^^^
+/rails/config/environment.rb:5:in `&#x3C;main>'
+</code></pre>
+<h2>3.1 <code>config/deploy.yml</code></h2>
+<pre><code class="language-yml"># Name of your application. Used to uniquely configure containers.
+service: rails-kamal-deployed-to-azure
+
+# Name of the container image.
+image: serv/rails-kamal-deployed-to-azure
+
+# Deploy to these servers.
+servers:
+  - 74.235.199.96
+
+# Credentials for your image host.
+registry:
+  # Specify the registry server, if you're not using Docker Hub
+  server: railskamaldeployedtoazure.azurecr.io
+  username: railskamaldeployedtoazure
+
+  # Always use an access token rather than real password when possible.
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+# Inject ENV variables into containers (secrets come from .env).
+# Remember to run `kamal env push` after making changes!
+env:
+  #   clear:
+  #     DB_HOST: 192.168.0.2
+  secret:
+    - RAILS_MASTER_KEY
+# Use a different ssh user than root
+ssh:
+  user: azureuser
+
+# To use Sqlite
+builder:
+  context: .
+volumes:
+  - 'storage:/rails/storage'
+</code></pre>
+<h2>3.2 <code>kamal setup</code></h2>
+<ul>
+<li>You may get this error: <code>permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock</code> when you run <code>kamal setup</code> for the first time.</li>
+<li>For this run <code>sudo usermod -aG docker ${USER}</code> <a href="https://github.com/basecamp/kamal/issues/405#issuecomment-1652527208">[1]</a></li>
+<li>If the command runs successfully, you should see</li>
+</ul>
+<pre><code>  INFO [f489cd69] Finished in 0.326 seconds with exit status 0 (successful).
+  Finished all in 87.1 seconds
+Releasing the deploy lock...
+  Finished all in 91.9 seconds
+</code></pre>
+<ul>
+<li>Try going to the IP address of the load balancer.<ul>
+<li><img src="/images/2024/9/16/lbloading.png"></li>
+</ul></li>
+</ul>
+</div></main><section style="width:100%"></section><footer class="pb-12"><div class="flex"><a class="flex-initial pr-4 hover:underline" href="http://jasonkim.ca/">Personal Site</a><a class="flex-initial pr-4 hover:underline" href="https://github.com/serv">Github</a><a class="flex-initial pr-4 hover:underline" href="https://www.linkedin.com/in/jason-kim-a2b97b6/">Linkedin</a><a class="flex-initial pr-4 hover:underline" href="https://twitter.com/jasoki">Twitter</a></div></footer></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"post":{"title":"Deploy Rails 7.2.1 + Sqlite3 App to Azure Using Kamal","createdAt":"2024-09-23T23:07:51-07:00","categories":["rails","ruby","azure","kamal"],"slug":"deploy-rails-721-sqlite3-app-to-azure-using-kamal","fullPath":"/Users/jasonkim/projects/websites/serv.github.io/_posts/2024-09-23-deploy-rails-721-app-to-azure-using-kamal.md","content":"\u003cp\u003e\u003ca href=\"https://kamal-deploy.org/\"\u003eKamal\u003c/a\u003e is a deployment tool for\ndeploying Rails apps to cloud environments.\nAnd Azure is a fantastic cloud service provider (I work for Microsoft) to\ndeploy Rails apps.\u003c/p\u003e\n\u003cp\u003eLet's try to deploy a test Rails app with a Sqlite3 DB to Azure.\u003c/p\u003e\n\u003cp\u003eAlthough this guide will go into details about setting up various systems in\nAzure, the guide assumes that you have Azure account and billing setup already.\nThe guide also assumes some preliminary understanding of Rails.\u003c/p\u003e\n\u003cp\u003eHere are the exact versions of tools I am using as of April 7, 2024.\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003eRuby: 3.3.0\u003c/li\u003e\n\u003cli\u003eRails: 7.2.1\u003c/li\u003e\n\u003cli\u003eKamal: 1.3.1\u003c/li\u003e\n\u003cli\u003eSqlite: 3.43.2\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch1\u003e1. Settings up Rails App\u003c/h1\u003e\n\u003ch2\u003e1.1 Create a new Rails app\u003c/h2\u003e\n\u003cp\u003e\u003ccode\u003e$ rails new rails-kamal-deployed-to-azure --minimal\u003c/code\u003e\u003c/p\u003e\n\u003ch2\u003e1.2 Add a scaffold\u003c/h2\u003e\n\u003cul\u003e\n\u003cli\u003e\u003ccode\u003e$ cd rails-kamal-deployed-to-azure\u003c/code\u003e\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003e$ rails g scaffold post title:string content:text\u003c/code\u003e\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch2\u003e1.3 Run migration\u003c/h2\u003e\n\u003cul\u003e\n\u003cli\u003eYou can omit \u003ccode\u003erails db:create\u003c/code\u003e because database will be created by starting docker-compose\u003c/li\u003e\n\u003cli\u003eRun \u003ccode\u003e$ rails db:migrate\u003c/code\u003e \u003c/li\u003e\n\u003c/ul\u003e\n\u003ch2\u003e1.4 Update routes\u003c/h2\u003e\n\u003cp\u003eIn \u003ccode\u003eroutes.rb\u003c/code\u003e,\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\"language-ruby\"\u003eroot \"posts#index\"\n\u003c/code\u003e\u003c/pre\u003e\n\u003ch2\u003e1.5 Start the server to test locally\u003c/h2\u003e\n\u003cul\u003e\n\u003cli\u003e\u003ccode\u003e$ ./bin/rails s\u003c/code\u003e\u003c/li\u003e\n\u003cli\u003eCheck that the server is locally running.\u003c/li\u003e\n\u003cli\u003eGo to \u003ca href=\"http://localhost:3000\"\u003elocalhost:3000\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003eYou should see something like this.\u003cul\u003e\n\u003cli\u003e\u003cimg src=\"/images/2024/9/16/16-local-rails.png\"\u003e\u003c/li\u003e\n\u003c/ul\u003e\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch1\u003e2. Azure\u003c/h1\u003e\n\u003cp\u003eYou should have a subscription and a resource group for Azure before you proceed.\u003c/p\u003e\n\u003ch2\u003e2.1 Create virtual machines\u003c/h2\u003e\n\u003cul\u003e\n\u003cli\u003eGo to \u003ca href=\"https://portal.azure.com/#create/Microsoft.VirtualMachine-ARM\"\u003ehttps://portal.azure.com/#create/Microsoft.VirtualMachine-ARM\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003eSelect a subscription and a resource group.\u003c/li\u003e\n\u003cli\u003eUse a name like \u003ccode\u003erails-kamal-deployed-to-azure-1\u003c/code\u003e\u003c/li\u003e\n\u003cli\u003eChoose \u003ccode\u003eSSH public key\u003c/code\u003e for \u003ccode\u003eAuthentication type \u003e Administrator account\u003c/code\u003e.\u003c/li\u003e\n\u003cli\u003eAdd \u003ccode\u003eKey pair name\u003c/code\u003e. Use a name like \u003ccode\u003erails-kamal-deployed-to-azure-1_key\u003c/code\u003e. \u003cul\u003e\n\u003cli\u003e\u003cimg src=\"/images/2024/9/16/16-ssh.png\"\u003e\u003c/li\u003e\n\u003c/ul\u003e\u003c/li\u003e\n\u003cli\u003eEnable ports 22, 80, 443\u003cul\u003e\n\u003cli\u003e\u003cimg src=\"/images/2024/9/16/16-inbound-ports.png\"\u003e\u003c/li\u003e\n\u003c/ul\u003e\u003c/li\u003e\n\u003cli\u003eClick \"Review + create\"\u003c/li\u003e\n\u003cli\u003eDownload the key when prompted and keep it handy.\u003cul\u003e\n\u003cli\u003e\u003cimg src=\"/images/2024/9/16/16-download-key.png\"\u003e\u003c/li\u003e\n\u003c/ul\u003e\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch3\u003e2.1.1. Update SSH config\u003c/h3\u003e\n\u003cul\u003e\n\u003cli\u003eInside \u003ccode\u003e~/.ssh/config\u003c/code\u003e\u003c/li\u003e\n\u003cli\u003eAdd\u003cpre\u003e\u003ccode\u003eHost 74.235.199.96\n  IdentityFile ./rails-kamal-deployed-to-azure-1_key.pem\n  User azureuser\n\u003c/code\u003e\u003c/pre\u003e\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003e$ ssh-add ~/.ssh/rails-kamal-deployed-to-azure-1_key.pem\u003c/code\u003e\u003cul\u003e\n\u003cli\u003eYou may get \u003cpre\u003e\u003ccode\u003e$ ssh-add ~/.ssh/rails-kamal-deployed-to-azure-1_key.pem\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n@         WARNING: UNPROTECTED PRIVATE KEY FILE!          @\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\nPermissions 0644 for '/Users/jasonkim/.ssh/rails-kamal-deployed-to-azure-1_key.pem' are too open.\nIt is required that your private key files are NOT accessible by others.\nThis private key will be ignored.\n\u003c/code\u003e\u003c/pre\u003e\u003cul\u003e\n\u003cli\u003e\u003ccode\u003e$ chmod 600 ~/.ssh/rails-kamal-deployed-to-azure-1_key.pem\u003c/code\u003e\u003c/li\u003e\n\u003cli\u003eNow you can add it.\u003cpre\u003e\u003ccode\u003e$ ssh-add ~/.ssh/rails-kamal-deployed-to-azure-1_key.pem\nIdentity added: /Users/jasonkim/.ssh/rails-kamal-deployed-to-azure-1_key.pem (/Users/jasonkim/.ssh/rails-kamal-deployed-to-azure-1_key.pem)\n\u003c/code\u003e\u003c/pre\u003e\u003c/li\u003e\n\u003cli\u003echeck that ssh-ing into the VM works\u003c/li\u003e\n\u003cli\u003eMake sure the VM is turned on.\u003c/li\u003e\n\u003c/ul\u003e\u003c/li\u003e\n\u003c/ul\u003e\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch2\u003e2.2 Create Container Registry\u003c/h2\u003e\n\u003cul\u003e\n\u003cli\u003eGo to \u003ca href=\"https://portal.azure.com/#browse/Microsoft.ContainerRegistry%2Fregistries\"\u003ehttps://portal.azure.com/#browse/Microsoft.ContainerRegistry%2Fregistries\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003eCreate a Container Registry\u003cul\u003e\n\u003cli\u003e\u003cimg src=\"/images/2024/9/16/16-registry.png\"\u003e\u003c/li\u003e\n\u003c/ul\u003e\u003c/li\u003e\n\u003cli\u003eOnce the registry is created, go to the registry resource\u003c/li\u003e\n\u003cli\u003eGo to Settings \u003e Access Keys section\u003c/li\u003e\n\u003cli\u003eCheck \"Admin user\"\u003c/li\u003e\n\u003cli\u003eCopy the passwords\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch2\u003e2.3 Create a load balancer\u003c/h2\u003e\n\u003cul\u003e\n\u003cli\u003eGo to \u003ca href=\"https://portal.azure.com/#create/Microsoft.LoadBalancer-ARM\"\u003ehttps://portal.azure.com/#create/Microsoft.LoadBalancer-ARM\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003eUnder Basics, setup the load balancer like this\u003cul\u003e\n\u003cli\u003e\u003cimg src=\"/images/2024/9/16/lb.png\"\u003e\u003c/li\u003e\n\u003c/ul\u003e\u003c/li\u003e\n\u003cli\u003eClick Next: Frontend\u003c/li\u003e\n\u003cli\u003eClick \"Add a fronted IP Configuration\"\u003c/li\u003e\n\u003cli\u003eYou'll need to create a public IP Address.\u003c/li\u003e\n\u003cli\u003eClick \"Create New\" under Public IP Address\u003c/li\u003e\n\u003cli\u003eCreate one like this\u003cul\u003e\n\u003cli\u003e\u003cimg src=\"/images/2024/9/16/public-ip.png\"\u003e\u003c/li\u003e\n\u003c/ul\u003e\u003c/li\u003e\n\u003cli\u003eClick \"save\" to add frontend IP configuration\u003c/li\u003e\n\u003cli\u003eClick \"Review + create\"\u003c/li\u003e\n\u003cli\u003eClick \"create\"\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch2\u003e2.4 Setup VM to use the LB\u003c/h2\u003e\n\u003cul\u003e\n\u003cli\u003eGo to the VM page\u003c/li\u003e\n\u003cli\u003eClick on the VM that should be behind the load balancer\u003c/li\u003e\n\u003cli\u003eClick Network \u003e Load balancing \u003c/li\u003e\n\u003cli\u003eClick Add load balancing\u003c/li\u003e\n\u003cli\u003eClick Add existing\u003c/li\u003e\n\u003cli\u003eSetup load balancing like the following\u003cul\u003e\n\u003cli\u003e\u003cimg src=\"/images/2024/9/16/lb-setup-vm.png\"\u003e\u003c/li\u003e\n\u003c/ul\u003e\u003c/li\u003e\n\u003cli\u003eClick Save\u003c/li\u003e\n\u003cli\u003eThis should take upto a minute\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch2\u003e2.5 Add NAT rule\u003c/h2\u003e\n\u003cul\u003e\n\u003cli\u003eGo select the load balancer\u003c/li\u003e\n\u003cli\u003eGo to Settings \u003e Inbound NAT Rules\u003c/li\u003e\n\u003cli\u003eAdd\u003c/li\u003e\n\u003cli\u003eSetup the rule like below\u003cul\u003e\n\u003cli\u003e\u003cimg src=\"/images/2024/9/16/natrule.png\"\u003e\u003c/li\u003e\n\u003c/ul\u003e\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch1\u003e3. Kamal Setup\u003c/h1\u003e\n\u003cp\u003eBefore you begin, make sure \u003cstrong\u003eDocker is locally running\u003c/strong\u003e from the machine that you are deploying from.\u003c/p\u003e\n\u003cp\u003eFollow the instructions found \u003ca href=\"https://kamal-deploy.org/docs/installation/\"\u003ehere\u003c/a\u003e.\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003e\u003ccode\u003e$ gem install kamal\u003c/code\u003e\u003c/li\u003e\n\u003cli\u003einside your app directory, run \u003ccode\u003e$ kamal init\u003c/code\u003e\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch2\u003e3.1 Rails Secret\u003c/h2\u003e\n\u003cul\u003e\n\u003cli\u003eRun \u003ccode\u003e$ bin/rails credentials:edit\u003c/code\u003e\u003c/li\u003e\n\u003cli\u003eCopy the value\u003c/li\u003e\n\u003cli\u003ePaste to \u003ccode\u003e.env\u003c/code\u003e file for \u003ccode\u003eRAILS_MASTER_KEY\u003c/code\u003e environment variable.\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003eIf you skip this, you will likely face an error like below:\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003e ERROR bin/rails aborted!\nArgumentError: key must be 16 bytes (ArgumentError)\n\n        cipher.key = @secret\n                     ^^^^^^^\n/rails/config/environment.rb:5:in `\u0026#x3C;main\u003e'\nTasks: TOP =\u003e db:prepare =\u003e db:load_config =\u003e environment\n(See full trace by running task with --trace)\nbin/rails aborted!\nArgumentError: key must be 16 bytes (ArgumentError)\n\n        cipher.key = @secret\n                     ^^^^^^^\n/rails/config/environment.rb:5:in `\u0026#x3C;main\u003e'\n\u003c/code\u003e\u003c/pre\u003e\n\u003ch2\u003e3.1 \u003ccode\u003econfig/deploy.yml\u003c/code\u003e\u003c/h2\u003e\n\u003cpre\u003e\u003ccode class=\"language-yml\"\u003e# Name of your application. Used to uniquely configure containers.\nservice: rails-kamal-deployed-to-azure\n\n# Name of the container image.\nimage: serv/rails-kamal-deployed-to-azure\n\n# Deploy to these servers.\nservers:\n  - 74.235.199.96\n\n# Credentials for your image host.\nregistry:\n  # Specify the registry server, if you're not using Docker Hub\n  server: railskamaldeployedtoazure.azurecr.io\n  username: railskamaldeployedtoazure\n\n  # Always use an access token rather than real password when possible.\n  password:\n    - KAMAL_REGISTRY_PASSWORD\n# Inject ENV variables into containers (secrets come from .env).\n# Remember to run `kamal env push` after making changes!\nenv:\n  #   clear:\n  #     DB_HOST: 192.168.0.2\n  secret:\n    - RAILS_MASTER_KEY\n# Use a different ssh user than root\nssh:\n  user: azureuser\n\n# To use Sqlite\nbuilder:\n  context: .\nvolumes:\n  - 'storage:/rails/storage'\n\u003c/code\u003e\u003c/pre\u003e\n\u003ch2\u003e3.2 \u003ccode\u003ekamal setup\u003c/code\u003e\u003c/h2\u003e\n\u003cul\u003e\n\u003cli\u003eYou may get this error: \u003ccode\u003epermission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock\u003c/code\u003e when you run \u003ccode\u003ekamal setup\u003c/code\u003e for the first time.\u003c/li\u003e\n\u003cli\u003eFor this run \u003ccode\u003esudo usermod -aG docker ${USER}\u003c/code\u003e \u003ca href=\"https://github.com/basecamp/kamal/issues/405#issuecomment-1652527208\"\u003e[1]\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003eIf the command runs successfully, you should see\u003c/li\u003e\n\u003c/ul\u003e\n\u003cpre\u003e\u003ccode\u003e  INFO [f489cd69] Finished in 0.326 seconds with exit status 0 (successful).\n  Finished all in 87.1 seconds\nReleasing the deploy lock...\n  Finished all in 91.9 seconds\n\u003c/code\u003e\u003c/pre\u003e\n\u003cul\u003e\n\u003cli\u003eTry going to the IP address of the load balancer.\u003cul\u003e\n\u003cli\u003e\u003cimg src=\"/images/2024/9/16/lbloading.png\"\u003e\u003c/li\u003e\n\u003c/ul\u003e\u003c/li\u003e\n\u003c/ul\u003e\n"}},"__N_SSG":true},"page":"/post/[slug]","query":{"slug":"deploy-rails-721-sqlite3-app-to-azure-using-kamal"},"buildId":"8b_X0_BafxK45UBW9Skcv","nextExport":false,"isFallback":false,"gsp":true}</script><script nomodule="" src="/_next/static/runtime/polyfills-788a592a52ba46c11fcc.js"></script><script async="" data-next-page="/_app" src="/_next/static/8b_X0_BafxK45UBW9Skcv/pages/_app.js"></script><script async="" data-next-page="/post/[slug]" src="/_next/static/8b_X0_BafxK45UBW9Skcv/pages/post/%5Bslug%5D.js"></script><script src="/_next/static/runtime/webpack-c212667a5f965e81e004.js" async=""></script><script src="/_next/static/chunks/framework.e84fa698c7ee940652bd.js" async=""></script><script src="/_next/static/chunks/5a4765bf.4c419f4b16a96bca7647.js" async=""></script><script src="/_next/static/chunks/commons.212dae668aecc379ad96.js" async=""></script><script src="/_next/static/runtime/main-c20c68f2e453b0454f3a.js" async=""></script><script src="/_next/static/chunks/75fc9c18.7a8030f6600daa7431ae.js" async=""></script><script src="/_next/static/chunks/f11c7ca474d158c47adaba6da65bb95bf062c85c.109621aeddcc04cf25c6.js" async=""></script><script src="/_next/static/8b_X0_BafxK45UBW9Skcv/_buildManifest.js" async=""></script><script src="/_next/static/8b_X0_BafxK45UBW9Skcv/_ssgManifest.js" async=""></script></body></html>
