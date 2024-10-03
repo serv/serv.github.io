@@ -69,3 +69,8 @@ development:
 ```ruby
 root "posts#index"
 ```
+
+## 1.6 Start server locally
+
+- `$ ./bin/dev`
+- Go to localhost:3000
