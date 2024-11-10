@@ -102,7 +102,8 @@ You should have a subscription and a resource group for Azure before you proceed
       ```
     - check that ssh-ing into the VM works
     - Make sure the VM is turned on.
-
+- SSH into the box
+  - `$ sudo usermod -aG docker $USER`
 
 ## 2.2 Create Container Registry
 
@@ -223,9 +224,9 @@ volumes:
   - 'storage:/rails/storage'
 ```
 
-## 3.2 `kamal setup`
+## 3.2 `dotenv kamal setup`
 
-- You may get this error: `permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock` when you run `kamal setup` for the first time.
+- You may get this error: `permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock` when you run `dotenv kamal setup` for the first time.
 - For this run `sudo usermod -aG docker ${USER}` [[1]](https://github.com/basecamp/kamal/issues/405#issuecomment-1652527208)
 - If the command runs successfully, you should see
 
@@ -239,5 +240,8 @@ Releasing the deploy lock...
 - Try going to the IP address of the load balancer.
   - ![](/images/2024/9/16/lbloading.png)
 
+- Also you may or may not need `dotenv` in front of running `kamal setup`.
+  - There were changes to how Kamal 2 handles secret environment variables, and to force load the secret variables `dotenv` is needed.
+  - [More on this](https://github.com/basecamp/kamal/discussions/977)
 
 
