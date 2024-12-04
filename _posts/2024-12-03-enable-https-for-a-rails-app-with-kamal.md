@@ -25,7 +25,7 @@ This post is made for:
 4. Select Settings > Inbound NAT rules link in the left sidebar.
 5. Click +Add
 6. Create a new NAT inbound rule like below
-  - ![](/public/images/2024/12/3/lb-nat-inbound.png)
+    - ![](/images/2024/12/3/lb-nat-inbound.png)
 
 # 2. Rails App
 
