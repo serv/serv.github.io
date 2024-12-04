@@ -1,0 +1,40 @@
+<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width"/><meta charSet="utf-8"/><title>Jason Kim&#x27;s Blog</title><link rel="icon" href="/favicon.ico"/><meta name="next-head-count" content="4"/><link rel="preload" href="/_next/static/css/5398d8c2c6eb5e22e315.css" as="style"/><link rel="stylesheet" href="/_next/static/css/5398d8c2c6eb5e22e315.css"/><link rel="preload" href="/_next/static/css/3c6bf924f0424cd47cc5.css" as="style"/><link rel="stylesheet" href="/_next/static/css/3c6bf924f0424cd47cc5.css"/><link rel="preload" href="/_next/static/RkwM887QUcynDGVZtzHSZ/pages/_app.js" as="script"/><link rel="preload" href="/_next/static/RkwM887QUcynDGVZtzHSZ/pages/post/%5Bslug%5D.js" as="script"/><link rel="preload" href="/_next/static/runtime/webpack-c212667a5f965e81e004.js" as="script"/><link rel="preload" href="/_next/static/chunks/framework.e84fa698c7ee940652bd.js" as="script"/><link rel="preload" href="/_next/static/chunks/5a4765bf.4c419f4b16a96bca7647.js" as="script"/><link rel="preload" href="/_next/static/chunks/commons.212dae668aecc379ad96.js" as="script"/><link rel="preload" href="/_next/static/runtime/main-c20c68f2e453b0454f3a.js" as="script"/><link rel="preload" href="/_next/static/chunks/75fc9c18.cbe862d05f67479ee6e5.js" as="script"/><link rel="preload" href="/_next/static/chunks/2e7b3b1558a0289ad039627051d39c66c5d079c9.64565d5a878629f53174.js" as="script"/></head><body><div id="__next"><div class="container mx-auto"><header class="pt-16 pb-12"><a class="hover:underline" href="/"><h1>Jason Kim&#x27;s Blog</h1></a></header><main class="main pb-8"><div class="pb-2 text-3xl font-bold">Enable HTTPS for a Rails app with Kamal to Azure</div><div class="pb-8 text-sm text-gray-600">2024-12-03</div><div class="markdown"><p>Refer to previous two posts to deploy a Rails app to Azure.</p>
+<ul>
+<li><a href="https://blog.jasonkim.ca/post/deploy-rails-721-sqlite3-app-to-azure-using-kamal">Deploy Rails 7.2.1 + Sqlite3 App to Azure Using Kamal</a></li>
+<li><a href="https://blog.jasonkim.ca/post/deploy-rails-721-managed-postgresql-app-to-azure-using-kamal-211">Deploy Rails 7.2.1 + Managed Postgresql App to Azure Using Kamal 2.1.1</a></li>
+</ul>
+<p>This post is made for:</p>
+<ul>
+<li>Ruby: 3.3.5</li>
+<li>Rails: 8.0.0</li>
+<li>Kamal: 2.3.0 </li>
+</ul>
+<h1>1. Load Balancer Setup</h1>
+<ol>
+<li>Sign into Azure</li>
+<li>Search for Load Balancers and select it.</li>
+<li>Select the load balancer for the VM running the Rails app.</li>
+<li>Select Settings > Inbound NAT rules link in the left sidebar.</li>
+<li>Click +Add</li>
+<li>Create a new NAT inbound rule like below<ul>
+<li><img src="/images/2024/12/3/lb-nat-inbound.png"></li>
+</ul></li>
+</ol>
+<h1>2. Rails App</h1>
+<p>Setup the Rails like like the following.</p>
+<h2>2.1 <code>config/environments/production.rb</code></h2>
+<pre><code class="language-ruby">config.force_ssl = true
+</code></pre>
+<h2>2.2 <code>config/deploy.yml</code></h2>
+<pre><code class="language-yaml">...
+proxy:
+  ssl: true
+  host: yourdomain.com
+...
+</code></pre>
+<h2>2.3 Deploy and Check</h2>
+<ol>
+<li>Run <code>kamal deploy</code></li>
+<li>Check <code>yourdomain.com</code></li>
+</ol>
+</div></main><section style="width:100%"></section><footer class="pb-12"><div class="flex"><a class="flex-initial pr-4 hover:underline" href="http://jasonkim.ca/">Personal Site</a><a class="flex-initial pr-4 hover:underline" href="https://github.com/serv">Github</a><a class="flex-initial pr-4 hover:underline" href="https://www.linkedin.com/in/jason-kim-a2b97b6/">Linkedin</a><a class="flex-initial pr-4 hover:underline" href="https://twitter.com/jasoki">Twitter</a></div></footer></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"post":{"title":"Enable HTTPS for a Rails app with Kamal to Azure","createdAt":"2024-12-03T23:13:30-08:00","categories":["rails","kamal"],"slug":"enable-https-for-a-rails-app-with-kamal-to-azure","fullPath":"/Users/jasonkim/projects/websites/serv.github.io/_posts/2024-12-03-enable-https-for-a-rails-app-with-kamal.md","content":"\u003cp\u003eRefer to previous two posts to deploy a Rails app to Azure.\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003e\u003ca href=\"https://blog.jasonkim.ca/post/deploy-rails-721-sqlite3-app-to-azure-using-kamal\"\u003eDeploy Rails 7.2.1 + Sqlite3 App to Azure Using Kamal\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href=\"https://blog.jasonkim.ca/post/deploy-rails-721-managed-postgresql-app-to-azure-using-kamal-211\"\u003eDeploy Rails 7.2.1 + Managed Postgresql App to Azure Using Kamal 2.1.1\u003c/a\u003e\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003eThis post is made for:\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003eRuby: 3.3.5\u003c/li\u003e\n\u003cli\u003eRails: 8.0.0\u003c/li\u003e\n\u003cli\u003eKamal: 2.3.0 \u003c/li\u003e\n\u003c/ul\u003e\n\u003ch1\u003e1. Load Balancer Setup\u003c/h1\u003e\n\u003col\u003e\n\u003cli\u003eSign into Azure\u003c/li\u003e\n\u003cli\u003eSearch for Load Balancers and select it.\u003c/li\u003e\n\u003cli\u003eSelect the load balancer for the VM running the Rails app.\u003c/li\u003e\n\u003cli\u003eSelect Settings \u003e Inbound NAT rules link in the left sidebar.\u003c/li\u003e\n\u003cli\u003eClick +Add\u003c/li\u003e\n\u003cli\u003eCreate a new NAT inbound rule like below\u003cul\u003e\n\u003cli\u003e\u003cimg src=\"/images/2024/12/3/lb-nat-inbound.png\"\u003e\u003c/li\u003e\n\u003c/ul\u003e\u003c/li\u003e\n\u003c/ol\u003e\n\u003ch1\u003e2. Rails App\u003c/h1\u003e\n\u003cp\u003eSetup the Rails like like the following.\u003c/p\u003e\n\u003ch2\u003e2.1 \u003ccode\u003econfig/environments/production.rb\u003c/code\u003e\u003c/h2\u003e\n\u003cpre\u003e\u003ccode class=\"language-ruby\"\u003econfig.force_ssl = true\n\u003c/code\u003e\u003c/pre\u003e\n\u003ch2\u003e2.2 \u003ccode\u003econfig/deploy.yml\u003c/code\u003e\u003c/h2\u003e\n\u003cpre\u003e\u003ccode class=\"language-yaml\"\u003e...\nproxy:\n  ssl: true\n  host: yourdomain.com\n...\n\u003c/code\u003e\u003c/pre\u003e\n\u003ch2\u003e2.3 Deploy and Check\u003c/h2\u003e\n\u003col\u003e\n\u003cli\u003eRun \u003ccode\u003ekamal deploy\u003c/code\u003e\u003c/li\u003e\n\u003cli\u003eCheck \u003ccode\u003eyourdomain.com\u003c/code\u003e\u003c/li\u003e\n\u003c/ol\u003e\n"}},"__N_SSG":true},"page":"/post/[slug]","query":{"slug":"enable-https-for-a-rails-app-with-kamal-to-azure"},"buildId":"RkwM887QUcynDGVZtzHSZ","nextExport":false,"isFallback":false,"gsp":true}</script><script nomodule="" src="/_next/static/runtime/polyfills-788a592a52ba46c11fcc.js"></script><script async="" data-next-page="/_app" src="/_next/static/RkwM887QUcynDGVZtzHSZ/pages/_app.js"></script><script async="" data-next-page="/post/[slug]" src="/_next/static/RkwM887QUcynDGVZtzHSZ/pages/post/%5Bslug%5D.js"></script><script src="/_next/static/runtime/webpack-c212667a5f965e81e004.js" async=""></script><script src="/_next/static/chunks/framework.e84fa698c7ee940652bd.js" async=""></script><script src="/_next/static/chunks/5a4765bf.4c419f4b16a96bca7647.js" async=""></script><script src="/_next/static/chunks/commons.212dae668aecc379ad96.js" async=""></script><script src="/_next/static/runtime/main-c20c68f2e453b0454f3a.js" async=""></script><script src="/_next/static/chunks/75fc9c18.cbe862d05f67479ee6e5.js" async=""></script><script src="/_next/static/chunks/2e7b3b1558a0289ad039627051d39c66c5d079c9.64565d5a878629f53174.js" async=""></script><script src="/_next/static/RkwM887QUcynDGVZtzHSZ/_buildManifest.js" async=""></script><script src="/_next/static/RkwM887QUcynDGVZtzHSZ/_ssgManifest.js" async=""></script></body></html>
