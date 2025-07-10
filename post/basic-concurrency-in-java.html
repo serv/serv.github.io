@@ -1,0 +1,347 @@
+<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width"/><meta charSet="utf-8"/><title>Jason Kim&#x27;s Blog</title><link rel="icon" href="/favicon.ico"/><meta name="next-head-count" content="4"/><link rel="preload" href="/_next/static/css/5398d8c2c6eb5e22e315.css" as="style"/><link rel="stylesheet" href="/_next/static/css/5398d8c2c6eb5e22e315.css"/><link rel="preload" href="/_next/static/css/3c6bf924f0424cd47cc5.css" as="style"/><link rel="stylesheet" href="/_next/static/css/3c6bf924f0424cd47cc5.css"/><link rel="preload" href="/_next/static/0KCVTKrcnz1vaknDlOdeE/pages/_app.js" as="script"/><link rel="preload" href="/_next/static/0KCVTKrcnz1vaknDlOdeE/pages/post/%5Bslug%5D.js" as="script"/><link rel="preload" href="/_next/static/runtime/webpack-c212667a5f965e81e004.js" as="script"/><link rel="preload" href="/_next/static/chunks/framework.e84fa698c7ee940652bd.js" as="script"/><link rel="preload" href="/_next/static/chunks/5a4765bf.4c419f4b16a96bca7647.js" as="script"/><link rel="preload" href="/_next/static/chunks/commons.212dae668aecc379ad96.js" as="script"/><link rel="preload" href="/_next/static/runtime/main-c20c68f2e453b0454f3a.js" as="script"/><link rel="preload" href="/_next/static/chunks/75fc9c18.cbe862d05f67479ee6e5.js" as="script"/><link rel="preload" href="/_next/static/chunks/682f061b037abbb67de245157a69db824df2f8a5.64565d5a878629f53174.js" as="script"/></head><body><div id="__next"><div class="container mx-auto"><header class="pt-16 pb-12"><a class="hover:underline" href="/"><h1>Jason Kim&#x27;s Blog</h1></a></header><main class="main pb-8"><div class="pb-2 text-3xl font-bold">Basic Concurrency in Java</div><div class="pb-8 text-sm text-gray-600">2025-07-10</div><div class="markdown"><p>Let's review basic concurrency concepts in Java.</p>
+<h2>Process vs Thread</h2>
+<p>Processes are like having multiple programs running at the same time. Each program is a process.</p>
+<p>Threads are like a single program running concurrently. A process can have multiple threads.</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Process</th>
+<th>Thread</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Memory</td>
+<td>Isolated</td>
+<td>Shared</td>
+</tr>
+<tr>
+<td>Creation Cost</td>
+<td>High</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>Communication</td>
+<td>Slow (IPC)</td>
+<td>Fast (shared mem)</td>
+</tr>
+<tr>
+<td>Crash Effect</td>
+<td>Only this process dies</td>
+<td>Can kill the process the thread belongs to</td>
+</tr>
+</tbody>
+</table>
+<h2>Concurrency vs Parellalism</h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Concurrency</th>
+<th>Parallelism</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Definition</strong></td>
+<td>Dealing with multiple tasks at once (may or may not execute simultaneously)</td>
+<td>Executing multiple tasks <em>simultaneously</em></td>
+</tr>
+<tr>
+<td><strong>Execution</strong></td>
+<td>Tasks make progress together (interleaved)</td>
+<td>Tasks run at <em>exact same time</em> (on multiple cores)</td>
+</tr>
+<tr>
+<td><strong>Hardware</strong></td>
+<td>Possible on single-core CPU</td>
+<td>Requires multi-core CPU/distributed systems</td>
+</tr>
+<tr>
+<td><strong>Goal</strong></td>
+<td>Manage many tasks efficiently</td>
+<td>Speed up computation</td>
+</tr>
+<tr>
+<td><strong>Example</strong></td>
+<td>Handling 1000 web requests on a server (switching between them)</td>
+<td>Rendering 4K video by splitting frames across 8 CPU cores</td>
+</tr>
+</tbody>
+</table>
+<h2>Problems in Concurrency</h2>
+<ol>
+<li>Race Condition:
+When two threads access shared data at the same time, leading to unpredictable results.</li>
+<li>Deadlock:
+When two threads block each other forever because each holds a resource the other needs.</li>
+<li>Starvation:
+When a thread never gets CPU time because others always take priority. For example, a low-priority thread never running because high-priority threads keep executing.</li>
+<li>Livelock:
+Threads keep retrying but make no progress (like two people trying to pass each other but always stepping aside the same way).</li>
+</ol>
+<h2>Synchronization Basics</h2>
+<h3>Mutex (Lock)</h3>
+<h4>Without a lock</h4>
+<pre><code class="language-java">public class MutexLockNotUsed {
+    private static int counter = 0;
+
+    public static void main(String[] args) throws InterruptedException {
+        Thread t1 = new Thread(() -> incrementCounter(10000));
+        Thread t2 = new Thread(() -> incrementCounter(10000));
+
+        t1.start();
+        t2.start();
+
+        t1.join();
+        t2.join();
+
+        System.out.println("Final counter value without lock: " + counter); // Likely less than 20000
+    }
+
+    private static void incrementCounter(int times) {
+        for (int i = 0; i &#x3C; times; i++) {
+            counter++; // UNSAFE! No synchronization
+        }
+    }
+}
+</code></pre>
+<p>When you write counter++, it looks like a single operation, but the CPU actually performs three distinct steps:</p>
+<ul>
+<li>READ the current value from memory into a register</li>
+<li>INCREMENT the value in the register</li>
+<li>WRITE the new value back to memory</li>
+</ul>
+<p>Imagine Thread A and Thread B both executing counter++ when counter starts at 0:</p>
+<pre><code>Thread A: Reads counter (0)
+Thread B: Reads counter (0)  ← Both threads see 0!
+Thread A: Writes 1           ← Now memory = 1
+Thread B: Writes 1           ← Overwrites with 1 again!
+</code></pre>
+<p>Instead of reaching 2, we only get 1 - we've lost an increment.</p>
+<h4>With a lock</h4>
+<pre><code class="language-java">import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class MutexLock {
+    private static int counter = 0;
+    private static final Lock lock = new ReentrantLock();
+
+    public static void main(String[] args) throws InterruptedException {
+        Thread t1 = new Thread(() -> incrementCounter(10000));
+        Thread t2 = new Thread(() -> incrementCounter(10000));
+
+        t1.start();
+        t2.start();
+
+        t1.join();
+        t2.join();
+
+        System.out.println("Final counter value: " + counter); // Should be 20000
+    }
+
+    private static void incrementCounter(int times) {
+        for (int i = 0; i &#x3C; times; i++) {
+            lock.lock();
+            try {
+                counter++;
+            } finally {
+                lock.unlock();
+            }
+        }
+    }
+}
+</code></pre>
+<p>The lock ensures thread safety by preventing concurrent access to the shared <code>counter</code> variable.</p>
+<ul>
+<li>Mutual Exclusion: When one thread acquires the lock with <code>lock.lock()</code>, other threads must wait until the lock is released before they can access the protected code section.</li>
+<li>Atomic Operations: The <code>try-finally</code> block ensures the lock is always released, preventing deadlocks while maintaining atomicity of the counter increment operation.</li>
+<li>Memory Visibility: The lock establishes a happens-before relationship, ensuring changes made by one thread are visible to others after the lock is released.</li>
+</ul>
+<h3>Semaphore</h3>
+<h4>Without a semaphore</h4>
+<pre><code class="language-java">public class WithoutSemaphore {
+    private static final int MAX_CONCURRENT_DOWNLOADS = 3;
+    private static AtomicInteger currentDownloads = new AtomicInteger(0);
+
+    public static void main(String[] args) {
+        // Simulate 10 users trying to download
+        for (int i = 1; i &#x3C;= 10; i++) {
+            int finalI = i;
+            new Thread(() -> downloadFile("User-" + finalI)).start();
+        }
+    }
+
+    static void downloadFile(String user) {
+        int downloads = currentDownloads.incrementAndGet();
+
+        // Check if limit is exceeded (but it's too late!)
+        if (downloads > MAX_CONCURRENT_DOWNLOADS) {
+            System.err.println(user + " FAILED: Too many downloads (" + downloads + ")");
+        } else {
+            System.out.println(user + " started downloading... [Active: " + downloads + "]");
+        }
+
+        // Simulate download time
+        try { Thread.sleep(2000); }
+        catch (InterruptedException e) { e.printStackTrace(); }
+
+        currentDownloads.decrementAndGet();
+        System.out.println(user + " finished downloading.");
+    }
+}
+</code></pre>
+<p>This code produces a log like below</p>
+<pre><code>User-3 started downloading... [Active: 2]
+User-6 started downloading... [Active: 3]
+User-7 started downloading... [Active: 1]
+User-10 FAILED: Too many downloads (10)
+User-5 FAILED: Too many downloads (8)
+User-2 FAILED: Too many downloads (5)
+User-9 FAILED: Too many downloads (9)
+User-1 FAILED: Too many downloads (7)
+User-8 FAILED: Too many downloads (6)
+User-4 FAILED: Too many downloads (4)
+</code></pre>
+<h4>With a semaphore</h4>
+<pre><code class="language-java">public class WithSemaphore {
+    private static final Semaphore semaphore = new Semaphore(3); // Allow 3 at a time
+
+    public static void main(String[] args) {
+        for (int i = 1; i &#x3C;= 10; i++) {
+            int finalI = i;
+            new Thread(() -> downloadFile("User-" + finalI)).start();
+        }
+    }
+
+    static void downloadFile(String user) {
+        try {
+            semaphore.acquire(); // Blocks if >3 downloads
+            System.out.println(user + " started downloading... [Active: " + (3 - semaphore.availablePermits()) + "]");
+
+            Thread.sleep(2000); // Simulate download
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            semaphore.release();
+            System.out.println(user + " finished downloading.");
+        }
+    }
+}
+</code></pre>
+<p>With a semaphore, we can ensure that only 3 downloads happen a time.</p>
+<h3>Producer Consumer</h3>
+<h4>Without lock</h4>
+<pre><code class="language-java">public class UnsafeProducerConsumer {
+    private static final int CAPACITY = 5;
+    private static final Queue&#x3C;Integer> queue = new LinkedList&#x3C;>();
+
+    public static void main(String[] args) {
+        new Thread(UnsafeProducerConsumer::produce).start();
+        new Thread(UnsafeProducerConsumer::consume).start();
+    }
+
+    private static void produce() {
+        int value = 0;
+        while (true) {
+            // BROKEN: No synchronization
+            if (queue.size() &#x3C; CAPACITY) { // Race condition here
+                queue.offer(value);
+                System.out.println("Produced: " + value);
+                value++;
+            }
+            // Missing: Condition signaling
+        }
+    }
+
+    private static void consume() {
+        while (true) {
+            // BROKEN: No synchronization
+            if (!queue.isEmpty()) { // Race condition here
+                int value = queue.poll();
+                System.out.println("Consumed: " + value);
+            }
+            // Missing: Condition signaling
+        }
+    }
+}
+</code></pre>
+<p>This may cause the producer to produce more than the limit of the queue size.</p>
+<pre><code>Produced: 0
+Produced: 1
+Produced: 2
+Produced: 3
+Produced: 4
+Produced: 5 &#x3C;- greater than the queue size limit of 5.
+</code></pre>
+<h3>With lock</h3>
+<pre><code class="language-java">public class SafeProducerConsumer {
+    private static final int CAPACITY = 5;
+    private static final Queue&#x3C;Integer> queue = new LinkedList&#x3C;>();
+    private static final Lock lock = new ReentrantLock();
+    private static final Condition notFull = lock.newCondition();
+    private static final Condition notEmpty = lock.newCondition();
+
+    public static void main(String[] args) {
+        Thread producer = new Thread(SafeProducerConsumer::produce);
+        Thread consumer = new Thread(SafeProducerConsumer::consume);
+
+        producer.start();
+        consumer.start();
+    }
+
+    private static void produce() {
+        int value = 0;
+        while (true) {
+            lock.lock();
+            try {
+                while (queue.size() == CAPACITY) {
+                    System.out.println("Queue full, producer waiting...");
+                    notFull.await();
+                }
+                queue.offer(value);
+                System.out.println("Produced: " + value);
+                value++;
+                notEmpty.signal(); // Wake up consumer
+                Thread.sleep(500); // Slow down producer
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                lock.unlock();
+            }
+        }
+    }
+
+    private static void consume() {
+        while (true) {
+            lock.lock();
+            try {
+                while (queue.isEmpty()) {
+                    System.out.println("Queue empty, consumer waiting...");
+                    notEmpty.await();
+                }
+                int value = queue.poll();
+                System.out.println("Consumed: " + value);
+                notFull.signal(); // Wake up producer
+                Thread.sleep(1000); // Slow down consumer
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                lock.unlock();
+            }
+        }
+    }
+}
+</code></pre>
+<p>The lock ensures that the producer doesn't enqueue greater than the limit of the queue.</p>
+<pre><code>Produced: 0
+Produced: 1
+Produced: 2
+Produced: 3
+Produced: 4
+Queue full, producer waiting...
+Consumed: 0
+</code></pre>
+</div></main><section style="width:100%"></section><footer class="pb-12"><div class="flex"><a class="flex-initial pr-4 hover:underline" href="http://jasonkim.ca/">Personal Site</a><a class="flex-initial pr-4 hover:underline" href="https://github.com/serv">Github</a><a class="flex-initial pr-4 hover:underline" href="https://www.linkedin.com/in/jason-kim-a2b97b6/">Linkedin</a><a class="flex-initial pr-4 hover:underline" href="https://twitter.com/jasoki">Twitter</a></div></footer></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"post":{"title":"Basic Concurrency in Java","createdAt":"2025-07-10T09:43:48-07:00","categories":["Java","Concurrency"],"slug":"basic-concurrency-in-java","fullPath":"/Users/jasonkim/projects/websites/serv.github.io/_posts/2025-07-10-basic-concurrency-in-java.md","content":"\u003cp\u003eLet's review basic concurrency concepts in Java.\u003c/p\u003e\n\u003ch2\u003eProcess vs Thread\u003c/h2\u003e\n\u003cp\u003eProcesses are like having multiple programs running at the same time. Each program is a process.\u003c/p\u003e\n\u003cp\u003eThreads are like a single program running concurrently. A process can have multiple threads.\u003c/p\u003e\n\u003ctable\u003e\n\u003cthead\u003e\n\u003ctr\u003e\n\u003cth\u003eFeature\u003c/th\u003e\n\u003cth\u003eProcess\u003c/th\u003e\n\u003cth\u003eThread\u003c/th\u003e\n\u003c/tr\u003e\n\u003c/thead\u003e\n\u003ctbody\u003e\n\u003ctr\u003e\n\u003ctd\u003eMemory\u003c/td\u003e\n\u003ctd\u003eIsolated\u003c/td\u003e\n\u003ctd\u003eShared\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eCreation Cost\u003c/td\u003e\n\u003ctd\u003eHigh\u003c/td\u003e\n\u003ctd\u003eLow\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eCommunication\u003c/td\u003e\n\u003ctd\u003eSlow (IPC)\u003c/td\u003e\n\u003ctd\u003eFast (shared mem)\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eCrash Effect\u003c/td\u003e\n\u003ctd\u003eOnly this process dies\u003c/td\u003e\n\u003ctd\u003eCan kill the process the thread belongs to\u003c/td\u003e\n\u003c/tr\u003e\n\u003c/tbody\u003e\n\u003c/table\u003e\n\u003ch2\u003eConcurrency vs Parellalism\u003c/h2\u003e\n\u003ctable\u003e\n\u003cthead\u003e\n\u003ctr\u003e\n\u003cth\u003eFeature\u003c/th\u003e\n\u003cth\u003eConcurrency\u003c/th\u003e\n\u003cth\u003eParallelism\u003c/th\u003e\n\u003c/tr\u003e\n\u003c/thead\u003e\n\u003ctbody\u003e\n\u003ctr\u003e\n\u003ctd\u003e\u003cstrong\u003eDefinition\u003c/strong\u003e\u003c/td\u003e\n\u003ctd\u003eDealing with multiple tasks at once (may or may not execute simultaneously)\u003c/td\u003e\n\u003ctd\u003eExecuting multiple tasks \u003cem\u003esimultaneously\u003c/em\u003e\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e\u003cstrong\u003eExecution\u003c/strong\u003e\u003c/td\u003e\n\u003ctd\u003eTasks make progress together (interleaved)\u003c/td\u003e\n\u003ctd\u003eTasks run at \u003cem\u003eexact same time\u003c/em\u003e (on multiple cores)\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e\u003cstrong\u003eHardware\u003c/strong\u003e\u003c/td\u003e\n\u003ctd\u003ePossible on single-core CPU\u003c/td\u003e\n\u003ctd\u003eRequires multi-core CPU/distributed systems\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e\u003cstrong\u003eGoal\u003c/strong\u003e\u003c/td\u003e\n\u003ctd\u003eManage many tasks efficiently\u003c/td\u003e\n\u003ctd\u003eSpeed up computation\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e\u003cstrong\u003eExample\u003c/strong\u003e\u003c/td\u003e\n\u003ctd\u003eHandling 1000 web requests on a server (switching between them)\u003c/td\u003e\n\u003ctd\u003eRendering 4K video by splitting frames across 8 CPU cores\u003c/td\u003e\n\u003c/tr\u003e\n\u003c/tbody\u003e\n\u003c/table\u003e\n\u003ch2\u003eProblems in Concurrency\u003c/h2\u003e\n\u003col\u003e\n\u003cli\u003eRace Condition:\nWhen two threads access shared data at the same time, leading to unpredictable results.\u003c/li\u003e\n\u003cli\u003eDeadlock:\nWhen two threads block each other forever because each holds a resource the other needs.\u003c/li\u003e\n\u003cli\u003eStarvation:\nWhen a thread never gets CPU time because others always take priority. For example, a low-priority thread never running because high-priority threads keep executing.\u003c/li\u003e\n\u003cli\u003eLivelock:\nThreads keep retrying but make no progress (like two people trying to pass each other but always stepping aside the same way).\u003c/li\u003e\n\u003c/ol\u003e\n\u003ch2\u003eSynchronization Basics\u003c/h2\u003e\n\u003ch3\u003eMutex (Lock)\u003c/h3\u003e\n\u003ch4\u003eWithout a lock\u003c/h4\u003e\n\u003cpre\u003e\u003ccode class=\"language-java\"\u003epublic class MutexLockNotUsed {\n    private static int counter = 0;\n\n    public static void main(String[] args) throws InterruptedException {\n        Thread t1 = new Thread(() -\u003e incrementCounter(10000));\n        Thread t2 = new Thread(() -\u003e incrementCounter(10000));\n\n        t1.start();\n        t2.start();\n\n        t1.join();\n        t2.join();\n\n        System.out.println(\"Final counter value without lock: \" + counter); // Likely less than 20000\n    }\n\n    private static void incrementCounter(int times) {\n        for (int i = 0; i \u0026#x3C; times; i++) {\n            counter++; // UNSAFE! No synchronization\n        }\n    }\n}\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003eWhen you write counter++, it looks like a single operation, but the CPU actually performs three distinct steps:\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003eREAD the current value from memory into a register\u003c/li\u003e\n\u003cli\u003eINCREMENT the value in the register\u003c/li\u003e\n\u003cli\u003eWRITE the new value back to memory\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003eImagine Thread A and Thread B both executing counter++ when counter starts at 0:\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003eThread A: Reads counter (0)\nThread B: Reads counter (0)  ← Both threads see 0!\nThread A: Writes 1           ← Now memory = 1\nThread B: Writes 1           ← Overwrites with 1 again!\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003eInstead of reaching 2, we only get 1 - we've lost an increment.\u003c/p\u003e\n\u003ch4\u003eWith a lock\u003c/h4\u003e\n\u003cpre\u003e\u003ccode class=\"language-java\"\u003eimport java.util.concurrent.locks.Lock;\nimport java.util.concurrent.locks.ReentrantLock;\n\npublic class MutexLock {\n    private static int counter = 0;\n    private static final Lock lock = new ReentrantLock();\n\n    public static void main(String[] args) throws InterruptedException {\n        Thread t1 = new Thread(() -\u003e incrementCounter(10000));\n        Thread t2 = new Thread(() -\u003e incrementCounter(10000));\n\n        t1.start();\n        t2.start();\n\n        t1.join();\n        t2.join();\n\n        System.out.println(\"Final counter value: \" + counter); // Should be 20000\n    }\n\n    private static void incrementCounter(int times) {\n        for (int i = 0; i \u0026#x3C; times; i++) {\n            lock.lock();\n            try {\n                counter++;\n            } finally {\n                lock.unlock();\n            }\n        }\n    }\n}\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003eThe lock ensures thread safety by preventing concurrent access to the shared \u003ccode\u003ecounter\u003c/code\u003e variable.\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003eMutual Exclusion: When one thread acquires the lock with \u003ccode\u003elock.lock()\u003c/code\u003e, other threads must wait until the lock is released before they can access the protected code section.\u003c/li\u003e\n\u003cli\u003eAtomic Operations: The \u003ccode\u003etry-finally\u003c/code\u003e block ensures the lock is always released, preventing deadlocks while maintaining atomicity of the counter increment operation.\u003c/li\u003e\n\u003cli\u003eMemory Visibility: The lock establishes a happens-before relationship, ensuring changes made by one thread are visible to others after the lock is released.\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch3\u003eSemaphore\u003c/h3\u003e\n\u003ch4\u003eWithout a semaphore\u003c/h4\u003e\n\u003cpre\u003e\u003ccode class=\"language-java\"\u003epublic class WithoutSemaphore {\n    private static final int MAX_CONCURRENT_DOWNLOADS = 3;\n    private static AtomicInteger currentDownloads = new AtomicInteger(0);\n\n    public static void main(String[] args) {\n        // Simulate 10 users trying to download\n        for (int i = 1; i \u0026#x3C;= 10; i++) {\n            int finalI = i;\n            new Thread(() -\u003e downloadFile(\"User-\" + finalI)).start();\n        }\n    }\n\n    static void downloadFile(String user) {\n        int downloads = currentDownloads.incrementAndGet();\n\n        // Check if limit is exceeded (but it's too late!)\n        if (downloads \u003e MAX_CONCURRENT_DOWNLOADS) {\n            System.err.println(user + \" FAILED: Too many downloads (\" + downloads + \")\");\n        } else {\n            System.out.println(user + \" started downloading... [Active: \" + downloads + \"]\");\n        }\n\n        // Simulate download time\n        try { Thread.sleep(2000); }\n        catch (InterruptedException e) { e.printStackTrace(); }\n\n        currentDownloads.decrementAndGet();\n        System.out.println(user + \" finished downloading.\");\n    }\n}\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003eThis code produces a log like below\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003eUser-3 started downloading... [Active: 2]\nUser-6 started downloading... [Active: 3]\nUser-7 started downloading... [Active: 1]\nUser-10 FAILED: Too many downloads (10)\nUser-5 FAILED: Too many downloads (8)\nUser-2 FAILED: Too many downloads (5)\nUser-9 FAILED: Too many downloads (9)\nUser-1 FAILED: Too many downloads (7)\nUser-8 FAILED: Too many downloads (6)\nUser-4 FAILED: Too many downloads (4)\n\u003c/code\u003e\u003c/pre\u003e\n\u003ch4\u003eWith a semaphore\u003c/h4\u003e\n\u003cpre\u003e\u003ccode class=\"language-java\"\u003epublic class WithSemaphore {\n    private static final Semaphore semaphore = new Semaphore(3); // Allow 3 at a time\n\n    public static void main(String[] args) {\n        for (int i = 1; i \u0026#x3C;= 10; i++) {\n            int finalI = i;\n            new Thread(() -\u003e downloadFile(\"User-\" + finalI)).start();\n        }\n    }\n\n    static void downloadFile(String user) {\n        try {\n            semaphore.acquire(); // Blocks if \u003e3 downloads\n            System.out.println(user + \" started downloading... [Active: \" + (3 - semaphore.availablePermits()) + \"]\");\n\n            Thread.sleep(2000); // Simulate download\n\n        } catch (InterruptedException e) {\n            e.printStackTrace();\n        } finally {\n            semaphore.release();\n            System.out.println(user + \" finished downloading.\");\n        }\n    }\n}\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003eWith a semaphore, we can ensure that only 3 downloads happen a time.\u003c/p\u003e\n\u003ch3\u003eProducer Consumer\u003c/h3\u003e\n\u003ch4\u003eWithout lock\u003c/h4\u003e\n\u003cpre\u003e\u003ccode class=\"language-java\"\u003epublic class UnsafeProducerConsumer {\n    private static final int CAPACITY = 5;\n    private static final Queue\u0026#x3C;Integer\u003e queue = new LinkedList\u0026#x3C;\u003e();\n\n    public static void main(String[] args) {\n        new Thread(UnsafeProducerConsumer::produce).start();\n        new Thread(UnsafeProducerConsumer::consume).start();\n    }\n\n    private static void produce() {\n        int value = 0;\n        while (true) {\n            // BROKEN: No synchronization\n            if (queue.size() \u0026#x3C; CAPACITY) { // Race condition here\n                queue.offer(value);\n                System.out.println(\"Produced: \" + value);\n                value++;\n            }\n            // Missing: Condition signaling\n        }\n    }\n\n    private static void consume() {\n        while (true) {\n            // BROKEN: No synchronization\n            if (!queue.isEmpty()) { // Race condition here\n                int value = queue.poll();\n                System.out.println(\"Consumed: \" + value);\n            }\n            // Missing: Condition signaling\n        }\n    }\n}\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003eThis may cause the producer to produce more than the limit of the queue size.\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003eProduced: 0\nProduced: 1\nProduced: 2\nProduced: 3\nProduced: 4\nProduced: 5 \u0026#x3C;- greater than the queue size limit of 5.\n\u003c/code\u003e\u003c/pre\u003e\n\u003ch3\u003eWith lock\u003c/h3\u003e\n\u003cpre\u003e\u003ccode class=\"language-java\"\u003epublic class SafeProducerConsumer {\n    private static final int CAPACITY = 5;\n    private static final Queue\u0026#x3C;Integer\u003e queue = new LinkedList\u0026#x3C;\u003e();\n    private static final Lock lock = new ReentrantLock();\n    private static final Condition notFull = lock.newCondition();\n    private static final Condition notEmpty = lock.newCondition();\n\n    public static void main(String[] args) {\n        Thread producer = new Thread(SafeProducerConsumer::produce);\n        Thread consumer = new Thread(SafeProducerConsumer::consume);\n\n        producer.start();\n        consumer.start();\n    }\n\n    private static void produce() {\n        int value = 0;\n        while (true) {\n            lock.lock();\n            try {\n                while (queue.size() == CAPACITY) {\n                    System.out.println(\"Queue full, producer waiting...\");\n                    notFull.await();\n                }\n                queue.offer(value);\n                System.out.println(\"Produced: \" + value);\n                value++;\n                notEmpty.signal(); // Wake up consumer\n                Thread.sleep(500); // Slow down producer\n            } catch (InterruptedException e) {\n                e.printStackTrace();\n            } finally {\n                lock.unlock();\n            }\n        }\n    }\n\n    private static void consume() {\n        while (true) {\n            lock.lock();\n            try {\n                while (queue.isEmpty()) {\n                    System.out.println(\"Queue empty, consumer waiting...\");\n                    notEmpty.await();\n                }\n                int value = queue.poll();\n                System.out.println(\"Consumed: \" + value);\n                notFull.signal(); // Wake up producer\n                Thread.sleep(1000); // Slow down consumer\n            } catch (InterruptedException e) {\n                e.printStackTrace();\n            } finally {\n                lock.unlock();\n            }\n        }\n    }\n}\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003eThe lock ensures that the producer doesn't enqueue greater than the limit of the queue.\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003eProduced: 0\nProduced: 1\nProduced: 2\nProduced: 3\nProduced: 4\nQueue full, producer waiting...\nConsumed: 0\n\u003c/code\u003e\u003c/pre\u003e\n"}},"__N_SSG":true},"page":"/post/[slug]","query":{"slug":"basic-concurrency-in-java"},"buildId":"0KCVTKrcnz1vaknDlOdeE","nextExport":false,"isFallback":false,"gsp":true}</script><script nomodule="" src="/_next/static/runtime/polyfills-788a592a52ba46c11fcc.js"></script><script async="" data-next-page="/_app" src="/_next/static/0KCVTKrcnz1vaknDlOdeE/pages/_app.js"></script><script async="" data-next-page="/post/[slug]" src="/_next/static/0KCVTKrcnz1vaknDlOdeE/pages/post/%5Bslug%5D.js"></script><script src="/_next/static/runtime/webpack-c212667a5f965e81e004.js" async=""></script><script src="/_next/static/chunks/framework.e84fa698c7ee940652bd.js" async=""></script><script src="/_next/static/chunks/5a4765bf.4c419f4b16a96bca7647.js" async=""></script><script src="/_next/static/chunks/commons.212dae668aecc379ad96.js" async=""></script><script src="/_next/static/runtime/main-c20c68f2e453b0454f3a.js" async=""></script><script src="/_next/static/chunks/75fc9c18.cbe862d05f67479ee6e5.js" async=""></script><script src="/_next/static/chunks/682f061b037abbb67de245157a69db824df2f8a5.64565d5a878629f53174.js" async=""></script><script src="/_next/static/0KCVTKrcnz1vaknDlOdeE/_buildManifest.js" async=""></script><script src="/_next/static/0KCVTKrcnz1vaknDlOdeE/_ssgManifest.js" async=""></script></body></html>
